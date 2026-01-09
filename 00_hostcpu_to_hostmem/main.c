@@ -1,45 +1,88 @@
+#define _GNU_SOURCE
 #include <stdio.h>
-#include <stdlib.h>
 #include <pthread.h>
-#include <stdatomic.h>
+#include <sched.h>
 #include <stdint.h>
-#include <immintrin.h> //clflush
+#include <stdlib.h>
 
-// lock flag for atomicity
-atomic_flag lock_flag = ATOMIC_FLAG_INIT;
 
-void acquire_lock(atomic_flag* lock) {
-    while (atomic_flag_test_and_set(lock)) { }
+#define false 0
+#define true 1
+typedef int bool;
+
+
+volatile bool wantp = false;
+volatile bool wantq = false;
+volatile int turn = 1;
+
+pthread_t t1, t2;
+
+// will be Host
+void p(void* arg) {
+    uintptr_t accessed_address = *(uintptr_t*)arg;
+    volatile int* target_address = (volatile int*)accessed_address;
+
+    wantp = true;
+
+    __asm__ volatile("mfence" ::: "memory");
+
+    while(wantq) {
+        if(turn == 2) {
+        wantp = false;
+
+        while(turn != 1) {
+            sched_yield();
+        }
+        wantp = true;
+        __asm__ volatile("mfence" ::: "memory");
+        }
+    }
+    *target_address = *target_address + 1;
+    turn = 2;
+    wantp = false;
 }
 
-void release_lock(atomic_flag* lock) {
-    atomic_flag_clear(lock);
+//will be Device
+void q(void* arg) {
+    uintptr_t accessed_address = *(uintptr_t*)arg;
+    volatile int* target_address = (volatile int*)accessed_address;
+
+    wantq = true;
+    __asm__ volatile("mfence" ::: "memory");
+
+    while(wantp) {
+        if(turn == 1) {
+        wantq = false;
+        while(turn != 2) {
+            sched_yield();
+        }
+        wantq = true;
+        __asm__ volatile("mfence" ::: "memory");
+        }
+    }
+    *target_address = *target_address + 1;
+    turn = 1;
+    wantq = false;
 }
 
 void* worker(void* arg) {
     uintptr_t accessed_address = *(uintptr_t*)arg;
-
     printf("Accessed address: 0x%lX\n", accessed_address);
 
-    for (int i = 0; i < 100000; i++) {
-        acquire_lock(&lock_flag);
+    for (int i = 0; i < 1000000; i++) {
 
-        volatile int* target_address = (volatile int*)accessed_address;
-
-        *target_address = *target_address + 1;
-
-        _mm_clflush((void*)target_address);
-
-        //enforce memory ordering
-        _mm_mfence();
-
-        release_lock(&lock_flag);
+        pthread_t id = pthread_self();
+        if(pthread_equal(id,t1)){
+        p(arg);
+        } else if(pthread_equal(id, t2)) {
+        q(arg);
+        }
     }
-    return NULL;
+
+    return 0;
 }
 
 int main() {
-    pthread_t t1, t2;
 
     // memory allocation
     int* safe_memory = (int*)malloc(sizeof(int));
