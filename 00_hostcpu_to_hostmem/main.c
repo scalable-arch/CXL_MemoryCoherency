@@ -15,13 +15,12 @@ volatile bool wantp = false;
 volatile bool wantq = false;
 volatile int turn = 1;
 
+volatile int shared_cnt = 0;
+
 pthread_t t1, t2;
 
 // will be Host
-void p(void* arg) {
-    uintptr_t accessed_address = *(uintptr_t*)arg;
-    volatile int* target_address = (volatile int*)accessed_address;
-
+void p(volatile int* shared_ptr) {
     wantp = true;
 
     __asm__ volatile("mfence" ::: "memory");
@@ -37,22 +36,22 @@ void p(void* arg) {
         __asm__ volatile("mfence" ::: "memory");
         }
     }
-    *target_address = *target_address + 1;
+    //*shared_ptr = *shared_ptr + 1;
+    shared_cnt++;
     turn = 2;
     wantp = false;
 }
 
 //will be Device
-void q(void* arg) {
-    uintptr_t accessed_address = *(uintptr_t*)arg;
-    volatile int* target_address = (volatile int*)accessed_address;
-
+void q(volatile int* shared_ptr) {
     wantq = true;
+
     __asm__ volatile("mfence" ::: "memory");
 
     while(wantp) {
         if(turn == 1) {
         wantq = false;
+
         while(turn != 2) {
             sched_yield();
         }
@@ -60,48 +59,42 @@ void q(void* arg) {
         __asm__ volatile("mfence" ::: "memory");
         }
     }
-    *target_address = *target_address + 1;
+    //*shared_ptr = *shared_ptr + 1;
+    shared_cnt++;
     turn = 1;
     wantq = false;
 }
 
-void* worker(void* arg) {
-    uintptr_t accessed_address = *(uintptr_t*)arg;
-    printf("Accessed address: 0x%lX\n", accessed_address);
+void* worker(volatile void* shared_ptr) {
+    //uintptr_t accessed_address = (uintptr_t)arg;
+    //printf("Accessed address: 0x%lX\n", accessed_address);
+    pthread_t id = pthread_self();
 
-    for (int i = 0; i < 1000000; i++) {
-
-        pthread_t id = pthread_self();
-        if(pthread_equal(id,t1)){
-        p(arg);
-        } else if(pthread_equal(id, t2)) {
-        q(arg);
-        }
+    if(pthread_equal(id,t1)){
+         for (int i = 0; i < 1000000; i++) {
+            p(shared_ptr);
+         }
+    } else if(pthread_equal(id, t2)) {
+         for (int i = 0; i < 1000000; i++) {
+            q(shared_ptr);
+         }
     }
 
     return 0;
 }
 
 int main() {
-
-    // memory allocation
-    int* safe_memory = (int*)malloc(sizeof(int));
-    *safe_memory = 0;
-
-    uintptr_t allocated_address = (uintptr_t)safe_memory;
-
-    printf("Allocated Address: 0x%lX\n", allocated_address);
-    printf("Initialized value: %d\n\n", *safe_memory);
+    printf("Allocated Address: 0x%p\n", &shared_cnt);
+    printf("Initialized value: %d\n\n", shared_cnt);
 
     // thread init, excuting
-    pthread_create(&t1, NULL, worker, &allocated_address);
-    pthread_create(&t2, NULL, worker, &allocated_address);
+    pthread_create(&t1, NULL, worker, (volatile void *) &shared_cnt);
+    pthread_create(&t2, NULL, worker, (volatile void *) &shared_cnt);
 
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
 
-    printf("\nFinal value(0x%lX): %d\n", allocated_address, *(volatile int*)allocated_address);
+    printf("\nFinal value(0x%p): %d\n", &shared_cnt, shared_cnt);
 
-    free(safe_memory);
     return 0;
 }
