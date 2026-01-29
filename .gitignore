@@ -3,3 +3,4 @@
 
 # 2. 하지만 ref_golden 폴더(와 그 내용물)는 예외로 함 (추적 대상)
 !/quartus/ref_golden/
+!/quartus/shared
