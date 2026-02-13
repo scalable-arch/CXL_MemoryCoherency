@@ -13,7 +13,7 @@
 #include<string.h>// memset, strerror
 #include<errno.h>// errno 값/에러 처리
 #include<unistd.h>// usleep, close (필요시)
-#include<linux/vfio.h>// VFIO_PCI_BAR0_REGION_INDEX 등 BAR region index 상수 -> Ubuntu에 설치되어 있어야 하며 없으면 헤더 패키지 설치 필요 
+#include<linux/vfio.h>// VFIO_PCI_BAR0_REGION_INDEX 등 BAR region index 상수 -> Ubuntu에 설치되어 있어야 하며 없으면 헤더 패키지 설치 필요
 #include <string.h>
 #include"bwvfio.h"// BWVFIODev, BWVFIOMemAttr, bwvfio_* API
 #include <stdatomic.h> // atomic_thread_fence() (barrier)
@@ -35,6 +35,7 @@
 #define Q_START_ADDR_H_OFF    0x0Cu
 #define Q_SIZE_OFF            0x10u
 #define Q_TAIL_PTR_OFF        0x14u// doorbell
+#define Q_HEAD_PTR_OFF        0x18u// descriptor fetch head pointer
 #define Q_COMPLETED_PTR_OFF   0x1Cu// 폴링용
 #define Q_RESET_OFF           0x48u
 
@@ -46,13 +47,15 @@
 #define RING_ORDER_LOG2       1u// 프로토타입: 2^1 = 2 엔트리(최소). desc_idx=1만 사용해서 검증
 #define DESC_IDX_FIRST        1u// descriptor index는 1부터 시작(0 쓰지 않기)
 
-#define DESC_BYTES            32u                 // 32B : descriptor 1개 size 
+#define DESC_BYTES            32u                 // 32B : descriptor 1개 size
 #define DMA_LEN_MAX_BYTES     (1u << 20)          // 1MB : DMA payload의 max_size (Data size)
 #define DMA_PYLD_CNT_MASK     ((1u << 20) - 1u)   // 20-bit : PYLD_CNT 20bit를 64bit word에 패킹할 때 상위 bit가 섞이지 않도록 마스킹
 
 // ---- 6) 임시 device DDR 주소(아직 NoC 미완성이라 상수로) ----
 #define DEV_DDR_BASE_TMP      0xDEAD0000ull
 #define DEV_ADDR_TMP          (DEV_DDR_BASE_TMP + 0x1000ull)
+
+
 
 
 // descriptor/buffer pointer 구조체 선언
@@ -101,7 +104,7 @@ static inline void doorbell_write_barrier(void) {
 
 //step별 함수 선언
 /*
- * 함수(step)별 기능 
+ * 함수(step)별 기능
  * init_vfio()          : bwvfio/VFIO로 PCIe 디바이스를 열고, DMA를 위해 Bus Master를 활성화한다.
  * alloc_dma_buffers()  : SHM 기반 Host 버퍼(Descriptor Ring + TX/RX payload)를 할당하고 VA/IOVA를 확보한다.
  * qcsr_init_queue()    : H2D/D2H 방향에 대해 DMA 큐 레지스터(Q_RESET, Q_START_ADDR, Q_SIZE, Q_CTRL)를 설정한다.
@@ -126,17 +129,17 @@ static inline int init_vfio(dma_ctx_t *ctx, const char *bdf){
 return 0;
 }
 
-// 2) DMA용 Host 버퍼/descriptor ring 할당 + VA/IOVA 확보 
+// 2) DMA용 Host 버퍼/descriptor ring 할당 + VA/IOVA 확보
 static inline int alloc_dma_buffers(dma_ctx_t *ctx, size_t desc_ring_bytes, size_t tx_bytes, size_t rx_bytes){
     int alloc_dma_buffers_status;                                  // 디버그용 status 변수 선언
     BWVFIOMemAttr attr = {0};                              // bwvfio.h 안 flag 변수 초기화
     if (!ctx) return -1;                                   // ctx Null 확인
     attr.flags = BWVFIO_DMF_SHM | BWVFIO_DMF_SHM_CREATE | BWVFIO_DMF_RW;   // bwvfio.h 안의 권한/동작 플래그 맴버, bit or로 구성된 32bit flag field
-    
+
     // 2-1) Descriptor ring 전체 alloc -> 이후 DMA 요청을 발급할 때 해당 공간에 descriptor 정보를 write
     alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, desc_ring_bytes, &attr, &ctx->desc_memid);
     if (alloc_dma_buffers_status) goto fail;
-    // ctx 구조체 멤버에 VA 저장 
+    // ctx 구조체 멤버에 VA 저장
     alloc_dma_buffers_status = bwvfio_get_mem_va(&ctx->dev, ctx->desc_memid, &ctx->desc_va);
     if (alloc_dma_buffers_status) goto fail;
     // ctx 구조체 멤버에 IOVA 저장
@@ -185,7 +188,7 @@ static inline int alloc_dma_buffers(dma_ctx_t *ctx, size_t desc_ring_bytes, size
         }
     }
 
-    return 0; 
+    return 0;
 
     fail:
     //host user-space에서 bwvfio로 할당한 SHM 메모리 객체(memid)를 해제 (중간 실패 시 메모리 누수 방지)
@@ -216,7 +219,7 @@ static inline int qcsr_init_queue(dma_ctx_t *ctx, int dir, uint32_t q, uint64_t 
     int qcsr_init_status;
     uint32_t reset_val = 0;  // QCSR의 Q_RESET 레지스터를 MMIO로 읽어 온 값을 담아두는 로컬 변수
 
-    // guard 
+    // guard
     if (!ctx) return -1;
     if (desc_iova == 0) return -1;
     if (ring_order_log2 < 1 || ring_order_log2 > 16) return -1;
@@ -232,7 +235,7 @@ static inline int qcsr_init_queue(dma_ctx_t *ctx, int dir, uint32_t q, uint64_t 
     } while (reset_val != 0);
 
     // Descriptor ring(현재는 ring= 1 descriptor)의 IOVA를 QCSR에 등록
-    // base 주소가 64bit인데, QCSR register가 32bit로 나뉘어 있어서 64bit 주소를 두 개의 register에 저장 
+    // base 주소가 64bit인데, QCSR register가 32bit로 나뉘어 있어서 64bit 주소를 두 개의 register에 저장
     qcsr_init_status = bwvfio_ms_write32(&ctx->dev, QCSR_REGION, QCSR_ADDR(dir, q, Q_START_ADDR_L_OFF), (uint32_t)(desc_iova & 0xffffffffu)); //하위 32bit 추출해서 저장
     if (qcsr_init_status) return qcsr_init_status;
 
@@ -244,7 +247,7 @@ static inline int qcsr_init_queue(dma_ctx_t *ctx, int dir, uint32_t q, uint64_t 
     if (qcsr_init_status) return qcsr_init_status;
 
     // queue enable
-    qcsr_init_status = bwvfio_ms_write32(&ctx->dev, QCSR_REGION, QCSR_ADDR(dir, q, Q_CTRL_OFF), Q_CTRL_QEN); // Ctrl register의 
+    qcsr_init_status = bwvfio_ms_write32(&ctx->dev, QCSR_REGION, QCSR_ADDR(dir, q, Q_CTRL_OFF), Q_CTRL_QEN); // Ctrl register의
     if (qcsr_init_status) return qcsr_init_status;
 
     return 0;
@@ -253,7 +256,7 @@ static inline int qcsr_init_queue(dma_ctx_t *ctx, int dir, uint32_t q, uint64_t 
 // 4) descriptor 1개 작성(H2D / D2H)
 static inline int write_desc_h2d(dma_ctx_t *ctx, uint32_t desc_idx, uint64_t dev_dst_addr, uint32_t len){
     int write_desc_h2d_status = 0;
-    // guard 
+    // guard
     if (!ctx) return -1;                        // context pointer 검사
     if (!ctx->desc_va) return -1;               // Host VA(descriptor ring이 할당된) 검사
     if (ctx->tx_iova == 0) return -1;          // H2D payload IOVA 검사 (DMA가 read할 src_addr)
@@ -267,7 +270,7 @@ static inline int write_desc_h2d(dma_ctx_t *ctx, uint32_t desc_idx, uint64_t dev
     // if ((ctx->tx_iova  & 0x3ull) != 0) return -1;
     // if ((len & 0x3u) != 0) return -1;
 
-    
+
     // ring에서 desc_idx번째 descriptor가 들어갈 메모리 위치를 계산 + 이후 write(desc_set)에서 해당 descriptor를 가리키는 주소로 사용 (descriptor 단위로 최종 typecasting)
     mcdma_desc_t *slot = (mcdma_desc_t *)((uint8_t *)ctx->desc_va + (uint64_t)(desc_idx - 1) * DESC_BYTES); // desc_idx는 1부터 시작하므로 slot 오프셋은 (desc_idx - 1)
 
@@ -278,13 +281,13 @@ static inline int write_desc_h2d(dma_ctx_t *ctx, uint32_t desc_idx, uint64_t dev
     desc_set_u64(slot, 0x00, ctx->tx_iova); //이 offset들은 descriptor의 bit format을 byte offset으로 변환한 값 (ex. SRC_ADDR [63:0] -> 0x00...0x07 )
 
     // DEST_ADDR = device memory address ( DEV_ADDR_TMP = 임시값/추후 NoC 확정 후 교체)
-    desc_set_u64(slot, 0x08, dev_dst_addr); 
+    desc_set_u64(slot, 0x08, dev_dst_addr);
 
     // w2 = PYLD_CNT + DESC_IDX 패킹 : PYLD_CNT: bits[19:0] + DESC_IDX: bits[47:32] 만 매핑(나머지는 0 = writeback/interrupt 미사용)
     uint32_t pyld_cnt = encode_pyld_cnt(len) & DMA_PYLD_CNT_MASK;
     uint64_t w2 = ((uint64_t)pyld_cnt << 0) | ((uint64_t)(desc_idx & 0xFFFFu) << 32);
     desc_set_u64(slot, 0x10, w2);
-    
+
 
     // w3는 0 유지 (LINK/DESC_INVALID/SOF/EOF 등 미사용)
     desc_set_u64(slot, 0x18, 0ull);
@@ -295,14 +298,14 @@ static inline int write_desc_h2d(dma_ctx_t *ctx, uint32_t desc_idx, uint64_t dev
 
 static inline int write_desc_d2h(dma_ctx_t *ctx, uint32_t desc_idx, uint64_t dev_src_addr, uint32_t len){
     int write_desc_d2h_status = 0;
-    // guard 
-    if (!ctx) return -1;                        
-    if (!ctx->desc_va) return -1;               
+    // guard
+    if (!ctx) return -1;
+    if (!ctx->desc_va) return -1;
     if (ctx->rx_iova == 0) return -1;          // D2H payload IOVA 검사 (DMA가 write할 descriptor(host 메모리)의 주소)
-    if (desc_idx == 0) return -1;              // descriptor ring 내부 descriptor의 index 
-    if (len == 0 || len > DMA_LEN_MAX_BYTES) return -1; 
-    uint32_t ring_entries = (1u << RING_ORDER_LOG2); 
-    if (desc_idx >= ring_entries) return -1;    
+    if (desc_idx == 0) return -1;              // descriptor ring 내부 descriptor의 index
+    if (len == 0 || len > DMA_LEN_MAX_BYTES) return -1;
+    uint32_t ring_entries = (1u << RING_ORDER_LOG2);
+    if (desc_idx >= ring_entries) return -1;
 
     // (옵션) 기본 정렬 모드에서 DWORD 정렬 요구 시 사용
     // if ((dev_dst_addr & 0x3ull) != 0) return -1;
@@ -314,18 +317,18 @@ static inline int write_desc_d2h(dma_ctx_t *ctx, uint32_t desc_idx, uint64_t dev
     const uint32_t descs_per_page = (4096u / DESC_BYTES); // 4096/32 = 128
     if (descs_per_page && ((desc_idx % descs_per_page) == 0))
         return -1;
-    
+
     // ring에서 desc_idx번째 descriptor가 들어갈 메모리 위치를 계산(descriptor를 가리키는 주소)
-    mcdma_desc_t *slot = (mcdma_desc_t *)((uint8_t *)ctx->desc_va + (uint64_t)(desc_idx - 1) * DESC_BYTES); 
+    mcdma_desc_t *slot = (mcdma_desc_t *)((uint8_t *)ctx->desc_va + (uint64_t)(desc_idx - 1) * DESC_BYTES);
 
     // slot 초기화(이전 descriptor 값 제거)
     memset(slot, 0, sizeof(*slot));
 
     // SRC_ADDR write = device memory address ( DEV_ADDR_TMP = 임시값/추후 NoC 확정 후 교체)
-    desc_set_u64(slot, 0x00, dev_src_addr); 
+    desc_set_u64(slot, 0x00, dev_src_addr);
 
     // DEST_ADDR write = Host payload buffer IOVA (DMA가 write할 descriptor(host 메모리)의 주소)
-    desc_set_u64(slot, 0x08, ctx->rx_iova); 
+    desc_set_u64(slot, 0x08, ctx->rx_iova);
 
     // w2 = PYLD_CNT + DESC_IDX 패킹 : PYLD_CNT: bits[19:0] + DESC_IDX: bits[47:32] 만 매핑(나머지는 0 = writeback/interrupt 미사용)
     uint32_t pyld_cnt = encode_pyld_cnt(len) & DMA_PYLD_CNT_MASK;
@@ -351,7 +354,7 @@ static inline int doorbell(dma_ctx_t *ctx, int dir, uint32_t q, uint32_t tail_id
     // write tail_idx
     doorbell_status = bwvfio_ms_write32(&ctx->dev, QCSR_REGION, QCSR_ADDR(dir, q, Q_TAIL_PTR_OFF), tail_idx);
     if (doorbell_status) return doorbell_status;
-    
+
     return 0;
 }
 
@@ -361,16 +364,24 @@ static inline int poll_complete(dma_ctx_t *ctx, int dir, uint32_t q, uint32_t ta
     uint32_t ring_entries = (1u << RING_ORDER_LOG2); // ring 크기 계산용 변수
     uint32_t completed_reg_off = 0; // Q_COMPLETED_POINTER 레지스터의 byte offset 주소
     uint32_t completed_val = 0; // 위 offset 위치의 register를 읽어서 얻은 regi 값 = 마지막 완료된 descriptor index 값
+    uint32_t head_reg_off = 0; // Q_HEAD_POINTER 레지스터의 byte offset 주소
+    uint32_t head_val = 0; // 위 offset 위치의 register를 읽어서 얻은 값
     // guard
     if (!ctx) return -1;
     if (target_idx ==0 || target_idx >= ring_entries) return -1;
     // QCSR 주소 계산 = DMA가 완료한 마지막 descriptor 위치
     completed_reg_off = QCSR_ADDR(dir, q, Q_COMPLETED_PTR_OFF);
+    head_reg_off = QCSR_ADDR(dir, q, Q_HEAD_PTR_OFF);
     while(1) {
+        poll_complete_status = bwvfio_ms_read32(&ctx->dev, QCSR_REGION, head_reg_off, &head_val); // descriptor fetch stage 상태/에러 확인
+        if (poll_complete_status) return poll_complete_status;
+        uint32_t desc_fetch_err = ((head_val >> 24) & 0x1u); // [24] = descriptor fetch UR/timeout error (H2D/D2H 공통)
+        if (desc_fetch_err) return -EIO;
+
         poll_complete_status = bwvfio_ms_read32(&ctx->dev, QCSR_REGION, completed_reg_off, &completed_val); //마지막 완료 descriptor ptr 주소를 읽어 completed_idx에 저장(polling)
         if (poll_complete_status) return poll_complete_status;
 
-        // completed pointer bitfield 처리 
+        // completed pointer bitfield 처리
         uint32_t completed_idx = (completed_val & 0xFFFFu);     // [15:0] = 완료 idx
         uint32_t h2d_err = ((completed_val >> 24) & 0x1u);      // [24] = H2D error bit (D2H는 reserved)
         // H2D일 때 에러비트 올라오면 즉시 실패
@@ -379,10 +390,10 @@ static inline int poll_complete(dma_ctx_t *ctx, int dir, uint32_t q, uint32_t ta
         if (completed_idx_out) *completed_idx_out = completed_idx; // completed_idx_out = 마지막 완료된 descriptor index 값
         if (completed_idx >= target_idx) break; // target_idx = 완료되길 기다리는 descriptor의 index
     }
-    // descriptor data가 목적지에 도착 완료를 의미 
+    // descriptor data가 목적지에 도착 완료를 의미
      //단일 descriptor ring (ring 확장 시 로직 추가)
     atomic_thread_fence(memory_order_acquire);
-    
+
     return 0;
 }
 
