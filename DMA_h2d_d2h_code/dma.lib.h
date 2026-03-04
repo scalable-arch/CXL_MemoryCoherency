@@ -56,8 +56,6 @@
 #define DEV_ADDR_TMP          (DEV_DDR_BASE_TMP + 0x1000ull)
 
 
-
-
 // descriptor/buffer pointer 구조체 선언
 // VFIO 디바이스 핸들, Host 메모리 객체, Host VA, IOVA(DMA 주소) 등, main에서 한 번 선언한 다음 계속 사용
 typedef struct {
@@ -70,6 +68,12 @@ uint8_t *tx_va;
 uint8_t *rx_va;
 
 uint64_t desc_iova, tx_iova, rx_iova;
+
+// (추가) shared window
+int      shared_memid;
+uint8_t *shared_va;
+uint64_t shared_iova;
+size_t   shared_bytes;   // 매핑된 크기(4KB align 권장)
 } dma_ctx_t;
 
 // 256-bit(32B) descriptor layout (word 기준)
@@ -129,63 +133,112 @@ static inline int init_vfio(dma_ctx_t *ctx, const char *bdf){
 return 0;
 }
 
+// shared용
+static inline size_t align_up_sz(size_t x, size_t a) {
+    return (x + (a - 1)) & ~(a - 1);
+}
+
+// shared buffer alloc (DMA desc/tx/rx와 별개)
+static inline int alloc_shared_buffer(dma_ctx_t *ctx, size_t bytes, uint64_t iova_base)
+{
+    int alloc_shared_status;
+    BWVFIOMemAttr attr = {0};
+    const size_t PAGE = 4096;
+
+    if (!ctx || bytes == 0) return -1;
+
+    size_t map_sz = align_up_sz(bytes, PAGE);
+
+    attr.flags = BWVFIO_DMF_SHM | BWVFIO_DMF_SHM_CREATE | BWVFIO_DMF_RW | BWVFIO_DMF_IOVA;
+    attr.iova  = iova_base;
+
+    alloc_shared_status = bwvfio_alloc_mem(&ctx->dev, map_sz, &attr, &ctx->shared_memid);
+    if (alloc_shared_status) goto fail;
+
+    void *tmp_va = NULL;
+    alloc_shared_status = bwvfio_get_mem_va(&ctx->dev, ctx->shared_memid, &tmp_va);
+    if (alloc_shared_status) goto fail;
+    ctx->shared_va = (uint8_t *)tmp_va;
+
+    alloc_shared_status = bwvfio_get_mem_iova(&ctx->dev, ctx->shared_memid, &ctx->shared_iova);
+    if (alloc_shared_status) goto fail;
+
+    ctx->shared_bytes = map_sz;
+    return 0;
+
+fail:
+    if (ctx->shared_memid >= 0) {
+        (void)bwvfio_free_mem(&ctx->dev, ctx->shared_memid);
+    }
+    ctx->shared_memid = -1;
+    ctx->shared_va = NULL;
+    ctx->shared_iova = 0;
+    ctx->shared_bytes = 0;
+    return alloc_shared_status;
+}
+
 // 2) DMA용 Host 버퍼/descriptor ring 할당 + VA/IOVA 확보
 static inline int alloc_dma_buffers(dma_ctx_t *ctx, size_t desc_ring_bytes, size_t tx_bytes, size_t rx_bytes){
-    int alloc_dma_buffers_status;                                  // 디버그용 status 변수 선언
-    BWVFIOMemAttr attr = {0};                              // bwvfio.h 안 flag 변수 초기화
-    if (!ctx) return -1;                                   // ctx Null 확인
-    attr.flags = BWVFIO_DMF_SHM | BWVFIO_DMF_SHM_CREATE | BWVFIO_DMF_RW;   // bwvfio.h 안의 권한/동작 플래그 맴버, bit or로 구성된 32bit flag field
+    int alloc_dma_buffers_status;
+    BWVFIOMemAttr attr = {0};
+    if (!ctx) return -1;
 
-    // 2-1) Descriptor ring 전체 alloc -> 이후 DMA 요청을 발급할 때 해당 공간에 descriptor 정보를 write
-    alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, desc_ring_bytes, &attr, &ctx->desc_memid);
+    // (추가) 4KB 정렬 권장 (VFIO_IOMMU_MAP_DMA가 보통 page 정렬 요구)
+    const size_t PAGE = 4096;
+    #define ALIGN_UP(x,a) (((x)+((a)-1)) & ~((a)-1))
+
+    // (변경 1) BWVFIO_DMF_IOVA 추가
+    attr.flags = BWVFIO_DMF_SHM | BWVFIO_DMF_SHM_CREATE | BWVFIO_DMF_RW | BWVFIO_DMF_IOVA;
+
+    uint64_t next_iova = 0x01000000ull; // shared를 안 쓰면 기존처럼 여기서 시작
+    if (ctx->shared_iova != 0 && ctx->shared_bytes != 0) {
+        next_iova = ctx->shared_iova + ctx->shared_bytes; // shared 끝 다음부터 DMA 배치
+    }
+
+    // 2-1) Descriptor ring
+    size_t desc_sz = ALIGN_UP(desc_ring_bytes, PAGE);
+    attr.iova = next_iova;                      // ★ 여기서 강제 IOVA 지정
+    alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, desc_sz, &attr, &ctx->desc_memid);
     if (alloc_dma_buffers_status) goto fail;
-    // ctx 구조체 멤버에 VA 저장
+    next_iova += desc_sz;
+
     alloc_dma_buffers_status = bwvfio_get_mem_va(&ctx->dev, ctx->desc_memid, &ctx->desc_va);
     if (alloc_dma_buffers_status) goto fail;
-    // ctx 구조체 멤버에 IOVA 저장
     alloc_dma_buffers_status = bwvfio_get_mem_iova(&ctx->dev, ctx->desc_memid, &ctx->desc_iova);
     if (alloc_dma_buffers_status) goto fail;
 
-    // 2-2) H2D 송신 버퍼(TX) 준비= DMA가 Host에서 읽어 갈 데이터가 들어 있는 메모리를 준비
+    // 2-2) TX
     if (tx_bytes) {
-        alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, tx_bytes, &attr, &ctx->tx_memid);
+        size_t tx_sz = ALIGN_UP(tx_bytes, PAGE);
+        attr.iova = next_iova;                  // ★ TX IOVA 강제
+        alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, tx_sz, &attr, &ctx->tx_memid);
         if (alloc_dma_buffers_status) goto fail;
+        next_iova += tx_sz;
 
-        void *tmp_va = NULL; // 타입 변환을 위한 임시 void 변수 선언
-        alloc_dma_buffers_status = bwvfio_get_mem_va(&ctx->dev, ctx->tx_memid, &tmp_va); // tx_va는 void가 아니라 uint8_t 타입으로 struct에 선언되어 있는데, 함수 시그니처는 void 인자를 요구해서 타입 변환
+        void *tmp_va = NULL;
+        alloc_dma_buffers_status = bwvfio_get_mem_va(&ctx->dev, ctx->tx_memid, &tmp_va);
         if (alloc_dma_buffers_status) goto fail;
-        ctx->tx_va = (uint8_t *)tmp_va; // 이후 코드에서 byte 배열로 편하게 쓰기 위해 타입 캐스팅 후 저장
+        ctx->tx_va = (uint8_t *)tmp_va;
 
         alloc_dma_buffers_status = bwvfio_get_mem_iova(&ctx->dev, ctx->tx_memid, &ctx->tx_iova);
         if (alloc_dma_buffers_status) goto fail;
     }
 
-    // 2-3) D2H 수신 버퍼(RX) 준비= DMA가 디바이스가 써 줄 결과를 받을 Host 메모리를 준비
+    // 2-3) RX
     if (rx_bytes) {
-        alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, rx_bytes, &attr, &ctx->rx_memid);
+        size_t rx_sz = ALIGN_UP(rx_bytes, PAGE);
+        attr.iova = next_iova;                  // ★ RX IOVA 강제
+        alloc_dma_buffers_status = bwvfio_alloc_mem(&ctx->dev, rx_sz, &attr, &ctx->rx_memid);
         if (alloc_dma_buffers_status) goto fail;
+        next_iova += rx_sz;
 
-        void *tmp_va = NULL; // 타입 변환을 위한 임시 void 변수 선언
-        alloc_dma_buffers_status = bwvfio_get_mem_va(&ctx->dev, ctx->rx_memid, &tmp_va); // rx_va는 void가 아니라 uint8_t 타입으로 struct에 선언되어 있는데, 함수 시그니처는 void 인자를 요구해서 타입 변환
+        void *tmp_va = NULL;
+        alloc_dma_buffers_status = bwvfio_get_mem_va(&ctx->dev, ctx->rx_memid, &tmp_va);
         if (alloc_dma_buffers_status) goto fail;
-        ctx->rx_va = (uint8_t *)tmp_va; // 이후 코드에서 byte 배열로 편하게 쓰기 위해 타입 캐스팅 후 저장
+        ctx->rx_va = (uint8_t *)tmp_va;
 
         alloc_dma_buffers_status = bwvfio_get_mem_iova(&ctx->dev, ctx->rx_memid, &ctx->rx_iova);
         if (alloc_dma_buffers_status) goto fail;
-    }
-
-    // ring에서 사용하지 않는 엔트리(desc_idx=2)를 DESC_INVALID로 막아두기 (ring entry 개수를 2개 이상으로 늘릴 경우 제거/수정 필요)
-    {
-        uint32_t ring_entries = (1u << RING_ORDER_LOG2); // 현재 2
-        if (ring_entries >= 2) {
-            uint32_t invalid_idx = 2;
-
-            mcdma_desc_t *slot = (mcdma_desc_t *)((uint8_t *)ctx->desc_va +
-                                (uint64_t)(invalid_idx - 1) * DESC_BYTES);
-
-            memset(slot, 0, sizeof(*slot));
-            desc_set_u64(slot, 0x18, (1ull << 62)); // DESC_INVALID[254] -> w3[62]
-        }
     }
 
     return 0;
@@ -425,6 +478,14 @@ static inline void cleanup(dma_ctx_t *ctx){
 
     // VFIO 디바이스 핸들 닫기
     bwvfio_close_dev(&ctx->dev);
+
+    if (ctx->shared_memid >= 0) {
+    (void)bwvfio_free_mem(&ctx->dev, ctx->shared_memid);
+    ctx->shared_memid = -1;
+    }
+    ctx->shared_va = NULL;
+    ctx->shared_iova = 0;
+    ctx->shared_bytes = 0;
 }
 
 

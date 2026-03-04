@@ -81,7 +81,7 @@ int main(int argc, char **argv)
     }
 
     // 4B로 테스트 (정렬 요구 대응)
-    const uint32_t len = 4;
+    const uint32_t len = 32;
     const uint32_t io_map_bytes = 4096;
 
     // H2D + D2H 모두 필요하므로 rx_bytes도 할당
@@ -91,13 +91,22 @@ int main(int argc, char **argv)
         cleanup(&ctx);
         return 1;
     }
+    else{
+        printf("IOVA(desc) = 0x%016" PRIx64 "\n", ctx.desc_iova);
+        printf("IOVA(tx)   = 0x%016" PRIx64 "\n", ctx.tx_iova);
+        printf("IOVA(rx)   = 0x%016" PRIx64 "\n", ctx.rx_iova);
+
+        printf("VA(desc)   = %p\n", ctx.desc_va);
+        printf("VA(tx)     = %p\n", (void*)ctx.tx_va);
+        printf("VA(rx)     = %p\n", (void*)ctx.rx_va);
+    }
 
     // device DDR을 DMA가 0x0부터 본다고 가정
-    const uint64_t dev_addr = 0x40000000ull;
+    const uint64_t dev_addr = 0x00ull;
 
     // 0x0에 0xFF 쓰기
     uint8_t wr[len];
-    for (uint32_t i = 0; i < len; i++) wr[i] = 0x12;
+    for (uint32_t i = 0; i < len; i++) wr[i] = 0xF0;
 
     main_status = h2d_write_buf(&ctx, dev_addr, wr, len);
     if (main_status) {
