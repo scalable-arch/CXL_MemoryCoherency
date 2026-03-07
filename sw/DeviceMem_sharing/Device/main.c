@@ -4,11 +4,12 @@
 #define TARGET_ADDR  ((uintptr_t)0x90000000u)
 #define HS_BASE      ((uintptr_t)0x90100000u)
 
-#define HS_REQ_ADDR  (HS_BASE + 0x0)
-#define HS_ACK_ADDR  (HS_BASE + 0x4)
-#define HS_GO_ADDR   (HS_BASE + 0x8)
+#define HS_REQ_ADDR  (HS_BASE + 0x0u)
+#define HS_ACK_ADDR  (HS_BASE + 0x4u)
+#define HS_GO_ADDR   (HS_BASE + 0x8u)
+#define HS_DONE_ADDR (HS_BASE + 0xCu)
 
-#define LIMIT        (10000000u)
+#define LIMIT        (500u)
 
 static inline void io_fence(void)
 {
@@ -23,13 +24,16 @@ static inline void io_fence(void)
 
 static bool barrier_handshake(uint32_t token, uint32_t spin_limit)
 {
-    volatile uint32_t * const req = (volatile uint32_t *)HS_REQ_ADDR;
-    volatile uint32_t * const ack = (volatile uint32_t *)HS_ACK_ADDR;
-    volatile uint32_t * const go  = (volatile uint32_t *)HS_GO_ADDR;
+    volatile uint32_t * const req  = (volatile uint32_t *)HS_REQ_ADDR;
+    volatile uint32_t * const ack  = (volatile uint32_t *)HS_ACK_ADDR;
+    volatile uint32_t * const go   = (volatile uint32_t *)HS_GO_ADDR;
+    volatile uint32_t * const done = (volatile uint32_t *)HS_DONE_ADDR;
+
+    *done = 0u;
+    io_fence();
 
     bool req_seen = false;
 
-    // HPS: Host의 REQ 대기
     for (uint32_t spin = 0; spin < spin_limit; ++spin) {
         if (*req == token) {
             io_fence();
@@ -38,22 +42,18 @@ static bool barrier_handshake(uint32_t token, uint32_t spin_limit)
             req_seen = true;
             break;
         }
-        // (선택) 폴링 부하 완화
-        // __asm__ __volatile__("nop");
     }
 
     if (!req_seen) {
         return false; // REQ timeout
     }
 
-    // HPS: GO 대기
+    // HPS: wait GO
     for (uint32_t spin = 0; spin < spin_limit; ++spin) {
         if (*go == token) {
             io_fence();
             return true;
         }
-        // (선택) 폴링 부하 완화
-        // __asm__ __volatile__("nop");
     }
 
     return false; // GO timeout
@@ -62,7 +62,7 @@ static bool barrier_handshake(uint32_t token, uint32_t spin_limit)
 static uint32_t do_increment(void)
 {
     volatile uint32_t * const p = (volatile uint32_t *)TARGET_ADDR;
-    *p = 0;
+    *p = 0u;
 
     for (uint32_t i = 0; i < LIMIT; ++i) {
         (*p)++;
@@ -72,15 +72,26 @@ static uint32_t do_increment(void)
 
 int main(void)
 {
-    // token은 실행마다 바꾸는 게 제일 좋음(예: 1,2,3... or 난수)
     const uint32_t token = 0xA5A50001u;
+
+    int end = 0;
 
     if (!barrier_handshake(token, 200000000u)) {
         return -1;
     }
 
+
     uint32_t result = do_increment();
     (void)result;
+
+    volatile uint32_t * const done = (volatile uint32_t *)HS_DONE_ADDR;
+    io_fence();
+    *done = token;
+    io_fence();
+
+    // go to line
+    end = 1;
+
 
     return 0;
 }
