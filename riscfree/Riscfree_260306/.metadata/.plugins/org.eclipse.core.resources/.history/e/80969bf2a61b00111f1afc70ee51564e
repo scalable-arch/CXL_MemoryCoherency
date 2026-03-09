@@ -9,7 +9,7 @@
 #define HS_GO_ADDR   (HS_BASE + 0x8u)
 #define HS_DONE_ADDR (HS_BASE + 0xCu)
 
-#define LIMIT        (10000u)
+#define LIMIT        (0u)
 
 static inline void io_fence(void)
 {

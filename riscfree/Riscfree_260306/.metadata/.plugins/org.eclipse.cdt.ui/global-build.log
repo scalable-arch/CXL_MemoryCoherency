@@ -1,4 +1,4 @@
-13:36:18 **** Build of configuration Debug for project DeviceMem_sharing ****
+20:00:50 **** Build of configuration Debug for project DeviceMem_sharing ****
 make all 
 Building file: ../src/init.S
 Invoking: GNU Arm Cross Assembler

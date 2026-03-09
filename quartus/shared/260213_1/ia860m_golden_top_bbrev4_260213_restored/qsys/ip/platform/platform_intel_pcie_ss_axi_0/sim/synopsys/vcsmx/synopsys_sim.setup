@@ -1,9 +1,0 @@
-
-WORK > DEFAULT
-DEFAULT:                             ./libraries/work/                               
-work:                                ./libraries/work/                               
-altera_s10_configuration_clock_1916: ./libraries/altera_s10_configuration_clock_1916/
-intel_rtile_pcie_ast_1160:           ./libraries/intel_rtile_pcie_ast_1160/          
-intel_pcie_ss_axi_310:               ./libraries/intel_pcie_ss_axi_310/              
-platform_intel_pcie_ss_axi_0:        ./libraries/platform_intel_pcie_ss_axi_0/       
-OTHERS=_device_synopsys_sim.setup                                                    

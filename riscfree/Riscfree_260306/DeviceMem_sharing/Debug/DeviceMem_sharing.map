@@ -59,12 +59,12 @@ END GROUP
  .text.barrier_handshake
                 0x000000007fe003cc      0x110 ./src/main.o
  .text.do_increment
-                0x000000007fe004dc       0x58 ./src/main.o
- .text.main     0x000000007fe00534       0x80 ./src/main.o
-                0x000000007fe00534                main
+                0x000000007fe004dc       0x5c ./src/main.o
+ .text.main     0x000000007fe00538       0x80 ./src/main.o
+                0x000000007fe00538                main
  *(.gnu.linkonce.t.*)
                 0x000000007fe005c0                . = ALIGN (0x10)
- *fill*         0x000000007fe005b4        0xc 
+ *fill*         0x000000007fe005b8        0x8 
 
 .iplt           0x000000007fe005c0        0x0
  .iplt          0x000000007fe005c0        0x0 ./src/init.o
@@ -143,10 +143,10 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000030       0x60 ./src/main.o
 
-.debug_str      0x0000000000000000     0x3d97
+.debug_str      0x0000000000000000     0x3d99
  .debug_str     0x0000000000000000       0x73 ./src/init.o
- .debug_str     0x0000000000000073     0x3d24 ./src/main.o
-                                       0x3e73 (size before relaxing)
+ .debug_str     0x0000000000000073     0x3d26 ./src/main.o
+                                       0x3e75 (size before relaxing)
 
 .debug_rnglists
                 0x0000000000000000       0x37

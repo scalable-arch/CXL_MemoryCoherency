@@ -12,7 +12,6 @@ SRC_MAIN="Host/main.c"
 SRC_VFIO="Host/bwvfio.c"
 OUT="Host/host_inc"
 
-# Compile
 gcc -O2 -g -std=gnu11 -Wall -Wextra -I. \
   "$SRC_MAIN" "$SRC_VFIO" \
   -lnuma \
@@ -20,10 +19,9 @@ gcc -O2 -g -std=gnu11 -Wall -Wextra -I. \
 
 echo "[OK] build: ./$OUT"
 
-# Run (needs root for vfio in most setups)
 if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
   echo "[INFO] not root -> running with sudo"
-  exec sudo "./$OUT" "$BDF"
+  exec sudo "./$OUT" "$@"
 else
-  exec "./$OUT" "$BDF"
+  exec "./$OUT" "$@"
 fi

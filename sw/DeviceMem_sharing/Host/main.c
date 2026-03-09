@@ -6,6 +6,7 @@
 #include <stdatomic.h>
 #include <unistd.h>   // usleep
 #include <errno.h>    // ETIMEDOUT
+#include <stdlib.h>   // strtoul
 
 #include "dma.lib.h"
 
@@ -120,7 +121,7 @@ static int host_barrier_handshake_dma(dma_ctx_t *ctx,
 // --------------------
 // Handshake 이후 Host 측 increment (정해진 횟수)
 // --------------------
-#define HOST_INC_COUNT        (500u)   // Host increment 횟수 (원하면 값만 바꾸면 됨)
+#define DEFAULT_HOST_INC_COUNT        (50000u)   // Host increment 횟수 (원하면 값만 바꾸면 됨)
 #define COUNTER_XFER_BYTES    (32u)      // 예제 스타일 유지: 32B 단위로 읽고/쓰면서 word0만 ++
 
 static int host_increment_n_times(dma_ctx_t *ctx, uint64_t dev_counter_addr, uint32_t n)
@@ -181,9 +182,43 @@ static int host_clear_hps_done(dma_ctx_t *ctx, uint64_t dev_hs_base)
     return 0;
 }
 
+//스크립트용
+static void print_usage(const char *prog)
+{
+    printf("Usage: %s [-n inc_count] [-b BDF]\n", prog);
+    printf("  -n inc_count   Host increment count (default: %u)\n", DEFAULT_HOST_INC_COUNT);
+    printf("  -b BDF         PCI BDF (default: 0000:41:00.0)\n");
+}
+
 int main(int argc, char **argv)
 {
-    const char *bdf = (argc >= 2) ? argv[1] : "0000:41:00.0";
+    // 이하 스크립트용
+    const char *bdf = "0000:41:00.0";
+    uint32_t host_inc_count = DEFAULT_HOST_INC_COUNT;
+
+    int opt = 0;
+    while ((opt = getopt(argc, argv, "n:b:h")) != -1) {
+        switch (opt) {
+        case 'n': {
+            char *endp = NULL;
+            unsigned long v = strtoul(optarg, &endp, 0);
+            if (*optarg == '\0' || (endp && *endp != '\0') || v > 0xFFFFFFFFul) {
+                fprintf(stderr, "Invalid -n value: %s\n", optarg);
+                print_usage(argv[0]);
+                return 1;
+            }
+            host_inc_count = (uint32_t)v;
+            break;
+        }
+        case 'b':
+            bdf = optarg;
+            break;
+        case 'h':
+        default:
+            print_usage(argv[0]);
+            return 0;
+        }
+    }
 
     dma_ctx_t ctx = (dma_ctx_t){0};
     ctx.desc_memid   = -1;
@@ -226,10 +261,10 @@ int main(int argc, char **argv)
         return 2;
     }
 
-    printf("Handshake OK (GO sent). Start HOST increment: %u times\n", HOST_INC_COUNT);
+    printf("Handshake OK (GO sent). Start HOST increment: %u times\n", host_inc_count);
 
     // Host도 정해진 횟수만큼 increment 수행
-    st = host_increment_n_times(&ctx, dev_counter_addr, HOST_INC_COUNT);
+    st = host_increment_n_times(&ctx, dev_counter_addr, host_inc_count);
     if (st) {
         printf("host increment failed: %d\n", st);
         cleanup(&ctx);

@@ -1,5 +1,0 @@
-
-DEFINE                     work                         ./../libraries/work/                        
-DEFINE                     platform_intel_pcie_ss_axi_0 ./../libraries/platform_intel_pcie_ss_axi_0/
-INCLUDE simulator.cds.lib                                                                           
-SOFTINCLUDE device.cds.lib                                                                          
