@@ -2780,3 +2780,548 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/C
 
 !ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-09 20:01:37.784
 !MESSAGE -break-insert -p 1 -t main
+!SESSION 2026-03-09 20:09:49.479 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306
+
+!ENTRY org.eclipse.osgi 4 0 2026-03-09 20:09:50.152
+!MESSAGE Application error
+!STACK 1
+org.eclipse.swt.SWTError: No more handles [gtk_init_check() failed]
+	at org.eclipse.swt.SWT.error(SWT.java:4948)
+	at org.eclipse.swt.widgets.Display.createDisplay(Display.java:1200)
+	at org.eclipse.swt.widgets.Display.create(Display.java:1124)
+	at org.eclipse.swt.graphics.Device.<init>(Device.java:167)
+	at org.eclipse.swt.widgets.Display.<init>(Display.java:633)
+	at org.eclipse.swt.widgets.Display.<init>(Display.java:624)
+	at org.eclipse.ui.internal.Workbench.createDisplay(Workbench.java:737)
+	at org.eclipse.ui.PlatformUI.createDisplay(PlatformUI.java:185)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.createDisplay(IDEApplication.java:182)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:125)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:143)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:109)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:439)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:271)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:668)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:605)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1481)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1454)
+!SESSION 2026-03-09 20:10:08.228 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306
+
+!ENTRY org.eclipse.core.resources 2 10035 2026-03-09 20:10:09.522
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.cdt.ui 4 0 2026-03-09 20:10:13.669
+!MESSAGE Error in CDT UI during reconcile
+!STACK 1
+C Model Exception: C Model Status [Element main.c does not exist.]
+	at org.eclipse.cdt.internal.core.model.CElement.newNotPresentException(CElement.java:485)
+	at org.eclipse.cdt.internal.core.model.TranslationUnit.makeConsistent(TranslationUnit.java:583)
+	at org.eclipse.cdt.internal.core.model.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:65)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:641)
+	at org.eclipse.cdt.internal.core.model.WorkingCopy.reconcile(WorkingCopy.java:365)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:79)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:64)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:89)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:346)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+!SUBENTRY 1 org.eclipse.cdt.core 4 969 2026-03-09 20:10:13.670
+!MESSAGE Element main.c does not exist.
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:12:36.421
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:12:37.413
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:12:37.415
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:12:37.433
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-09 20:12:37.533
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 38973 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-09 20:12:39.443
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-09 20:12:40.053
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2026-03-09 20:16:00.945
+!MESSAGE Composite status
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb.ui 4 0 2026-03-09 20:16:00.945
+!MESSAGE Task java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@55f87709[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@39f326d6[Wrapped task = org.eclipse.cdt.dsf.gdb.internal.ui.actions.GdbDisconnectCommand$4@5feb2d13]] rejected from org.eclipse.cdt.dsf.concurrent.DefaultDsfExecutor@68459991[Shutting down, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 2574]
+!SUBENTRY 1 org.eclipse.cdt.dsf 4 10005 2026-03-09 20:16:00.945
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.gdb.internal.ui.actions.GdbDisconnectCommand$1@11708138): Status ERROR: org.eclipse.cdt.dsf.gdb.ui code=0 Task java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask@55f87709[Not completed, task = java.util.concurrent.Executors$RunnableAdapter@39f326d6[Wrapped task = org.eclipse.cdt.dsf.gdb.internal.ui.actions.GdbDisconnectCommand$4@5feb2d13]] rejected from org.eclipse.cdt.dsf.concurrent.DefaultDsfExecutor@68459991[Shutting down, pool size = 1, active threads = 0, queued tasks = 1, completed tasks = 2574]' resulted in a rejected execution exception.
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:18:22.500
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:18:22.860
+!MESSAGE No Debug probes found
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-09 20:18:22.926
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 40403 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2026-03-09 20:18:23.147
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@711ea38a): Status ERROR: com.ashling.riscfree.debug.opxd.arm code=0 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+ org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+' resulted in an error.
+!SUBENTRY 1 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:18:23.147
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend.launchGdbServerProcess(GdbServerBackend.java:359)
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend$GdbServerStep$2.run(GdbServerBackend.java:759)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 2 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:18:23.147
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2026-03-09 20:18:23.158
+!MESSAGE Error in GDB server launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:599)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:448)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:433)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:393)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend.launchGdbServerProcess(GdbServerBackend.java:359)
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend$GdbServerStep$2.run(GdbServerBackend.java:759)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:18:23.158
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend.launchGdbServerProcess(GdbServerBackend.java:359)
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend$GdbServerStep$2.run(GdbServerBackend.java:759)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 2 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:18:23.158
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:19:48.192
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:19:48.208
+!MESSAGE No Debug probes found
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-09 20:19:48.274
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 35655 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2026-03-09 20:19:48.490
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@3918adf7): Status ERROR: com.ashling.riscfree.debug.opxd.arm code=0 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+ org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+' resulted in an error.
+!SUBENTRY 1 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:19:48.490
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend.launchGdbServerProcess(GdbServerBackend.java:359)
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend$GdbServerStep$2.run(GdbServerBackend.java:759)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 2 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:19:48.491
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2026-03-09 20:19:48.494
+!MESSAGE Error in GDB server launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:599)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:448)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:433)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:393)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend.launchGdbServerProcess(GdbServerBackend.java:359)
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend$GdbServerStep$2.run(GdbServerBackend.java:759)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:19:48.495
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend.launchGdbServerProcess(GdbServerBackend.java:359)
+	at com.ashling.riscfree.debug.opxd.arm.dsf.GdbServerBackend$GdbServerStep$2.run(GdbServerBackend.java:759)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 2 com.ashling.riscfree.debug.opxd.arm 4 0 2026-03-09 20:19:48.495
+!MESSAGE 
+Ashling GDB Server for ARM (ash-arm-gdb-server).
+v25.1.1, 31-Jan-2025, (c)Ashling Microsystems Ltd 2024.
+
+Error: The PC is not able to communicate with the debug probe. Please ensure it is connected to your PC
+
+
+!ENTRY org.eclipse.cdt.core 4 0 2026-03-09 20:20:49.067
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.cdt.core.CCorePlugin.stop() of bundle org.eclipse.cdt.core.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:923)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	... 13 more
+Root exception:
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SESSION 2026-03-09 20:23:29.500 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:24:17.462
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:24:18.482
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:24:18.483
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:24:18.504
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-09 20:24:18.620
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 33377 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-09 20:24:20.283
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-09 20:24:20.888
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:25:17.512
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:25:17.527
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=USB-Blaster variant [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-09 20:25:17.586
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 39051 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-09 20:25:19.116
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-09 20:25:19.568
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:26:59.341
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-09 20:26:59.719
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=USB-Blaster variant [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-09 20:26:59.794
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 33771 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-09 20:27:01.346
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-09 20:27:01.725
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY org.eclipse.cdt.core 4 0 2026-03-09 20:32:01.460
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.cdt.core.CCorePlugin.stop() of bundle org.eclipse.cdt.core.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:923)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	... 13 more
+Root exception:
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-03-09 20:32:01.776
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+!SESSION 2026-03-10 00:02:07.160 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 00:03:25.946
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 00:03:26.930
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 00:03:26.931
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 00:03:26.949
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 00:03:27.497
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 46663 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 00:03:31.066
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306/HostMem_sharing/Debug/HostMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 00:03:31.657
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY org.eclipse.cdt.core 4 0 2026-03-10 00:04:14.548
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.cdt.core.CCorePlugin.stop() of bundle org.eclipse.cdt.core.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:923)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	... 13 more
+Root exception:
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.core.jobs 4 2 2026-03-10 00:04:14.659
+!MESSAGE An internal error occurred during: "Execute Debug Command".
+!STACK 0
+org.eclipse.core.runtime.AssertionFailedException: assertion failed: The application has not been initialized.
+	at org.eclipse.core.runtime.Assert.isTrue(Assert.java:119)
+	at org.eclipse.core.internal.runtime.InternalPlatform.assertInitialized(InternalPlatform.java:185)
+	at org.eclipse.core.internal.runtime.InternalPlatform.getAdapterManager(InternalPlatform.java:206)
+	at org.eclipse.core.runtime.Platform.getAdapterManager(Platform.java:661)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunch.getAdapter(GdbLaunch.java:458)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunch.disconnect(GdbLaunch.java:342)
+	at org.eclipse.debug.internal.core.commands.DisconnectCommand.execute(DisconnectCommand.java:35)
+	at org.eclipse.debug.internal.core.commands.ForEachCommand.doExecute(ForEachCommand.java:36)
+	at org.eclipse.debug.core.commands.AbstractDebugCommand$1.run(AbstractDebugCommand.java:215)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-03-10 00:04:14.962
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
