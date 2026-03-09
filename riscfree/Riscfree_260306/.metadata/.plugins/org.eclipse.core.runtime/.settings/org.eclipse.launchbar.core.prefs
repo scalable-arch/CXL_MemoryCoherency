@@ -1,0 +1,7 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=linux
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:agilex7-a53-picojpeg Debug,org.eclipse.launchbar.core.descriptorType.default\:260306_test Debug (1),org.eclipse.launchbar.core.descriptorType.default\:260306_test.elf,org.eclipse.launchbar.core.descriptorType.default\:260306_test Debug,org.eclipse.launchbar.core.descriptorType.default\:HostMem_sharing.elf,org.eclipse.launchbar.core.descriptorType.default\:DeviceMem_sharing.elf
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:agilex7-a53-picojpeg\ Debug/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:agilex7-a53-picojpeg\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

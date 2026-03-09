@@ -1,0 +1,5 @@
+
+DEFINE                     work                                ./../libraries/work/                               
+DEFINE                     altera_s10_configuration_clock_1916 ./../libraries/altera_s10_configuration_clock_1916/
+INCLUDE simulator.cds.lib                                                                                         
+SOFTINCLUDE device.cds.lib                                                                                        

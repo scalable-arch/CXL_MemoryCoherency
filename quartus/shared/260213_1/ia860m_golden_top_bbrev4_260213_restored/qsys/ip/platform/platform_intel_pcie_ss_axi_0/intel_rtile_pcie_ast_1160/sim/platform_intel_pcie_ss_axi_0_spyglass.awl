@@ -1,0 +1,28 @@
+#############################
+## Clock_info03c
+
+waive -msg {Clock pin *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk5.u_rnr_pcie_csbb_gasket .clk, of flop *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk5.u_rnr_pcie_csbb_gasket .o_f2t_mcrdt_init , is tied to constant value}  -rule {  {Clock_info03c}  }  -comment {Created by kahuatng on 20-Nov-2022 22:36:30. Expect Quartus to synthesize away IOSF_CLK when CSB2WIRE=1.}
+waive -msg {Clock pin *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk6.u_rnr_pcie_csbb_gasket_1 .clk, of flop *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk6.u_rnr_pcie_csbb_gasket_1 .o_f2t_mcrdt_init , is tied to constant value}  -rule {  {Clock_info03c}  }  -comment {Created by kahuatng on 20-Nov-2022 22:36:30. Expect Quartus to synthesize away IOSF_CLK when CSB2WIRE=1.}
+waive -msg {Clock pin *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk7.u_rnr_pcie_csbb_gasket_2 .clk, of flop *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk7.u_rnr_pcie_csbb_gasket_2 .o_f2t_mcrdt_init , is tied to constant value}  -rule {  {Clock_info03c}  }  -comment {Created by kahuatng on 20-Nov-2022 22:36:30. Expect Quartus to synthesize away IOSF_CLK when CSB2WIRE=1.}
+waive -msg {Clock pin *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk8.u_rnr_pcie_csbb_gasket_3 .clk, of flop *.u_rnr_pcie_soft_rx_tx_wrapper.\genblk8.u_rnr_pcie_csbb_gasket_3 .o_f2t_mcrdt_init , is tied to constant value}  -rule {  {Clock_info03c}  }  -comment {Created by kahuatng on 20-Nov-2022 22:36:30. Expect Quartus to synthesize away IOSF_CLK when CSB2WIRE=1.}
+
+waive -msg {Clock pin *.u_rnr_pcie_soft_rx_tx_wrapper.clk, of flop *.u_rnr_pcie_soft_rx_tx_wrapper.u_rnr_pcie_soft_tx_wrapper.dsk_pulse_gen.dsk_m_gen.counter[0] , is tied to constant value}  -rule {  {Clock_info03c}  }  -comment {Created by kahuatng on 04-Dec-2022 14:14:33. Waived for pipe direct full only.} 
+
+
+##############################
+## Reset_sync02
+
+waive -msg {Reset signal '*.pldpll_lock_w' used to reset signal '*.pldpll_lock_sync_inst.din_s1' (domain '*.coreclkout_hip') is generated from domain '*.refclk0'}  -rule {  {Reset_sync02}  }  -comment {Created by kahuatng on 29-Nov-2022 21:21:13. Design Intent for indp refclk and perst} 
+waive -msg {Reset signal '*.pipepll_0_lock_w' used to reset signal '*.pipepll_0_lock_sync_inst.din_s1' (domain '*.coreclkout_hip') is generated from domain '*.refclk0'}  -rule {  {Reset_sync02}  }  -comment {Created by kahuatng on 29-Nov-2022 21:21:26. Design Intent for indp refclk and perst}
+waive -msg {Reset signal '*.pipepll_1_lock_w' used to reset signal '*.pipepll_1_lock_sync_inst.din_s1' (domain '*.coreclkout_hip') is generated from domain '*.refclk0'}  -rule {  {Reset_sync02}  }  -comment {Created by kahuatng on 29-Nov-2022 21:21:26. Design Intent for indp refclk and perst}
+waive -msg {Reset signal '*.pldpll_lock_w' used to reset signal '*.pldpll_lock_piped_sync_inst.din_s1' (domain '*.ch15_hdpldadapt_pld_pcs_tx_clk_out1_dcm') is generated from domain '*.refclk0'}  -rule {  {Reset_sync02}  }  -comment {Created by kahuatng on 29-Nov-2022 21:21:13. Design Intent for indp refclk and perst} 
+waive -msg {Reset signal '*.pipepll_0_lock_w' used to reset signal '*.pipepll_0_lock_piped_sync_inst.din_s1' (domain '*.ch15_hdpldadapt_pld_pcs_tx_clk_out1_dcm') is generated from domain '*.refclk0'}  -rule {  {Reset_sync02}  }  -comment {Created by kahuatng on 29-Nov-2022 21:21:13. Design Intent for indp refclk and perst}
+waive -msg {Reset signal '*.pipepll_1_lock_w' used to reset signal '*.pipepll_1_lock_piped_sync_inst.din_s1' (domain '*.ch15_hdpldadapt_pld_pcs_tx_clk_out1_dcm') is generated from domain '*.refclk0'}  -rule {  {Reset_sync02}  }  -comment {Created by kahuatng on 29-Nov-2022 21:21:13. Design Intent for indp refclk and perst}
+
+##############################
+## Ac_unsync01 & Ac_unsync02
+
+waive -msg {Unsynchronized Crossing: destination primary output *, clocked by *.ch*_hdpldadapt_pld_pcs_rx_clk_out1_dcm, source flop *, clocked by *.ch*_hdpldadapt_pld_pcs_tx_clk_out1_dcm.*}  -rule {  {Ac_unsync01}  }  -comment {Created by kahuatng on 12-Dec-2022 22:09:05. Spyglass fail to identify the same clock domain define in signal_in_domain (SGDC contraint for black box) and SGDC}
+waive -msg {Unsynchronized Crossing: destination primary output *, clocked by *.ch*_hdpldadapt_pld_pcs_rx_clk_out1_dcm, source flop *, clocked by *.ch*_hdpldadapt_pld_pcs_tx_clk_out1_dcm.*}  -rule {  {Ac_unsync02}  }  -comment {Created by kahuatng on 12-Dec-2022 22:14:29. Spyglass fail to identify the same clock domain define in signal_in_domain (SGDC contraint for black box) and SGDC}
+
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.ashling.riscfree.debug.opxd.arm.intel.launchConfigurationType">
+    <booleanAttribute key="com.ashling.riscfree.debug.opxd.arm.applyToAllCores" value="true"/>
+    <booleanAttribute key="com.ashling.riscfree.debug.opxd.arm.doContinue" value="true"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.arm.fGdbOtherCMDOptions" value=""/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.arm.gdbClientOtherCommands" value=""/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.arm.gdbClientOtherOptions" value=""/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.arm.intel.tapText" value="S10HPS/AGILEX_HPS/N5X_HPS (0x6BA00477)"/>
+    <listAttribute key="com.ashling.riscfree.debug.opxd.arm.multicoreInput">
+        <listEntry value="0;Cortex-A53 (0x00000000);true;true"/>
+        <listEntry value="1;Cortex-A53 (0x00000001);false;false"/>
+        <listEntry value="2;Cortex-A53 (0x00000002);false;false"/>
+        <listEntry value="3;Cortex-A53 (0x00000003);false;false"/>
+    </listAttribute>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.arm.otherRunCommands" value=""/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.coreNumber" value="0"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.deviceName" value="IA-860m USB Blaster 3 [3-1.4]"/>
+    <booleanAttribute key="com.ashling.riscfree.debug.opxd.core.isCustomRTOS" value="false"/>
+    <booleanAttribute key="com.ashling.riscfree.debug.opxd.core.isRTOSDebug" value="false"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.jtagFrequency" value="16"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.probeType" value="4"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.rtosScriptLocation" value=""/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.rtosType" value="FreeRTOS"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.rtosVersion" value="10.5.0"/>
+    <booleanAttribute key="com.ashling.riscfree.debug.opxd.core.semiHostingEnabled" value="false"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.serialNumber" value="1"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.tapIDCODE" value="0x6BA00477"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.tapName" value="S10HPS/AGILEX_HPS/N5X_HPS"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.tapNumber" value="1"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.targetDevice" value="auto-scan"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.targetRegFile" value="regs/aarch64.xml"/>
+    <stringAttribute key="com.ashling.riscfree.debug.opxd.core.transportType" value="JTAG"/>
+    <stringAttribute key="com.ashling.riscfree_trace_core.traceArchitecture" value="Arm CoreSight"/>
+    <booleanAttribute key="com.ashling.riscfree_trace_core.traceEnabled" value="false"/>
+    <stringAttribute key="ilg.gnumcueclipse.debug.gdbjtag.svdPath" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageOffset" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.ipAddress" value="localhost"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDevice" value="Opella-XD"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadImage" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadSymbols" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.pcRegister" value=""/>
+    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.portNumber" value="45855"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setPcRegister" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setStopAt" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.stopAt" value="main"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsFileName" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsOffset" value=""/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForImage" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForSymbols" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForImage" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForSymbols" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useRemoteTarget" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="${eclipse_home}/../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb"/>
+    <booleanAttribute key="org.eclipse.cdt.dsf.gdb.NON_STOP" value="true"/>
+    <intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="2"/>
+    <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/HostMem_sharing.elf"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="HostMem_sharing"/>
+    <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.1147599760"/>
+    <booleanAttribute key="org.eclipse.cdt.launch.loadRegisterGroups" value="true"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/HostMem_sharing"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
+</launchConfiguration>

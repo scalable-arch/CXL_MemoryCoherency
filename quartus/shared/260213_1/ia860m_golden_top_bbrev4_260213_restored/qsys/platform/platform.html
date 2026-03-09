@@ -1,0 +1,1908 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>datasheet for platform</title>
+  <style type="text/css">
+body { font-family:arial ;}
+a { text-decoration:underline ; color:#003000 ;}
+a:hover { text-decoration:underline ; color:0030f0 ;}
+td { padding : 5px ;}
+table.topTitle { width:100% ;}
+table.topTitle td.l { text-align:left ; font-weight: bold ; font-size:30px ;}
+table.topTitle td.r { text-align:right ; font-weight: bold ; font-size:16px ;}
+table.blueBar { width : 100% ; border-spacing : 0px ;}
+table.blueBar td { background:#0036ff ; font-size:12px ; color : white ; text-align : left ; font-weight : bold ;}
+table.blueBar td.l { text-align : left ;}
+table.blueBar td.r { text-align : right ;}
+table.items { width:100% ; border-collapse:collapse ;}
+table.items td.label { font-weight:bold ; font-size:16px ; vertical-align:top ;}
+table.items td.mono { font-family:courier ; font-size:12px ; white-space:pre ;}
+div.label { font-weight:bold ; font-size:16px ; vertical-align:top ; text-align:center ;}
+table.grid { border-collapse:collapse ;}
+table.grid td { border:1px solid #bbb ; font-size:12px ;}
+body { font-family:arial ;}
+table.x { font-family:courier ; border-collapse:collapse ; padding:2px ;}
+table.x td { border:1px solid #bbb ;}
+td.tableTitle { font-weight:bold ; text-align:center ;}
+table.grid { border-collapse:collapse ;}
+table.grid td { border:1px solid #bbb ;}
+table.grid td.tableTitle { font-weight:bold ; text-align:center ;}
+table.mmap { border-collapse:collapse ; text-size:11px ; border:1px solid #d8d8d8 ;}
+table.mmap td { border-color:#d8d8d8 ; border-width:1px ; border-style:solid ;}
+table.mmap td.empty { border-style:none ; background-color:#f0f0f0 ;}
+table.mmap td.slavemodule { text-align:left ; font-size:11px ; border-style:solid solid none solid ;}
+table.mmap td.slavem { text-align:right ; font-size:9px ; font-style:italic ; border-style:none solid none solid ;}
+table.mmap td.slaveb { text-align:right ; font-size:9px ; font-style:italic ; border-style:none solid solid solid ;}
+table.mmap td.mastermodule { text-align:center ; font-size:11px ; border-style:solid solid none solid ;}
+table.mmap td.masterlr { text-align:center ; font-size:9px ; font-style:italic ; border-style:none solid solid solid ;}
+table.mmap td.masterl { text-align:center ; font-size:9px ; font-style:italic ; border-style:none none solid solid ;}
+table.mmap td.masterm { text-align:center ; font-size:9px ; font-style:italic ; border-style:none none solid none ;}
+table.mmap td.masterr { text-align:center ; font-size:9px ; font-style:italic ; border-style:none solid solid none ;}
+table.mmap td.addr { font-family:courier ; font-size:9px ; text-align:right ;}
+table.connectionboxes { border-collapse:separate ; border-spacing:0px ; font-family:arial ;}
+table.connectionboxes td.from { border-bottom:1px solid black ; font-size:9px ; font-style:italic ; vertical-align:bottom ; text-align:left ;}
+table.connectionboxes td.to { font-size:9px ; font-style:italic ; vertical-align:top ; text-align:right ;}
+table.connectionboxes td.lefthandwire { border-bottom:1px solid black ; font-size:9px ; font-style:italic ; vertical-align:bottom ; text-align:right ;}
+table.connectionboxes td.righthandwire { border-bottom:1px solid black ; font-size:9px ; font-style:italic ; vertical-align:bottom ; text-align:left ;}
+table.connectionboxes td.righthandlabel { font-size:11px ; vertical-align:bottom ; text-align:left ;}
+table.connectionboxes td.neighbor { padding:3px ; border:1px solid black ; font-size: 11px ; background:#e8e8e8 ; vertical-align:center ; text-align:center ;}
+table.connectionboxes td.main { padding:8px ; border:1px solid black ; font-size: 14px ; font-weight:bold ; background:#ffffff ; vertical-align:center ; text-align:center ;}
+.parametersbox { border:1px solid #d0d0d0 ; display:inline-block ; max-height:160px ; overflow:auto ; width:360px ; font-size:10px ;}
+.flowbox { display:inline-block ;}
+.parametersbox table { font-size:10px ;}
+td.parametername { font-style:italic ;}
+td.parametervalue { font-weight:bold ;}
+div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; border-top:1px solid #707070 ; border-bottom:1px solid #707070 ; padding:20px ; margin:20px ; width:auto ;}</style>
+ </head>
+ <body>
+  <table class="topTitle">
+   <tr>
+    <td class="l">platform</td>
+    <td class="r">
+     <br/>
+     <br/>
+    </td>
+   </tr>
+  </table>
+  <table class="blueBar">
+   <tr>
+    <td class="l">2026.02.17.22:20:26</td>
+    <td class="r">Datasheet</td>
+   </tr>
+  </table>
+  <div style="width:100% ;  height:10px"> </div>
+  <div class="label">Overview</div>
+  <div class="greydiv">
+   <div style="display:inline-block ; text-align:left">
+    <table class="connectionboxes">
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+    </table>
+   </div><span style="display:inline-block ; width:28px"> </span>
+   <div style="display:inline-block ; text-align:left"><span>
+     <br/>All Components
+     <br/>&#160;&#160;
+     <a href="#module_address_extender_host2noc"><b>address_extender_host2noc</b>
+     </a> altera_address_span_extender 19.2.0
+     <br/>&#160;&#160;
+     <a href="#module_ccb_pcied2h_to_noc1"><b>ccb_pcied2h_to_noc1</b>
+     </a> mm_ccb 19.3.0
+     <br/>&#160;&#160;
+     <a href="#module_ccb_pcieh2d_to_noc2"><b>ccb_pcieh2d_to_noc2</b>
+     </a> mm_ccb 19.3.0
+     <br/>&#160;&#160;
+     <a href="#module_ccv_hps_to_noc"><b>ccv_hps_to_noc</b>
+     </a> mm_ccb 19.3.0</span>
+   </div>
+  </div>
+  <div style="width:100% ;  height:10px"> </div>
+  <div class="label">Memory Map</div>
+  <table class="mmap">
+   <tr>
+    <td class="empty" rowspan="2"></td>
+    <td class="mastermodule" colspan="1">
+     <a href="#module_address_extender_host2noc"><b>address_extender_host2noc</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="1">
+     <a href="#module_ccb_pcied2h_to_noc1"><b>ccb_pcied2h_to_noc1</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="1">
+     <a href="#module_ccb_pcieh2d_to_noc2"><b>ccb_pcieh2d_to_noc2</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="1">
+     <a href="#module_ccv_hps_to_noc"><b>ccv_hps_to_noc</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="3">
+     <a href="#module_hbm_noc_Initiator"><b>hbm_noc_Initiator</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="2">
+     <a href="#module_hps"><b>hps</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="4">
+     <a href="#module_intel_pcie_rtile_mcdma_0"><b>intel_pcie_rtile_mcdma_0</b>
+     </a>
+    </td>
+   </tr>
+   <tr>
+    <td class="masterlr">&#160;expanded_master</td>
+    <td class="masterlr">&#160;m0</td>
+    <td class="masterlr">&#160;m0</td>
+    <td class="masterlr">&#160;m0</td>
+    <td class="masterl">&#160;i0_axi4noc</td>
+    <td class="masterm">&#160;i1_axi4noc</td>
+    <td class="masterr">&#160;i2_axi4noc</td>
+    <td class="masterl">&#160;h2f_axi_master</td>
+    <td class="masterr">&#160;mpfe_iniu_0_axi4noc</td>
+    <td class="masterl">&#160;p0_rx_pio_master</td>
+    <td class="masterm">&#160;p0_d2hdm_master</td>
+    <td class="masterm">&#160;p0_h2ddm_master</td>
+    <td class="masterr">&#160;p1_bam_master</td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_address_extender_host2noc"><b>address_extender_host2noc</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">windowed_slave&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000 - 0x7fff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_ccb_pcied2h_to_noc1"><b>ccb_pcied2h_to_noc1</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">s0&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0xffff_ffff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_ccb_pcieh2d_to_noc2"><b>ccb_pcieh2d_to_noc2</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">s0&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0xffff_ffff_ffff_ffff</td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_ccv_hps_to_noc"><b>ccv_hps_to_noc</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">s0&#160;</td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000 - 0x7fff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_ddr4"><b>ddr4</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">s0_noc_axi4noc_hps&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000 - 0x1_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_hbm"><b>hbm</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">t_ch0_u0_axi4noc&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x4000_0000 - 0x7fff_ffff</td>
+    <td>0x4000_0000 - 0x7fff_ffff</td>
+    <td>0x4000_0000 - 0x7fff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">t_ch0_u1_axi4noc&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000 - 0x3fff_ffff</td>
+    <td>0x0000 - 0x3fff_ffff</td>
+    <td>0x0000 - 0x3fff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">t_ch0_ch1_sb_axi4noc&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_hbm_noc_Initiator"><b>hbm_noc_Initiator</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">s0_axi4&#160;</td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000 - 0x7fff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">s1_axi4&#160;</td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavem">s2_axi4&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td>0x0000_0000_0000_0000 - 0x0000_0fff_ffff_ffff</td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_intel_noc_clock_ctrl_0"><b>intel_noc_clock_ctrl_0</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">target_inst_0&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_intel_noc_clock_ctrl_1"><b>intel_noc_clock_ctrl_1</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">target_inst_0&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+  </table>
+  <a name="module_address_extender_host2noc"> </a>
+  <div>
+   <hr/>
+   <h2>address_extender_host2noc</h2>altera_address_span_extender v19.2.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hps">hps</a>
+      </td>
+      <td class="from">h2f_axi_master&#160;&#160;</td>
+      <td class="main" rowspan="10">address_extender_host2noc</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;windowed_slave</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sysclk_in">sysclk_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clock</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sys_reset_h_in">sys_reset_h_in</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">expanded_master&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccv_hps_to_noc">ccv_hps_to_noc</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>
+      <table>
+       <tr>
+        <td class="parametername">BURSTCOUNT_WIDTH</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">BYTEENABLE_WIDTH</td>
+        <td class="parametervalue">16</td>
+       </tr>
+       <tr>
+        <td class="parametername">CNTL_ADDRESS_WIDTH</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">DATA_WIDTH</td>
+        <td class="parametervalue">128</td>
+       </tr>
+       <tr>
+        <td class="parametername">MASTER_ADDRESS_WIDTH</td>
+        <td class="parametervalue">44</td>
+       </tr>
+       <tr>
+        <td class="parametername">MAX_BURST_BYTES</td>
+        <td class="parametervalue">16</td>
+       </tr>
+       <tr>
+        <td class="parametername">MAX_BURST_WORDS</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">SLAVE_ADDRESS_SHIFT</td>
+        <td class="parametervalue">4</td>
+       </tr>
+       <tr>
+        <td class="parametername">SLAVE_ADDRESS_WIDTH</td>
+        <td class="parametervalue">27</td>
+       </tr>
+       <tr>
+        <td class="parametername">SUB_WINDOW_COUNT</td>
+        <td class="parametervalue">1</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_ccb_pcied2h_to_noc1"> </a>
+  <div>
+   <hr/>
+   <h2>ccb_pcied2h_to_noc1</h2>mm_ccb v19.3.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="6">
+       <a href="#module_intel_pcie_rtile_mcdma_0">intel_pcie_rtile_mcdma_0</a>
+      </td>
+      <td class="from">p0_d2hdm_master&#160;&#160;</td>
+      <td class="main" rowspan="14">ccb_pcied2h_to_noc1</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0</td>
+     </tr>
+     <tr>
+      <td class="from">app_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_clk</td>
+     </tr>
+     <tr>
+      <td class="from">app_nreset_status&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_ref_clock_in">noc_ref_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;m0_clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_synch_areset_n">noc_synch_areset_n</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;m0_reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">m0&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hbm_noc_Initiator">hbm_noc_Initiator</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1_axi4</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_ccb_pcieh2d_to_noc2"> </a>
+  <div>
+   <hr/>
+   <h2>ccb_pcieh2d_to_noc2</h2>mm_ccb v19.3.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="6">
+       <a href="#module_intel_pcie_rtile_mcdma_0">intel_pcie_rtile_mcdma_0</a>
+      </td>
+      <td class="from">p0_h2ddm_master&#160;&#160;</td>
+      <td class="main" rowspan="14">ccb_pcieh2d_to_noc2</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0</td>
+     </tr>
+     <tr>
+      <td class="from">app_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_clk</td>
+     </tr>
+     <tr>
+      <td class="from">app_nreset_status&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_ref_clock_in">noc_ref_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;m0_clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_synch_areset_n">noc_synch_areset_n</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;m0_reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">m0&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hbm_noc_Initiator">hbm_noc_Initiator</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s2_axi4</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_ccv_hps_to_noc"> </a>
+  <div>
+   <hr/>
+   <h2>ccv_hps_to_noc</h2>mm_ccb v19.3.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_address_extender_host2noc">address_extender_host2noc</a>
+      </td>
+      <td class="from">expanded_master&#160;&#160;</td>
+      <td class="main" rowspan="16">ccv_hps_to_noc</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_ref_clock_in">noc_ref_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;m0_clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sysclk_in">sysclk_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_synch_areset_n">noc_synch_areset_n</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;m0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sys_reset_h_in">sys_reset_h_in</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">m0&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hbm_noc_Initiator">hbm_noc_Initiator</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_axi4</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_ddr4"> </a>
+  <div>
+   <hr/>
+   <h2>ddr4</h2>emif_io96b_hps v3.0.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hps">hps</a>
+      </td>
+      <td class="from">mpfe_iniu_0_axi4noc&#160;&#160;</td>
+      <td class="main" rowspan="2">ddr4</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_noc_axi4noc_hps</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_hbm"> </a>
+  <div>
+   <hr/>
+   <h2>hbm</h2>hbm_fp v8.0.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="12">
+       <a href="#module_hbm_noc_Initiator">hbm_noc_Initiator</a>
+      </td>
+      <td class="from">i0_axi4noc&#160;&#160;</td>
+      <td class="main" rowspan="15">hbm</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;t_ch0_u0_axi4noc</td>
+     </tr>
+     <tr>
+      <td class="from">i0_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;t_ch0_u1_axi4noc</td>
+     </tr>
+     <tr>
+      <td class="from">i1_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;t_ch0_u0_axi4noc</td>
+     </tr>
+     <tr>
+      <td class="from">i1_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;t_ch0_u1_axi4noc</td>
+     </tr>
+     <tr>
+      <td class="from">i2_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;t_ch0_u0_axi4noc</td>
+     </tr>
+     <tr>
+      <td class="from">i2_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;t_ch0_u1_axi4noc</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sysclk_in">sysclk_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;fabric_clk</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_hbm_noc_Initiator"> </a>
+  <div>
+   <hr/>
+   <h2>hbm_noc_Initiator</h2>intel_noc_initiator v6.0.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccv_hps_to_noc">ccv_hps_to_noc</a>
+      </td>
+      <td class="from">m0&#160;&#160;</td>
+      <td class="main" rowspan="26">hbm_noc_Initiator</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s0_axi4</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccb_pcied2h_to_noc1">ccb_pcied2h_to_noc1</a>
+      </td>
+      <td class="from">m0&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1_axi4</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccb_pcieh2d_to_noc2">ccb_pcieh2d_to_noc2</a>
+      </td>
+      <td class="from">m0&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s2_axi4</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_ref_clock_in">noc_ref_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s_axi4_aclk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_synch_areset_n">noc_synch_areset_n</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s_axi4_aresetn</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">i0_axi4noc&#160;&#160;</td>
+      <td class="neighbor" rowspan="12">
+       <a href="#module_hbm">hbm</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;t_ch0_u0_axi4noc</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">i0_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;t_ch0_u1_axi4noc</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">i1_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;t_ch0_u0_axi4noc</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">i1_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;t_ch0_u1_axi4noc</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">i2_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;t_ch0_u0_axi4noc</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">i2_axi4noc&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;t_ch0_u1_axi4noc</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_hps"> </a>
+  <div>
+   <hr/>
+   <h2>hps</h2>intel_agilex_hps v24.0.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sysclk_in">sysclk_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="main" rowspan="10">hps</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;h2f_axi_clock</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sys_reset_h_in">sys_reset_h_in</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;h2f_axi_reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">h2f_axi_master&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_address_extender_host2noc">address_extender_host2noc</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;windowed_slave</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">mpfe_iniu_0_axi4noc&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr4">ddr4</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_noc_axi4noc_hps</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_intel_noc_clock_ctrl_0"> </a>
+  <div>
+   <hr/>
+   <h2>intel_noc_clock_ctrl_0</h2>intel_noc_clock_ctrl v2.1.1
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_intel_noc_clock_ctrl_1"> </a>
+  <div>
+   <hr/>
+   <h2>intel_noc_clock_ctrl_1</h2>intel_noc_clock_ctrl v2.1.1
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_intel_pcie_rtile_mcdma_0"> </a>
+  <div>
+   <hr/>
+   <h2>intel_pcie_rtile_mcdma_0</h2>intel_pcie_rtile_mcdma v5.3.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pcie_ref0_clock_in">pcie_ref0_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="main" rowspan="23">intel_pcie_rtile_mcdma_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;refclk0</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pcie_ref1_clock_in">pcie_ref1_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;refclk1</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">p0_d2hdm_master&#160;&#160;</td>
+      <td class="neighbor" rowspan="6">
+       <a href="#module_ccb_pcied2h_to_noc1">ccb_pcied2h_to_noc1</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">app_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">app_nreset_status&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">p0_h2ddm_master&#160;&#160;</td>
+      <td class="neighbor" rowspan="6">
+       <a href="#module_ccb_pcieh2d_to_noc2">ccb_pcieh2d_to_noc2</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">app_clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">app_nreset_status&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">app_clk&#160;&#160;</td>
+      <td class="neighbor" rowspan="4">
+       <a href="#module_pcie_reset_out">pcie_reset_out</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">app_nreset_status&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;in_reset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_noc_ref_clock_in"> </a>
+  <div>
+   <hr/>
+   <h2>noc_ref_clock_in</h2>altera_clock_bridge v19.2.0
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_noc_synch_areset_n"> </a>
+  <div>
+   <hr/>
+   <h2>noc_synch_areset_n</h2>altera_reset_bridge v19.2.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_ref_clock_in">noc_ref_clock_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="main" rowspan="16">noc_synch_areset_n</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sys_reset_n_in">sys_reset_n_in</a>
+      </td>
+      <td class="from">out_reset&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;in_reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccv_hps_to_noc">ccv_hps_to_noc</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;m0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccb_pcied2h_to_noc1">ccb_pcied2h_to_noc1</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;m0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccb_pcieh2d_to_noc2">ccb_pcieh2d_to_noc2</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;m0_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hbm_noc_Initiator">hbm_noc_Initiator</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s_axi4_aresetn</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_pcie_ref0_clock_in"> </a>
+  <div>
+   <hr/>
+   <h2>pcie_ref0_clock_in</h2>altera_clock_bridge v19.2.0
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_pcie_ref1_clock_in"> </a>
+  <div>
+   <hr/>
+   <h2>pcie_ref1_clock_in</h2>altera_clock_bridge v19.2.0
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_pcie_reset_out"> </a>
+  <div>
+   <hr/>
+   <h2>pcie_reset_out</h2>altera_reset_bridge v19.2.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="4">
+       <a href="#module_intel_pcie_rtile_mcdma_0">intel_pcie_rtile_mcdma_0</a>
+      </td>
+      <td class="from">app_clk&#160;&#160;</td>
+      <td class="main" rowspan="4">pcie_reset_out</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr>
+      <td class="from">app_nreset_status&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;in_reset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_sys_reset_h_in"> </a>
+  <div>
+   <hr/>
+   <h2>sys_reset_h_in</h2>altera_reset_bridge v19.2.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sysclk_in">sysclk_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="main" rowspan="10">sys_reset_h_in</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_hps">hps</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;h2f_axi_reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_address_extender_host2noc">address_extender_host2noc</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;reset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ccv_hps_to_noc">ccv_hps_to_noc</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s0_reset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_sys_reset_n_in"> </a>
+  <div>
+   <hr/>
+   <h2>sys_reset_n_in</h2>altera_reset_bridge v19.2.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sysclk_in">sysclk_in</a>
+      </td>
+      <td class="from">out_clk&#160;&#160;</td>
+      <td class="main" rowspan="4">sys_reset_n_in</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">out_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_noc_synch_areset_n">noc_synch_areset_n</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;in_reset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_sysclk_in"> </a>
+  <div>
+   <hr/>
+   <h2>sysclk_in</h2>altera_clock_bridge v19.2.0
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <table class="blueBar">
+   <tr>
+    <td class="l">generation took 0.01 seconds</td>
+    <td class="r">rendering took 0.05 seconds</td>
+   </tr>
+  </table>
+ </body>
+</html>

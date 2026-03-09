@@ -1,0 +1,177 @@
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TOOL_NAME "QsysPrimePro"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TOOL_VERSION "25.1"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TOOL_ENV "QsysPrimePro"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TOOL_VENDOR_NAME "Intel Corporation"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TOP_LEVEL_COMPONENT_NAME "intel_noc_initiator"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name PRE_COMPILED_MODULE "ON"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name OCS_IP_FILE [file join $::quartus(qip_path) "../platform_intel_noc_initiator_0.ip"]
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name OCS_IP_TYPE "intel_noc_initiator"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name OCS_IP_VERSION "6.0.0"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name OCS_IP_HASH "xf2264i"
+set_global_assignment -library "platform_intel_noc_initiator_0" -name SOPCINFO_FILE [file join $::quartus(qip_path) "platform_intel_noc_initiator_0.sopcinfo"]
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name SLD_INFO "QSYS_NAME platform_intel_noc_initiator_0 HAS_SOPCINFO 1 GENERATION_ID 0"
+set_global_assignment -library "platform_intel_noc_initiator_0" -name MISC_FILE [file join $::quartus(qip_path) "platform_intel_noc_initiator_0.cmp"]
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TARGETED_DEVICE_FAMILY "Agilex 7"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TARGETED_PART_TRAIT "part.DEVICE_TEMPERATURE_GRADE::EXTENDED"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TARGETED_PART_TRAIT "part.DEVICE_POWER_MODEL::STANDARD_POWER"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TARGETED_PART_TRAIT "part.SUPPORTS_VID::1"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_TARGETED_PART_TRAIT "part.DEVICE_IOBANK_REVISION::IO96B_REVB0"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_GENERATED_DEVICE_FAMILY "{Agilex 7}"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_QSYS_MODE "STANDALONE"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "platform_intel_noc_initiator_0" -name MISC_FILE [file join $::quartus(qip_path) "../platform_intel_noc_initiator_0.ip"]
+
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_NAME "cGxhdGZvcm1faW50ZWxfbm9jX2luaXRpYXRvcl8wX2ludGVsX25vY19pbnRlcm5hbF9pbml0aWF0b3JfMjIwXzZqanJjaWk="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_DISPLAY_NAME "Tm9DIEludGVybmFsIEluaXRpYXRvciBJbnRlbCBGUEdBIElQ"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_INTERNAL "On"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_AUTHOR "SW50ZWwgQ29ycG9yYXRpb24="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_VERSION "Mi4yLjA="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_DESCRIPTION "VGhpcyBJUCBpcyByZXNwb25zaWJsZSBmb3IgY29ubmVjdGluZyBhbiBheGk0IG1hc3RlciB0byBUYXJnZXQgSVBzIHZpYSB0aGUgTm9DLg=="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_COMPONENT_GROUP "SW50ZWwgRlBHQSBJbnRlcmNvbm5lY3QvTm9D"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_NAME "cGxhdGZvcm1faW50ZWxfbm9jX2luaXRpYXRvcl8wX2ludGVsX2F4aTRfdXNlcl9hZGFwdGVyXzExMF9kbWdjdXhp"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_DISPLAY_NAME "QVhJNCBVc2VyIEFkYXB0ZXIgZm9yIE5vQyBJbml0aWF0b3IgRlBHQSBJUA=="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_INTERNAL "On"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_AUTHOR "QVVUSE9S"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_VERSION "MS4xLjA="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_DESCRIPTION "QVhJNCBVc2VyIEFkYXB0ZXIgZm9yIE5vQyBJbml0aWF0b3IgRlBHQSBJUA=="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_GROUP "SU5URVJOQUxfQ09NUE9ORU5UX1JPT1RfRk9MREVS"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi" -library "intel_axi4_user_adapter_110" -name IP_COMPONENT_DOCUMENTATION_LINK "REFUQVNIRUVUX1VSTA=="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_NAME "cGxhdGZvcm1faW50ZWxfbm9jX2luaXRpYXRvcl8wX2ludGVsX25vY19pbml0aWF0b3JfNjAwX3lhNmtsaXE="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_DISPLAY_NAME "Tm9DIEluaXRpYXRvciBJbnRlbCBGUEdBIElQ"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_AUTHOR "SW50ZWwgQ29ycG9yYXRpb24="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_VERSION "Ni4wLjA="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_DESCRIPTION "SW50ZWwgSGFyZCBNZW1vcnkgTmV0d29yay1vbi1jaGlwIEluaXRpYXRvciBJUA=="
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_GROUP "SW50ZWwgRlBHQSBJbnRlcmNvbm5lY3QvTm9D"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_COMPONENT_DOCUMENTATION_LINK "aHR0cHM6Ly93d3cuaW50ZWwuY29tL2NvbnRlbnQvd3d3L3VzL2VuL2RvY3MvcHJvZ3JhbW1hYmxlLzc2ODg0NC5odG1s"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_COMPONENT_NAME "cGxhdGZvcm1faW50ZWxfbm9jX2luaXRpYXRvcl8w"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_COMPONENT_DISPLAY_NAME "c3lzdGVt"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_COMPONENT_REPORT_HIERARCHY "On"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_COMPONENT_AUTHOR "SW50ZWwgQ29ycG9yYXRpb24="
+set_global_assignment -entity "platform_intel_noc_initiator_0" -library "platform_intel_noc_initiator_0" -name IP_COMPONENT_VERSION "MS4w"
+
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[257] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[258] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[259] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[260] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[261] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[262] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[263] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[264] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[265] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[266] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[267] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[268] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[269] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[270] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[271] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[272] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[273] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[274] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[275] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[276] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[277] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[278] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[279] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[280] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[281] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[282] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[283] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[284] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[285] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[286] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[287] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_0|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[288] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[257] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[258] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[259] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[260] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[261] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[262] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[263] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[264] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[265] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[266] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[267] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[268] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[269] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[270] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[271] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[272] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[273] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[274] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[275] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[276] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[277] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[278] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[279] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[280] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[281] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[282] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[283] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[284] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[285] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[286] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[287] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_1|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[288] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[257] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[258] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[259] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[260] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[261] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[262] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[263] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[264] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[265] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[266] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[267] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[268] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[269] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[270] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[271] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[272] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[273] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[274] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[275] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[276] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[277] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[278] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[279] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[280] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[281] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[282] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[283] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[284] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[285] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[286] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[287] 14320
+set_instance_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -name MESSAGE_DISABLE -to iniu_2|ready_latency_inst|rresp_inst|fifo_inst|a1|fifo_inst|mlab_inst|dout[288] 14320
+
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/top_ready_latency_adp.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/ff_macro_init.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/ready_latency_adapter.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/scfifo_s.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/scfifo_s_normal.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/scfifo_s_showahead.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/add_a_b_s0_s1.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/generic_mlab_sc.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/sc_fifo_uNOC_shim.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/sc_fifo_uNOC_shim_internal.sv"]
+set_global_assignment -library "intel_noc_internal_initiator_220" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_internal_initiator_220/synth/platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii.sv"]
+set_global_assignment -library "intel_axi4_user_adapter_110" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_axi4_user_adapter_110/synth/platform_intel_noc_initiator_0_intel_axi4_user_adapter_110_dmgcuxi.sv"]
+set_global_assignment -library "intel_axi4_user_adapter_110" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_axi4_user_adapter_110/synth/intel_axi4_user_adapter.sv"]
+set_global_assignment -library "intel_noc_initiator_600" -name VERILOG_FILE [file join $::quartus(qip_path) "intel_noc_initiator_600/synth/platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq.v"]
+set_global_assignment -library "platform_intel_noc_initiator_0" -name VERILOG_FILE [file join $::quartus(qip_path) "synth/platform_intel_noc_initiator_0.v"]
+
+
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_TOOL_NAME "intel_noc_initiator"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_TOOL_VERSION "6.0.0"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_initiator_600_ya6kliq" -library "intel_noc_initiator_600" -name IP_TOOL_ENV "QsysPrimePro"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_TOOL_NAME "intel_noc_internal_initiator"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_TOOL_VERSION "2.2.0"
+set_global_assignment -entity "platform_intel_noc_initiator_0_intel_noc_internal_initiator_220_6jjrcii" -library "intel_noc_internal_initiator_220" -name IP_TOOL_ENV "QsysPrimePro"
+

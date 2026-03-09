@@ -1,0 +1,5 @@
+
+DEFINE                     work                  ./../libraries/work/                 
+DEFINE                     intel_pcie_ss_axi_310 ./../libraries/intel_pcie_ss_axi_310/
+INCLUDE simulator.cds.lib                                                             
+SOFTINCLUDE device.cds.lib                                                            

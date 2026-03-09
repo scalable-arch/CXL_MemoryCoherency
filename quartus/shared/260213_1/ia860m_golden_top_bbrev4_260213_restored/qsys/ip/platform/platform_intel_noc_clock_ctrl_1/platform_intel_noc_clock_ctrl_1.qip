@@ -1,0 +1,44 @@
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_TOOL_NAME "QsysPrimePro"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_TOOL_VERSION "25.1"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_TOOL_ENV "QsysPrimePro"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_TOOL_VENDOR_NAME "Intel Corporation"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_TOP_LEVEL_COMPONENT_NAME "intel_noc_clock_ctrl"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name PRE_COMPILED_MODULE "ON"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name OCS_IP_FILE [file join $::quartus(qip_path) "../platform_intel_noc_clock_ctrl_1.ip"]
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name OCS_IP_TYPE "intel_noc_clock_ctrl"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name OCS_IP_VERSION "2.1.1"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name OCS_IP_HASH "x4tt46a"
+set_global_assignment -library "platform_intel_noc_clock_ctrl_1" -name SOPCINFO_FILE [file join $::quartus(qip_path) "platform_intel_noc_clock_ctrl_1.sopcinfo"]
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name SLD_INFO "QSYS_NAME platform_intel_noc_clock_ctrl_1 HAS_SOPCINFO 1 GENERATION_ID 0"
+set_global_assignment -library "platform_intel_noc_clock_ctrl_1" -name MISC_FILE [file join $::quartus(qip_path) "platform_intel_noc_clock_ctrl_1.cmp"]
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_TARGETED_DEVICE_FAMILY "Agilex 7"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_GENERATED_DEVICE_FAMILY "{Agilex 7}"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_QSYS_MODE "STANDALONE"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "platform_intel_noc_clock_ctrl_1" -name MISC_FILE [file join $::quartus(qip_path) "../platform_intel_noc_clock_ctrl_1.ip"]
+
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_NAME "aW50ZWxfbm9jX2Nsb2NrX2N0cmw="
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_DISPLAY_NAME "Tm9DIENsb2NrIENvbnRyb2wgSW50ZWwgRlBHQSBJUA=="
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_AUTHOR "SW50ZWwgQ29ycG9yYXRpb24="
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_VERSION "Mi4xLjE="
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_DESCRIPTION "VGhpcyBJUCBnZW5lcmF0ZXMgdGhlIGNsb2NrcyBhbmQgcGVyZm9ybXMgY29uZmlndXJhdGlvbiBmb3IgdGhlIE5vQy4gVXNlcnMgbXVzdCBpbnN0YW50aWF0ZSBvbmUgTm9DIENsb2NrIENvbnRyb2wgSVAgcGVyIE5vQyBncm91cC4="
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_GROUP "SW50ZWwgRlBHQSBJbnRlcmNvbm5lY3QvTm9D"
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_COMPONENT_DOCUMENTATION_LINK "aHR0cHM6Ly93d3cuaW50ZWwuY29tL2NvbnRlbnQvd3d3L3VzL2VuL2RvY3MvcHJvZ3JhbW1hYmxlLzc2ODg0NC8yMy00L25vYy1jbG9jay1jb250cm9sLWludGVsLWZwZ2EtaXAuaHRtbA=="
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_COMPONENT_NAME "cGxhdGZvcm1faW50ZWxfbm9jX2Nsb2NrX2N0cmxfMQ=="
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_COMPONENT_DISPLAY_NAME "c3lzdGVt"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_COMPONENT_REPORT_HIERARCHY "On"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_COMPONENT_AUTHOR "SW50ZWwgQ29ycG9yYXRpb24="
+set_global_assignment -entity "platform_intel_noc_clock_ctrl_1" -library "platform_intel_noc_clock_ctrl_1" -name IP_COMPONENT_VERSION "MS4w"
+
+
+set_global_assignment -library "intel_noc_clock_ctrl_211" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "intel_noc_clock_ctrl_211/synth/intel_noc_clock_ctrl.sv"]
+set_global_assignment -library "platform_intel_noc_clock_ctrl_1" -name VERILOG_FILE [file join $::quartus(qip_path) "synth/platform_intel_noc_clock_ctrl_1.v"]
+
+
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_TOOL_NAME "intel_noc_clock_ctrl"
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_TOOL_VERSION "2.1.1"
+set_global_assignment -entity "intel_noc_clock_ctrl" -library "intel_noc_clock_ctrl_211" -name IP_TOOL_ENV "QsysPrimePro"
+

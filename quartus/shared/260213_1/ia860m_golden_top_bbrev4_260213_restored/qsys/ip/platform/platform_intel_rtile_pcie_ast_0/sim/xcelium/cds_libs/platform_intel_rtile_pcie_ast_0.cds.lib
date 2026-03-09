@@ -1,0 +1,5 @@
+
+DEFINE                     work                            ./../libraries/work/                           
+DEFINE                     platform_intel_rtile_pcie_ast_0 ./../libraries/platform_intel_rtile_pcie_ast_0/
+INCLUDE simulator.cds.lib                                                                                 
+SOFTINCLUDE device.cds.lib                                                                                

@@ -48,7 +48,7 @@
 #define HS_DONE_OFF        (HS_BASE_OFF + 0xCu)
 
 // ---- Behavior params ----
-#define HOST_INC_COUNT     (500u)
+#define HOST_INC_COUNT     (5000u)
 
 static inline void host_fence(void)
 {

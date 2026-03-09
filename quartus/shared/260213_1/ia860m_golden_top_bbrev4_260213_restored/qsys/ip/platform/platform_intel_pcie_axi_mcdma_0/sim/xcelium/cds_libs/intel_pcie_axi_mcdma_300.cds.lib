@@ -1,0 +1,5 @@
+
+DEFINE                     work                     ./../libraries/work/                    
+DEFINE                     intel_pcie_axi_mcdma_300 ./../libraries/intel_pcie_axi_mcdma_300/
+INCLUDE simulator.cds.lib                                                                   
+SOFTINCLUDE device.cds.lib                                                                  

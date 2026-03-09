@@ -1,0 +1,104 @@
+	component platform_intel_pcie_axi_mcdma_0 is
+		port (
+			axi_st_clk                      : in  std_logic                       := 'X';             -- clk
+			axi_mm_clk                      : in  std_logic                       := 'X';             -- clk
+			axi_lite_clk                    : in  std_logic                       := 'X';             -- clk
+			axi_st_areset_n                 : in  std_logic                       := 'X';             -- reset_n
+			axi_mm_areset_n                 : in  std_logic                       := 'X';             -- reset_n
+			axi_lite_areset_n               : in  std_logic                       := 'X';             -- reset_n
+			ss_app_st_rx_tvalid             : in  std_logic                       := 'X';             -- tvalid
+			ss_app_st_rx_tdata              : in  std_logic_vector(1023 downto 0) := (others => 'X'); -- tdata
+			ss_app_st_rx_tkeep              : in  std_logic_vector(127 downto 0)  := (others => 'X'); -- tkeep
+			ss_app_st_rx_tlast              : in  std_logic                       := 'X';             -- tlast
+			ss_app_st_rx_tuser_vendor       : in  std_logic_vector(3 downto 0)    := (others => 'X'); -- ss_app_st_rx_tuser_vendor
+			ss_app_st_rx_tuser_last_segment : in  std_logic_vector(3 downto 0)    := (others => 'X'); -- ss_app_st_rx_tuser_last_segment
+			ss_app_st_rx_tuser_hvalid       : in  std_logic_vector(3 downto 0)    := (others => 'X'); -- ss_app_st_rx_tuser_hvalid
+			ss_app_st_rx_tuser_hdr          : in  std_logic_vector(1023 downto 0) := (others => 'X'); -- ss_app_st_rx_tuser_hdr
+			app_ss_st_tx_tvalid             : out std_logic;                                          -- tvalid
+			ss_app_st_tx_tready             : in  std_logic                       := 'X';             -- tready
+			app_ss_st_tx_tdata              : out std_logic_vector(1023 downto 0);                    -- tdata
+			app_ss_st_tx_tkeep              : out std_logic_vector(127 downto 0);                     -- tkeep
+			app_ss_st_tx_tlast              : out std_logic;                                          -- tlast
+			app_ss_st_tx_tuser_last_segment : out std_logic_vector(3 downto 0);                       -- app_ss_st_tx_tuser_last_segment
+			app_ss_st_tx_tuser_hvalid       : out std_logic_vector(3 downto 0);                       -- app_ss_st_tx_tuser_hvalid
+			app_ss_st_tx_tuser_hdr          : out std_logic_vector(1023 downto 0);                    -- app_ss_st_tx_tuser_hdr
+			app_ss_lite_csr_awvalid         : out std_logic;                                          -- awvalid
+			ss_app_lite_csr_awready         : in  std_logic                       := 'X';             -- awready
+			app_ss_lite_csr_awaddr          : out std_logic_vector(19 downto 0);                      -- awaddr
+			app_ss_lite_csr_wvalid          : out std_logic;                                          -- wvalid
+			ss_app_lite_csr_wready          : in  std_logic                       := 'X';             -- wready
+			app_ss_lite_csr_wdata           : out std_logic_vector(31 downto 0);                      -- wdata
+			app_ss_lite_csr_wstrb           : out std_logic_vector(3 downto 0);                       -- wstrb
+			ss_app_lite_csr_bvalid          : in  std_logic                       := 'X';             -- bvalid
+			app_ss_lite_csr_bready          : out std_logic;                                          -- bready
+			ss_app_lite_csr_bresp           : in  std_logic_vector(1 downto 0)    := (others => 'X'); -- bresp
+			app_ss_lite_csr_arvalid         : out std_logic;                                          -- arvalid
+			ss_app_lite_csr_arready         : in  std_logic                       := 'X';             -- arready
+			app_ss_lite_csr_araddr          : out std_logic_vector(19 downto 0);                      -- araddr
+			ss_app_lite_csr_rvalid          : in  std_logic                       := 'X';             -- rvalid
+			app_ss_lite_csr_rready          : out std_logic;                                          -- rready
+			ss_app_lite_csr_rdata           : in  std_logic_vector(31 downto 0)   := (others => 'X'); -- rdata
+			ss_app_lite_csr_rresp           : in  std_logic_vector(1 downto 0)    := (others => 'X'); -- rresp
+			ss_app_lite_csr_awprot          : out std_logic_vector(2 downto 0);                       -- awprot
+			ss_app_lite_csr_arprot          : out std_logic_vector(2 downto 0);                       -- arprot
+			h2d_axi_st_tvalid               : out std_logic;                                          -- tvalid
+			h2d_axi_st_tready               : in  std_logic                       := 'X';             -- tready
+			h2d_axi_st_tdata                : out std_logic_vector(1023 downto 0);                    -- tdata
+			h2d_axi_st_tkeep                : out std_logic_vector(127 downto 0);                     -- tkeep
+			h2d_axi_st_tlast                : out std_logic;                                          -- tlast
+			h2d_axi_st_tuser_metadata       : out std_logic_vector(63 downto 0);                      -- tuser
+			h2d_axi_st_tid                  : out std_logic_vector(11 downto 0);                      -- tid
+			h2d_axi_st_tuser_error          : out std_logic;                                          -- tuser_error
+			d2h_axi_st_tvalid               : in  std_logic                       := 'X';             -- tvalid
+			d2h_axi_st_tready               : out std_logic;                                          -- tready
+			d2h_axi_st_tdata                : in  std_logic_vector(1023 downto 0) := (others => 'X'); -- tdata
+			d2h_axi_st_tkeep                : in  std_logic_vector(127 downto 0)  := (others => 'X'); -- tkeep
+			d2h_axi_st_tlast                : in  std_logic                       := 'X';             -- tlast
+			d2h_axi_st_tuser_metadata       : in  std_logic_vector(63 downto 0)   := (others => 'X'); -- tuser
+			d2h_axi_st_tid                  : in  std_logic_vector(11 downto 0)   := (others => 'X'); -- tid
+			d2h_axi_st_tuser_error          : in  std_logic                       := 'X';             -- tuser_error
+			rx_pio_axi_lite_awvalid         : out std_logic;                                          -- awvalid
+			rx_pio_axi_lite_awready         : in  std_logic                       := 'X';             -- awready
+			rx_pio_axi_lite_awaddr          : out std_logic_vector(24 downto 0);                      -- awaddr
+			rx_pio_axi_lite_wvalid          : out std_logic;                                          -- wvalid
+			rx_pio_axi_lite_wready          : in  std_logic                       := 'X';             -- wready
+			rx_pio_axi_lite_wdata           : out std_logic_vector(63 downto 0);                      -- wdata
+			rx_pio_axi_lite_wstrb           : out std_logic_vector(7 downto 0);                       -- wstrb
+			rx_pio_axi_lite_bvalid          : in  std_logic                       := 'X';             -- bvalid
+			rx_pio_axi_lite_bready          : out std_logic;                                          -- bready
+			rx_pio_axi_lite_bresp           : in  std_logic_vector(1 downto 0)    := (others => 'X'); -- bresp
+			rx_pio_axi_lite_arvalid         : out std_logic;                                          -- arvalid
+			rx_pio_axi_lite_arready         : in  std_logic                       := 'X';             -- arready
+			rx_pio_axi_lite_araddr          : out std_logic_vector(24 downto 0);                      -- araddr
+			rx_pio_axi_lite_rvalid          : in  std_logic                       := 'X';             -- rvalid
+			rx_pio_axi_lite_rready          : out std_logic;                                          -- rready
+			rx_pio_axi_lite_rdata           : in  std_logic_vector(63 downto 0)   := (others => 'X'); -- rdata
+			rx_pio_axi_lite_rresp           : in  std_logic_vector(1 downto 0)    := (others => 'X'); -- rresp
+			rx_pio_axi_lite_awprot          : out std_logic_vector(2 downto 0);                       -- awprot
+			rx_pio_axi_lite_arprot          : out std_logic_vector(2 downto 0);                       -- arprot
+			ss_app_st_ciireq_tvalid         : in  std_logic                       := 'X';             -- tvalid
+			app_ss_st_ciireq_tready         : out std_logic;                                          -- tready
+			ss_app_st_ciireq_tdata          : in  std_logic_vector(71 downto 0)   := (others => 'X'); -- tdata
+			app_ss_st_ciiresp_tvalid        : out std_logic;                                          -- tvalid
+			app_ss_st_ciiresp_tdata         : out std_logic_vector(32 downto 0);                      -- tdata
+			ss_app_st_txcrdt_tvalid         : in  std_logic                       := 'X';             -- tvalid
+			ss_app_st_txcrdt_tdata          : in  std_logic_vector(18 downto 0)   := (others => 'X'); -- tdata
+			app_ss_st_rxcrdt_tvalid         : out std_logic;                                          -- tvalid
+			app_ss_st_rxcrdt_tdata          : out std_logic_vector(18 downto 0);                      -- tdata
+			ss_app_st_ctrlshadow_tvalid     : in  std_logic                       := 'X';             -- tvalid
+			ss_app_st_ctrlshadow_tdata      : in  std_logic_vector(39 downto 0)   := (others => 'X'); -- tdata
+			ss_app_st_flrrcvd_tvalid        : in  std_logic                       := 'X';             -- tvalid
+			ss_app_st_flrrcvd_tdata         : in  std_logic_vector(19 downto 0)   := (others => 'X'); -- tdata
+			app_ss_st_flrcmpl_tvalid        : out std_logic;                                          -- tvalid
+			app_ss_st_flrcmpl_tdata         : out std_logic_vector(19 downto 0);                      -- tdata
+			ss_app_st_flrcmpl_tready        : in  std_logic                       := 'X';             -- tready
+			ss_app_st_cplto_tvalid          : in  std_logic                       := 'X';             -- tvalid
+			ss_app_st_cplto_tdata           : in  std_logic_vector(29 downto 0)   := (others => 'X'); -- tdata
+			app_ss_st_err_tvalid            : out std_logic;                                          -- tvalid
+			app_ss_st_err_tdata             : out std_logic_vector(31 downto 0);                      -- tdata
+			app_ss_st_err_tlast             : out std_logic;                                          -- tlast
+			ss_app_st_err_tready            : in  std_logic                       := 'X';             -- tready
+			app_ss_st_err_tuser_error_type  : out std_logic_vector(13 downto 0)                       -- app_ss_st_err_tuser_error_type
+		);
+	end component platform_intel_pcie_axi_mcdma_0;
+

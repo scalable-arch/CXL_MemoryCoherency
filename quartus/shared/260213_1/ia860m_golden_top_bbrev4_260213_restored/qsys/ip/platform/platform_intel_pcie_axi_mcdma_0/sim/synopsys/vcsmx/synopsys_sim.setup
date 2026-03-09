@@ -1,0 +1,7 @@
+
+WORK > DEFAULT
+DEFAULT:                          ./libraries/work/                           
+work:                             ./libraries/work/                           
+intel_pcie_axi_mcdma_300:         ./libraries/intel_pcie_axi_mcdma_300/       
+platform_intel_pcie_axi_mcdma_0:  ./libraries/platform_intel_pcie_axi_mcdma_0/
+OTHERS=_device_synopsys_sim.setup                                             
