@@ -4,21 +4,39 @@
 #include <string.h>
 #include <inttypes.h>
 #include <stdatomic.h>
-#include <unistd.h>   // usleep
-#include <errno.h>    // ETIMEDOUT
-#include <stdlib.h>   // strtoul
+#include <unistd.h>
+#include <errno.h>
+#include <stdlib.h>
 
 #include "dma.lib.h"
 
-#define HS_XFER_WORDS       (8u)
-#define HS_XFER_BYTES       (32u)   // 8 words * 4B
-#define HS_DONE_WORD_IDX    (3u)    // HS_BASE + 0xC => word index 3
+#define HS_XFER_WORDS          (8u)
+#define HS_XFER_BYTES          (32u)   // one DMA block
+#define HS_DONE_WORD_IDX       (3u)    // HS_BASE + 0xC
+
+#define DEFAULT_HOST_INC_COUNT (500000u)
+#define COUNTER_XFER_BYTES     (32u)
+
+/*
+ * Device memory map from host DMA point of view:
+ *   counter block : 0x00000000
+ *   handshake     : 0x00100000
+ *   lock_host     : 0x00100020
+ *   lock_dev      : 0x00100040
+ *   turn          : 0x00100060
+ */
+#define DEV_COUNTER_ADDR       (0x00000000ull)
+#define DEV_HS_BASE            (0x00100000ull)
+#define DEV_LOCK_HOST_ADDR     (DEV_HS_BASE + 0x20ull)
+#define DEV_LOCK_DEV_ADDR      (DEV_HS_BASE + 0x40ull)
+#define DEV_TURN_ADDR          (DEV_HS_BASE + 0x60ull)
+
+#define TURN_HOST              (0u)
+#define TURN_DEV               (1u)
 
 // --------------------
-// (예제 스타일 그대로) H2D/D2H DMA 헬퍼
+// DMA read/write helpers
 // --------------------
-
-// Host memory(src)의 데이터를 DMA(H2D)로 device DDR(dst_dev_addr)에 쓰기
 static int h2d_write_buf(dma_ctx_t *ctx, uint64_t dst_dev_addr, const void *src, uint32_t len)
 {
     int st = 0;
@@ -45,7 +63,6 @@ static int h2d_write_buf(dma_ctx_t *ctx, uint64_t dst_dev_addr, const void *src,
     return 0;
 }
 
-// device DDR(src_dev_addr)의 데이터를 DMA(D2H)로 Host memory(dst)에 읽기
 static int d2h_read_buf(dma_ctx_t *ctx, void *dst, uint64_t src_dev_addr, uint32_t len)
 {
     int st = 0;
@@ -74,28 +91,91 @@ static int d2h_read_buf(dma_ctx_t *ctx, void *dst, uint64_t src_dev_addr, uint32
 }
 
 // --------------------
-// HPS barrier_handshake()에 맞춘 Host 핸드셰이크
+// 32B block helpers: only word0 is used
+// --------------------
+static int write_u32_block(dma_ctx_t *ctx, uint64_t dev_addr, uint32_t value)
+{
+    uint32_t wr[HS_XFER_WORDS] = {0};
+    wr[0] = value;
+    return h2d_write_buf(ctx, dev_addr, wr, HS_XFER_BYTES);
+}
+
+static int read_u32_block(dma_ctx_t *ctx, uint64_t dev_addr, uint32_t *value)
+{
+    int st = 0;
+    uint32_t rd[HS_XFER_WORDS] = {0};
+
+    if (!value) return -1;
+
+    st = d2h_read_buf(ctx, rd, dev_addr, HS_XFER_BYTES);
+    if (st) return st;
+
+    *value = rd[0];
+    return 0;
+}
+
+// --------------------
+// Prepare atomic run
+// --------------------
+static int host_prepare_atomic_state(dma_ctx_t *ctx,
+                                     uint64_t dev_counter_addr,
+                                     uint64_t dev_lock_host_addr,
+                                     uint64_t dev_lock_dev_addr,
+                                     uint64_t dev_turn_addr)
+{
+    int st = 0;
+
+    st = write_u32_block(ctx, dev_counter_addr, 0u);
+    if (st) return st;
+
+    st = write_u32_block(ctx, dev_lock_host_addr, 0u);
+    if (st) return st;
+
+    st = write_u32_block(ctx, dev_lock_dev_addr, 0u);
+    if (st) return st;
+
+    st = write_u32_block(ctx, dev_turn_addr, TURN_HOST);
+    if (st) return st;
+
+    return 0;
+}
+
+// --------------------
+// Handshake
 // --------------------
 static int host_barrier_handshake_dma(dma_ctx_t *ctx,
-                                      uint64_t hs_base_devaddr,
+                                      uint64_t dev_counter_addr,
+                                      uint64_t dev_hs_base,
+                                      uint64_t dev_lock_host_addr,
+                                      uint64_t dev_lock_dev_addr,
+                                      uint64_t dev_turn_addr,
                                       uint32_t token,
                                       uint32_t poll_limit,
                                       uint32_t poll_sleep_us)
 {
-    uint32_t wr[8] = {0};
-    uint32_t rd[8] = {0};
-    const uint32_t xfer_len = (uint32_t)sizeof(wr);
+    int st = 0;
+    uint32_t wr[HS_XFER_WORDS] = {0};
+    uint32_t rd[HS_XFER_WORDS] = {0};
 
-    // (1) REQ=token, ACK/GO=0
-    wr[0] = token;  // REQ @ +0x0
-    wr[1] = 0;      // ACK @ +0x4
-    wr[2] = 0;      // GO  @ +0x8
-    int st = h2d_write_buf(ctx, hs_base_devaddr, wr, xfer_len);
+    // important: initialize counter + mutex state BEFORE starting both sides
+    st = host_prepare_atomic_state(ctx,
+                                   dev_counter_addr,
+                                   dev_lock_host_addr,
+                                   dev_lock_dev_addr,
+                                   dev_turn_addr);
     if (st) return st;
 
-    // (2) ACK==token 폴링
+    // REQ=token, ACK/GO/DONE=0
+    wr[0] = token;  // REQ
+    wr[1] = 0u;     // ACK
+    wr[2] = 0u;     // GO
+    wr[3] = 0u;     // DONE
+    st = h2d_write_buf(ctx, dev_hs_base, wr, HS_XFER_BYTES);
+    if (st) return st;
+
+    // wait ACK==token
     for (uint32_t i = 0; i < poll_limit; ++i) {
-        st = d2h_read_buf(ctx, rd, hs_base_devaddr, xfer_len);
+        st = d2h_read_buf(ctx, rd, dev_hs_base, HS_XFER_BYTES);
         if (st) return st;
 
         if (rd[1] == token) break;
@@ -103,15 +183,16 @@ static int host_barrier_handshake_dma(dma_ctx_t *ctx,
     }
     if (rd[1] != token) return -ETIMEDOUT;
 
-    // (3) GO=token
+    // GO=token
     wr[0] = token;
     wr[1] = token;
     wr[2] = token;
-    st = h2d_write_buf(ctx, hs_base_devaddr, wr, xfer_len);
+    wr[3] = 0u;
+    st = h2d_write_buf(ctx, dev_hs_base, wr, HS_XFER_BYTES);
     if (st) return st;
 
-    // (선택) GO read-back
-    st = d2h_read_buf(ctx, rd, hs_base_devaddr, xfer_len);
+    // optional GO readback
+    st = d2h_read_buf(ctx, rd, dev_hs_base, HS_XFER_BYTES);
     if (st) return st;
     if (rd[2] != token) return -EIO;
 
@@ -119,23 +200,87 @@ static int host_barrier_handshake_dma(dma_ctx_t *ctx,
 }
 
 // --------------------
-// Handshake 이후 Host 측 increment (정해진 횟수)
+// Dekker mutex: host side
 // --------------------
-#define DEFAULT_HOST_INC_COUNT        (50000u)   // Host increment 횟수 (원하면 값만 바꾸면 됨)
-#define COUNTER_XFER_BYTES    (32u)      // 예제 스타일 유지: 32B 단위로 읽고/쓰면서 word0만 ++
-
-static int host_increment_n_times(dma_ctx_t *ctx, uint64_t dev_counter_addr, uint32_t n)
+static int host_dekker_lock(dma_ctx_t *ctx,
+                            uint64_t dev_lock_host_addr,
+                            uint64_t dev_lock_dev_addr,
+                            uint64_t dev_turn_addr)
 {
     int st = 0;
-    uint32_t buf[8] = {0}; // 32B
+    uint32_t other = 0u;
+    uint32_t turn  = 0u;
 
-    for (uint32_t i = 0; i < n; ++i) {
-        st = d2h_read_buf(ctx, buf, dev_counter_addr, COUNTER_XFER_BYTES);
+    st = write_u32_block(ctx, dev_lock_host_addr, 1u);
+    if (st) return st;
+
+    for (;;) {
+        st = read_u32_block(ctx, dev_lock_dev_addr, &other);
         if (st) return st;
 
-        buf[0] = buf[0] + 1u;
+        if (other == 0u) {
+            return 0;
+        }
 
-        st = h2d_write_buf(ctx, dev_counter_addr, buf, COUNTER_XFER_BYTES);
+        st = read_u32_block(ctx, dev_turn_addr, &turn);
+        if (st) return st;
+
+        if (turn == TURN_DEV) {
+            st = write_u32_block(ctx, dev_lock_host_addr, 0u);
+            if (st) return st;
+
+            do {
+                st = read_u32_block(ctx, dev_turn_addr, &turn);
+                if (st) return st;
+            } while (turn == TURN_DEV);
+
+            st = write_u32_block(ctx, dev_lock_host_addr, 1u);
+            if (st) return st;
+        }
+    }
+}
+
+static int host_dekker_unlock(dma_ctx_t *ctx,
+                              uint64_t dev_lock_host_addr,
+                              uint64_t dev_turn_addr)
+{
+    int st = 0;
+
+    st = write_u32_block(ctx, dev_turn_addr, TURN_DEV);
+    if (st) return st;
+
+    st = write_u32_block(ctx, dev_lock_host_addr, 0u);
+    if (st) return st;
+
+    return 0;
+}
+
+// --------------------
+// Atomic increment
+// --------------------
+static int host_increment_n_times_atomic(dma_ctx_t *ctx,
+                                         uint64_t dev_counter_addr,
+                                         uint64_t dev_lock_host_addr,
+                                         uint64_t dev_lock_dev_addr,
+                                         uint64_t dev_turn_addr,
+                                         uint32_t n)
+{
+    int st = 0;
+    uint32_t value = 0u;
+
+    for (uint32_t i = 0; i < n; ++i) {
+        st = host_dekker_lock(ctx, dev_lock_host_addr, dev_lock_dev_addr, dev_turn_addr);
+        if (st) return st;
+
+        st = read_u32_block(ctx, dev_counter_addr, &value);
+        if (st) return st;
+
+        value = value + 1u;
+
+        st = write_u32_block(ctx, dev_counter_addr, value);
+        if (st) return st;
+
+        st = host_dekker_unlock(ctx, dev_lock_host_addr, dev_turn_addr);
         if (st) return st;
     }
 
@@ -156,7 +301,7 @@ static int host_wait_hps_done(dma_ctx_t *ctx,
         if (st) return st;
 
         if (rd[HS_DONE_WORD_IDX] == token) {
-            return 0; // HPS done
+            return 0;
         }
 
         if (poll_sleep_us) usleep(poll_sleep_us);
@@ -170,7 +315,6 @@ static int host_clear_hps_done(dma_ctx_t *ctx, uint64_t dev_hs_base)
     int st = 0;
     uint32_t rd[HS_XFER_WORDS] = {0};
 
-    // read-modify-write로 word3(DONE)만 0으로
     st = d2h_read_buf(ctx, rd, dev_hs_base, HS_XFER_BYTES);
     if (st) return st;
 
@@ -182,7 +326,6 @@ static int host_clear_hps_done(dma_ctx_t *ctx, uint64_t dev_hs_base)
     return 0;
 }
 
-//스크립트용
 static void print_usage(const char *prog)
 {
     printf("Usage: %s [-n inc_count] [-b BDF]\n", prog);
@@ -192,7 +335,6 @@ static void print_usage(const char *prog)
 
 int main(int argc, char **argv)
 {
-    // 이하 스크립트용
     const char *bdf = "0000:41:00.0";
     uint32_t host_inc_count = DEFAULT_HOST_INC_COUNT;
 
@@ -243,16 +385,18 @@ int main(int argc, char **argv)
     printf("IOVA(tx)   = 0x%016" PRIx64 "\n", ctx.tx_iova);
     printf("IOVA(rx)   = 0x%016" PRIx64 "\n", ctx.rx_iova);
 
-    // Host(DMA) 기준 주소
-    const uint64_t dev_counter_addr = 0x00000000ull;
-    const uint64_t dev_hs_base      = 0x00100000ull;
-
     const uint32_t token = 0xA5A50001u;
 
     printf("Handshake start: hs_base=0x%016" PRIx64 ", token=0x%08x\n",
-           dev_hs_base, token);
+           DEV_HS_BASE, token);
 
-    st = host_barrier_handshake_dma(&ctx, dev_hs_base, token,
+    st = host_barrier_handshake_dma(&ctx,
+                                    DEV_COUNTER_ADDR,
+                                    DEV_HS_BASE,
+                                    DEV_LOCK_HOST_ADDR,
+                                    DEV_LOCK_DEV_ADDR,
+                                    DEV_TURN_ADDR,
+                                    token,
                                     /*poll_limit=*/5000u,
                                     /*poll_sleep_us=*/1000u);
     if (st) {
@@ -261,22 +405,25 @@ int main(int argc, char **argv)
         return 2;
     }
 
-    printf("Handshake OK (GO sent). Start HOST increment: %u times\n", host_inc_count);
+    printf("Handshake OK (GO sent). Start HOST atomic increment: %u times\n", host_inc_count);
 
-    // Host도 정해진 횟수만큼 increment 수행
-    st = host_increment_n_times(&ctx, dev_counter_addr, host_inc_count);
+    st = host_increment_n_times_atomic(&ctx,
+                                       DEV_COUNTER_ADDR,
+                                       DEV_LOCK_HOST_ADDR,
+                                       DEV_LOCK_DEV_ADDR,
+                                       DEV_TURN_ADDR,
+                                       host_inc_count);
     if (st) {
-        printf("host increment failed: %d\n", st);
+        printf("host atomic increment failed: %d\n", st);
         cleanup(&ctx);
         return 3;
     }
 
-    printf("HOST increment done.\n");
+    printf("HOST atomic increment done.\n");
 
-    // 1) HPS 완료(DONE=token) 대기
-    st = host_wait_hps_done(&ctx, dev_hs_base, token,
+    st = host_wait_hps_done(&ctx, DEV_HS_BASE, token,
                             /*poll_limit=*/5000u,
-                            /*poll_sleep_us=*/1000u); // 1ms * 5000 = 최대 5초
+                            /*poll_sleep_us=*/1000u);
     if (st) {
         printf("wait HPS done failed: %d\n", st);
         cleanup(&ctx);
@@ -284,24 +431,23 @@ int main(int argc, char **argv)
     }
     printf("HPS done detected.\n");
 
-    // 2) 최종 counter 읽어서 출력
-    uint32_t final_rd[8] = {0};
-    st = d2h_read_buf(&ctx, final_rd, dev_counter_addr, (uint32_t)sizeof(final_rd));
+    uint32_t final = 0u;
+    st = read_u32_block(&ctx, DEV_COUNTER_ADDR, &final);
     if (st) {
         printf("final counter read failed: %d\n", st);
         cleanup(&ctx);
         return 5;
     }
-    printf("FINAL counter = 0x%08x (%u)\n", final_rd[0], final_rd[0]);
+    printf("FINAL counter = 0x%08x (%u)\n", final, final);
 
-    // 3) DONE 비트 초기화(0으로)
-    st = host_clear_hps_done(&ctx, dev_hs_base);
+    st = host_clear_hps_done(&ctx, DEV_HS_BASE);
     if (st) {
         printf("clear HPS done failed: %d\n", st);
         cleanup(&ctx);
         return 6;
     }
     printf("HPS done cleared.\n");
+
     cleanup(&ctx);
     return 0;
 }
