@@ -152,7 +152,13 @@ After `Initiation Done!` appears, run:
 
 The program performs multiple device-memory write/readback checks and prints pass/fail messages for each address.
 
-## 6. Device Memory Sharing Test
+## 6. CXL.CACHE Validation
+
+Although `/sw/1-3_CXL_CACHE` contains source files, the code is identical to the following memory coherency tests. Therefore, there is no separate script for it, and completing the subsequent Host memory sharing and Device memory sharing tests is sufficient to verify support for CXL.cache as well.
+
+This is because satisfying atomic access on shared memory requires not only support for the CXL.cache protocol, but also a guarantee of memory coherency.
+
+## 7. Device Memory Sharing Test
 
 In this flow, the device runs first, then the host runs second.
 
@@ -346,7 +352,7 @@ Right-click that line and select:
 
 The final result is the `Final counter` value printed in the terminal.
 
-## 8. Notes on Increment Count
+## 9. Notes on Increment Count
 
 For the memory-sharing tests, the host script supports:
 
@@ -364,7 +370,7 @@ Example:
 
 To compare host and device contributions symmetrically, match the host increment count with the device-side increment constant in the device source.
 
-## 9. Expected Output Summary
+## 10. Expected Output Summary
 
 ### CXL.io
 
@@ -388,54 +394,3 @@ Final counter = ...
 
 This printed `Final counter` is the main result to check.
 
-## 10. Troubleshooting
-
-### `OK` does not appear in `run_init.sh`
-
-* Retry the initialization script
-* Make sure the card is properly enumerated
-* Check BMC reboot and FPGA load status
-
-### `invalid target...` in RiscFree
-
-* Use the existing working target/debug configuration
-* Recheck JTAG connection and target selection
-
-### Build changes do not appear
-
-* Use **Refresh**
-* Then run **Clean Project**
-* Then run **Build Project**
-
-### Host script does not run
-
-* Check `sudo` permission
-* Verify `libnuma` is installed
-* Make sure the PCIe device is enumerated correctly in `lspci`
-
-## 11. Recommended Execution Order Summary
-
-### Device Memory Sharing
-
-* Initialize FPGA
-* Build and start device in RiscFree
-* Run host program
-* Read `Final counter`
-
-### Host Memory Sharing
-
-* Initialize FPGA
-* Run host program
-* Build and start device in RiscFree
-* Read `Final counter`
-
-## 12. Main Output to Record
-
-For validation and reporting, record:
-
-* CXL.io read/write result
-* CXL.mem read/write result
-* Final counter value for host-memory sharing
-* Final counter value for device-memory sharing
-
-These outputs are the primary evidence that the host-device communication and memory-sharing paths are functioning correctly.
