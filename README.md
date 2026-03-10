@@ -45,11 +45,11 @@ Files used across multiple tests for setup, configuration, and fundamental opera
 
 * **`2_HostMem_sharing/`** : Host-memory sharing test. The host starts first and initializes the shared memory region. The device starts later to issue requests.
   * *Host Source:* `sw/2_HostMem_sharing/Host/main.c`
-  * *Device Source:* `riscfree/Riscfree_260306/HostMem_sharing/src/main.c`
+  * *Device Source:* `riscfree/HostMem_sharing/src/main.c`
 
 * **`3_DeviceMem_sharing/`** : Device-memory sharing test. The device starts first. The host starts later and participates in the synchronized increment test.
   * *Host Source:* `sw/3_DeviceMem_sharing/Host/main.c`
-  * *Device Source:* `riscfree/Riscfree_260306/DeviceMem_sharing/src/main.c`
+  * *Device Source:* `riscfree/DeviceMem_sharing/src/main.c`
 
 ---
 
@@ -122,7 +122,7 @@ Completing the subsequent **Host memory sharing** and **Device memory sharing** 
 3. **Build the device-side project in RiscFree:**
    * Right-click **`DeviceMem_sharing`** -> Select **Clean Project** -> Select **Build Project**. *(Use **Refresh** first if the view is stale).*
 4. **Start device execution in RiscFree:**
-   * Right-click **`260306_test`** -> Select **Debug As** -> Select **1 Ashling ...**
+   * Right-click **`DeviceMem_sharing`** -> Select **Debug As** -> Select **1 Ashling ...**
 5. **Run to the synchronization end point:**
    * In `main.c`, find `end = 1;`. Right-click that line and select **Run to Line**.
 6. **Run the host-side program:**
