@@ -15,11 +15,11 @@
 #define SHARED_BYTES       (2ull * 1024ull * 1024ull)
 
 // ---- For debug printing: HPS address = H2F_BASE + IOVA ----
-#define HPS_H2F_BASE       (0x80000000ull)
+#define HPS_H2F_BASE       (0x80000100ull)
 
 // ---- Offsets inside shared buffer ----
-#define COUNTER_OFF        (0x00000000u)
-#define HS_BASE_OFF        (0x00100000u)
+#define COUNTER_OFF        (0x00000100u)
+#define HS_BASE_OFF        (0x00100100u)
 
 #define HS_REQ_OFF         (HS_BASE_OFF + 0x00u)
 #define HS_ACK_OFF         (HS_BASE_OFF + 0x04u)
@@ -35,7 +35,7 @@
 #define TURN_DEV           (1u)
 
 // ---- Behavior params ----
-#define DEFAULT_HOST_INC_COUNT  (5000u)
+#define DEFAULT_HOST_INC_COUNT  (50000u)
 
 static inline void host_fence(void)
 {

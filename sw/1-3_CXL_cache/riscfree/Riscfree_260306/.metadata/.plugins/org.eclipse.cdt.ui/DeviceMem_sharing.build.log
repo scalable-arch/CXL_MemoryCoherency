@@ -1,4 +1,4 @@
-13:12:37 **** Incremental Build of configuration Debug for project DeviceMem_sharing ****
+14:39:05 **** Build of configuration Debug for project DeviceMem_sharing ****
 make all 
 Building file: ../src/init.S
 Invoking: GNU Arm Cross Assembler
@@ -12,7 +12,7 @@ Finished building: ../src/main.c
  
 Building target: DeviceMem_sharing.elf
 Invoking: GNU Arm Cross C Linker
-aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -T "/home/99june18/new/CXL_MemoryCoherency/CXL_cache/riscfree/Riscfree_260306/DeviceMem_sharing/src/link.ld" -nostartfiles -Xlinker --gc-sections -Xlinker --no-warn-rwx-segments -Wl,-Map,"DeviceMem_sharing.map" --specs=nosys.specs -o "DeviceMem_sharing.elf" ./src/init.o ./src/main.o   
+aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -T "/home/99june18/new/CXL_MemoryCoherency/sw/1-3_CXL_cache/riscfree/Riscfree_260306/DeviceMem_sharing/src/link.ld" -nostartfiles -Xlinker --gc-sections -Xlinker --no-warn-rwx-segments -Wl,-Map,"DeviceMem_sharing.map" --specs=nosys.specs -o "DeviceMem_sharing.elf" ./src/init.o ./src/main.o   
 Finished building target: DeviceMem_sharing.elf
  
 Invoking: GNU Arm Cross Create Flash Image
@@ -26,5 +26,5 @@ aarch64-none-elf-size --format=berkeley "DeviceMem_sharing.elf"
 Finished building: DeviceMem_sharing.siz
  
 
-13:12:37 Build Finished. 0 errors, 0 warnings. (took 167ms)
+14:39:05 Build Finished. 0 errors, 0 warnings. (took 167ms)
 

@@ -59,24 +59,23 @@ END GROUP
  .text.io_fence
                 0x000000007fe00390        0xc ./src/main.o
  .text.barrier_handshake
-                0x000000007fe0039c      0x150 ./src/main.o
+                0x000000007fe0039c      0x154 ./src/main.o
  .text.dekker_lock_device
-                0x000000007fe004ec       0xa0 ./src/main.o
+                0x000000007fe004f0       0xa0 ./src/main.o
  .text.dekker_unlock_device
-                0x000000007fe0058c       0x44 ./src/main.o
+                0x000000007fe00590       0x44 ./src/main.o
  .text.read_counter_once
-                0x000000007fe005d0       0x34 ./src/main.o
+                0x000000007fe005d4       0x38 ./src/main.o
  .text.do_increment_atomic
-                0x000000007fe00604       0x70 ./src/main.o
+                0x000000007fe0060c       0x74 ./src/main.o
  .text.wait_host_refresh_request
-                0x000000007fe00674       0x40 ./src/main.o
+                0x000000007fe00680       0x40 ./src/main.o
  .text.send_refresh_ack
-                0x000000007fe006b4       0x38 ./src/main.o
- .text.main     0x000000007fe006ec       0xa8 ./src/main.o
-                0x000000007fe006ec                main
+                0x000000007fe006c0       0x38 ./src/main.o
+ .text.main     0x000000007fe006f8       0xa8 ./src/main.o
+                0x000000007fe006f8                main
  *(.gnu.linkonce.t.*)
                 0x000000007fe007a0                . = ALIGN (0x10)
- *fill*         0x000000007fe00794        0xc 
 
 .iplt           0x000000007fe007a0        0x0
  .iplt          0x000000007fe007a0        0x0 ./src/init.o
@@ -134,13 +133,13 @@ LOAD linker stubs
  .debug_line    0x000000000000006e      0x2be ./src/main.o
 
 .debug_line_str
-                0x0000000000000000      0x20d
+                0x0000000000000000      0x214
  .debug_line_str
-                0x0000000000000000      0x20d ./src/init.o
-                                         0x70 (size before relaxing)
+                0x0000000000000000      0x214 ./src/init.o
+                                         0x77 (size before relaxing)
  .debug_line_str
-                0x000000000000020d        0x0 ./src/main.o
-                                        0x288 (size before relaxing)
+                0x0000000000000214        0x0 ./src/main.o
+                                        0x296 (size before relaxing)
 
 .debug_info     0x0000000000000000      0x3e0
  .debug_info    0x0000000000000000       0x29 ./src/init.o
@@ -156,10 +155,10 @@ LOAD linker stubs
  .debug_aranges
                 0x0000000000000030       0xb0 ./src/main.o
 
-.debug_str      0x0000000000000000     0x498d
- .debug_str     0x0000000000000000     0x498d ./src/init.o
-                                         0x7e (size before relaxing)
- .debug_str     0x000000000000498d        0x0 ./src/main.o
+.debug_str      0x0000000000000000     0x4994
+ .debug_str     0x0000000000000000     0x4994 ./src/init.o
+                                         0x85 (size before relaxing)
+ .debug_str     0x0000000000004994        0x0 ./src/main.o
                                        0x4a6a (size before relaxing)
 
 .debug_rnglists

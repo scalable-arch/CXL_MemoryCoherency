@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define TARGET_ADDR          ((uintptr_t)0x90000000u)
-#define HS_BASE              ((uintptr_t)0x90100000u)
+#define TARGET_ADDR          ((uintptr_t)0x90000100u)
+#define HS_BASE              ((uintptr_t)0x90100100u)
 
 #define HS_REQ_ADDR          (HS_BASE + 0x0u)
 #define HS_ACK_ADDR          (HS_BASE + 0x4u)
