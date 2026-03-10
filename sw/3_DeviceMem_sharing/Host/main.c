@@ -36,18 +36,23 @@ static int h2d_write_buf(dma_ctx_t *ctx, uint64_t dst_dev_addr, const void *src,
 
     if (!ctx || !src) return -1;
     if (len == 0 || len > DMA_LEN_MAX_BYTES) return -1;
+    
     // H2D queue 초기화
     st = qcsr_init_queue(ctx, QCSR_DIR_H2D, QUEUE_ID, ctx->desc_iova, RING_ORDER_LOG2);
     if (st) return st;
+
     // Host memory(tx_va)에 전송할 payload 복사
     memcpy(ctx->tx_va, src, len);
     atomic_thread_fence(memory_order_release);
+
     // H2D descriptor 작성
     st = write_desc_h2d(ctx, desc_idx, dst_dev_addr, len);
     if (st) return st;
+
     // doorbell로 DMA 실행 시작
     st = doorbell(ctx, QCSR_DIR_H2D, QUEUE_ID, desc_idx);
     if (st) return st;
+
     // 해당 descriptor 완료까지 polling
     st = poll_complete(ctx, QCSR_DIR_H2D, QUEUE_ID, desc_idx, NULL);
     if (st) return st;
@@ -63,21 +68,27 @@ static int d2h_read_buf(dma_ctx_t *ctx, void *dst, uint64_t src_dev_addr, uint32
 
     if (!ctx || !dst) return -1;
     if (len == 0 || len > DMA_LEN_MAX_BYTES) return -1;
+
     // D2H queue 초기화
     st = qcsr_init_queue(ctx, QCSR_DIR_D2H, QUEUE_ID, ctx->desc_iova, RING_ORDER_LOG2);
     if (st) return st;
+
     // rx buffer를 비운 뒤 DMA read 준비
     memset(ctx->rx_va, 0x00, len);
     atomic_thread_fence(memory_order_release);
+
     // D2H descriptor 작성
     st = write_desc_d2h(ctx, desc_idx, src_dev_addr, len);
     if (st) return st;
+
     // doorbell로 DMA 실행 시작
     st = doorbell(ctx, QCSR_DIR_D2H, QUEUE_ID, desc_idx);
     if (st) return st;
+
     // 해당 descriptor 완료까지 polling
     st = poll_complete(ctx, QCSR_DIR_D2H, QUEUE_ID, desc_idx, NULL);
     if (st) return st;
+
     // DMA로 읽어온 내용을 caller buffer로 복사
     memcpy(dst, ctx->rx_va, len);
     return 0;
@@ -206,13 +217,16 @@ static int host_dekker_lock(dma_ctx_t *ctx,
         // 상대(HPS)의 진입 의사 확인
         st = read_u32_block(ctx, dev_lock_dev_addr, &other);
         if (st) return st;
+
         // 상대가 진입을 원하지 않으면 바로 진입
         if (other == 0u) {
             return 0;
         }
+
         // turn 값으로 현재 우선권 확인
         st = read_u32_block(ctx, dev_turn_addr, &turn);
         if (st) return st;
+
         // 우선권이 상대에게 있으면 잠시 자신의 flag를 내리고 turn이 바뀔 때까지 대기
         if (turn == TURN_DEV) {
             st = write_u32_block(ctx, dev_lock_host_addr, 0u);
@@ -222,6 +236,7 @@ static int host_dekker_lock(dma_ctx_t *ctx,
                 st = read_u32_block(ctx, dev_turn_addr, &turn);
                 if (st) return st;
             } while (turn == TURN_DEV);
+
         // 우선권이 돌아오면 다시 진입 의사 표시
             st = write_u32_block(ctx, dev_lock_host_addr, 1u);
             if (st) return st;
@@ -373,11 +388,14 @@ int main(int argc, char **argv)
     printf("IOVA(desc) = 0x%016" PRIx64 "\n", ctx.desc_iova);
     printf("IOVA(tx)   = 0x%016" PRIx64 "\n", ctx.tx_iova);
     printf("IOVA(rx)   = 0x%016" PRIx64 "\n", ctx.rx_iova);
+
     // 이번 실행에서 Host와 Device/HPS가 공유할 handshake token 정의
     const uint32_t token = 0xA5A50001u;
+
     // handshake 시작 정보 출력
     printf("Handshake start: hs_base=0x%016" PRIx64 ", token=0x%08x\n",
            DEV_HS_BASE, token);
+
     // counter / lock 상태 초기화 후 REQ 기록 -> ACK 대기 -> GO 기록 순서로 handshake 수행
     st = host_barrier_handshake_dma(&ctx,
                                     DEV_COUNTER_ADDR,
@@ -395,6 +413,7 @@ int main(int argc, char **argv)
     }
     // handshake가 완료되었으므로 Host 측 atomic increment 시작
     printf("Handshake OK (GO sent). Start HOST atomic increment: %u times\n", host_inc_count);
+
     // device memory의 counter를 n회 증가시키며, 각 증가 연산은 Dekker lock으로 보호
     st = host_increment_n_times_atomic(&ctx,
                                        DEV_COUNTER_ADDR,
@@ -409,6 +428,7 @@ int main(int argc, char **argv)
     }
     // Host 작업 완료 후 Device/HPS의 완료 신호를 기다림
     printf("HOST atomic increment done.\n");
+
     // Device/HPS가 DONE=token을 기록할 때까지 polling
     st = host_wait_hps_done(&ctx, DEV_HS_BASE, token,
                             /*poll_limit=*/5000u,
@@ -418,7 +438,9 @@ int main(int argc, char **argv)
         cleanup(&ctx);
         return 4;
     }
+
     printf("HPS done detected.\n");
+
     // 최종 counter 값을 device memory에서 읽어 결과 확인
     uint32_t final = 0u;
     st = read_u32_block(&ctx, DEV_COUNTER_ADDR, &final);
@@ -427,7 +449,9 @@ int main(int argc, char **argv)
         cleanup(&ctx);
         return 5;
     }
+
     printf("FINAL counter = 0x%08x (%u)\n", final, final);
+
     // DONE flag를 clear하여 다음 실행에 이전 완료 상태가 남지 않도록 정리
     st = host_clear_hps_done(&ctx, DEV_HS_BASE);
     if (st) {
@@ -435,7 +459,9 @@ int main(int argc, char **argv)
         cleanup(&ctx);
         return 6;
     }
+
     printf("HPS done cleared.\n");
+
     // 할당한 DMA/VFIO 자원을 정리하고 정상 종료
     cleanup(&ctx);
     return 0;

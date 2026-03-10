@@ -1,3 +1,14 @@
+/*
+Explanation
+이 코드는 디바이스/HPS 측에서 공유 메모리 기반 atomic increment 동작을 수행하는 코드이다.
+호스트와 디바이스는 TARGET_ADDR의 counter를 함께 사용하며, HS_BASE 아래의 핸드셰이크 레지스터로 실행 순서를 맞춘다.
+프로그램은 먼저 REQ/ACK/GO 기반 barrier handshake를 통해 호스트가 준비되었는지 확인한 뒤 실제 작업을 시작한다.
+이후 디바이스는 Dekker mutex를 사용해 호스트와 상호 배제를 보장하면서 counter를 LIMIT 횟수만큼 증가시킨다.
+증가 작업이 끝나면 DONE 토큰을 기록해 디바이스 측 작업 완료를 호스트에 알린다.
+그 다음 호스트가 모든 increment를 마친 뒤 보내는 refresh request를 기다렸다가 counter를 다시 읽어 result를 최신화한다.
+마지막으로 refresh ACK를 반환하고 종료하여, 디바이스 측에서도 최종 counter 결과를 확인할 수 있게 한다.
+*/
+
 #include <stdint.h>
 #include <stdbool.h>
 

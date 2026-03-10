@@ -256,23 +256,29 @@ int main(int argc, char **argv)
         cleanup_all(&ctx);
         return 1;
     }
+    
     // shared buffer 초기화 + 순서 보장(fence)
     memset(ctx.shared_va, 0, ctx.shared_bytes);
     host_fence();
+
     // counter/flag 변수 초기화
     host_prepare_shared_state(ctx.shared_va);
+
     // Host가 보는 shared buffer의 VA/IOVA/크기를 출력 (매핑 상태 확인 목적)
     printf("[shared] VA   = %p\n", (void *)ctx.shared_va);
     printf("[shared] IOVA = 0x%016" PRIx64 " (requested 0x%016" PRIx64 ")\n",
            ctx.shared_iova, (uint64_t)SHARED_IOVA_BASE);
     printf("[shared] size = 0x%zx bytes\n", ctx.shared_bytes);
+
     // counter/handshake 기준 주소를 계산 및 출력
     const uint64_t hps_target_addr = HPS_H2F_BASE + ctx.shared_iova + COUNTER_OFF;
     const uint64_t hps_hs_base     = HPS_H2F_BASE + ctx.shared_iova + HS_BASE_OFF;
     printf("[HPS] TARGET_ADDR should be 0x%016" PRIx64 "\n", hps_target_addr);
     printf("[HPS] HS_BASE     should be 0x%016" PRIx64 "\n", hps_hs_base);
+
     // Host와 Device/HPS가 공유할 handshake token을 정의 
     const uint32_t token = 0xA5A50001u;
+
     // Device/HPS가 REQ를 기록할 때까지 대기 + 안내 메시지 출력
     printf("\nHOST is ready. Waiting for DEVICE REQ(token=0x%08x)...\n", token);
     printf("(Run device/HPS program now)\n\n");
@@ -286,6 +292,7 @@ int main(int argc, char **argv)
         cleanup_all(&ctx);
         return 2;
     }
+
     // handshake가 완료되면 Host 측 atomic increment를 시작
     printf("Handshake OK (GO seen). Start HOST atomic increment: %u times\n", host_inc_count);
 
@@ -295,6 +302,7 @@ int main(int argc, char **argv)
         cleanup_all(&ctx);
         return 3;
     }
+
     // Host 작업이 끝나면 Device/HPS의 완료 신호를 기다림
     printf("HOST atomic increment done. Waiting DEVICE DONE(token)...\n");
 
@@ -306,6 +314,7 @@ int main(int argc, char **argv)
         cleanup_all(&ctx);
         return 4;
     }
+
     // shared counter의 최종 값을 읽어 이번 Host/HPS 공동 수행 결과를 확인
     volatile uint32_t * const counter = shm_u32_ptr(ctx.shared_va, COUNTER_OFF);
     uint32_t final = *counter;
@@ -321,6 +330,7 @@ int main(int argc, char **argv)
     *shm_u32_ptr(ctx.shared_va, LOCK_DEV_OFF)  = 0u;
     *shm_u32_ptr(ctx.shared_va, TURN_OFF)      = TURN_HOST;
     host_fence();
+
     // 할당한 shared/VFIO 자원을 정리
     cleanup_all(&ctx);
     return 0;
