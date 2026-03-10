@@ -1,9 +1,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// HPSï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ shared memory ï¿½Ö¼ï¿½
-#define TARGET_ADDR      ((uintptr_t)0x81000100u)
-#define HS_BASE          ((uintptr_t)0x81100100u)
+// HPS¿¡¼­ º¸´Â shared memory ÁÖ¼Ò
+#define TARGET_ADDR      ((uintptr_t)0x81000000u)
+#define HS_BASE          ((uintptr_t)0x81100000u)
 
 #define HS_REQ_ADDR      (HS_BASE + 0x00u)
 #define HS_ACK_ADDR      (HS_BASE + 0x04u)
@@ -18,7 +18,7 @@
 #define TURN_HOST        (0u)
 #define TURN_DEV         (1u)
 
-#define LIMIT            (50000u)
+#define LIMIT            (5000u)
 
 static inline void io_fence(void)
 {
@@ -41,18 +41,18 @@ static bool device_handshake_initiate(uint32_t token, uint32_t spin_limit)
     volatile uint32_t * const cnt      = (volatile uint32_t *)TARGET_ADDR;
     volatile uint32_t * const flag_dev = (volatile uint32_t *)LOCK_DEV_ADDR;
 
-    // ï¿½Ö¼ï¿½ ï¿½Ê±ï¿½È­
+    // ÃÖ¼Ò ÃÊ±âÈ­
     *done     = 0u;
     *go       = 0u;
     *ack      = 0u;
     *flag_dev = 0u;
     io_fence();
 
-    // REQ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // REQ º¸³»±â
     *req = token;
     io_fence();
 
-    // ACK ï¿½ï¿½ï¿½
+    // ACK ´ë±â
     for (uint32_t spin = 0; spin < spin_limit; ++spin) {
         if (*ack == token) {
             io_fence();
@@ -63,11 +63,11 @@ static bool device_handshake_initiate(uint32_t token, uint32_t spin_limit)
         return false;
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ counterï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ½ÃÀÛ Á÷Àü counter¸¦ 0À¸·Î ¸ÂÃã
     *cnt = 0u;
     io_fence();
 
-    // GO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // GO º¸³»±â
     *go = token;
     io_fence();
 
