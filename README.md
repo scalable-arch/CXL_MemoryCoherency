@@ -24,73 +24,51 @@ sw/
 └── run_riscfree.sh
 ```
 
-### Directory Description
+## Directory & Source Code Overview
 
-#### `1-1_CXL_io/`
+This section outlines the repository structure, detailing the purpose of each directory and its associated key source files.
 
-CXL.io validation. This test checks whether the host can access FPGA BAR space through PCIe/CXL.io and confirm read/write behavior.
+### Common Libraries & Utilities
+Files used across multiple tests for setup, configuration, and fundamental operations.
 
-#### `1-2_CXL_mem/`
+* **`run_riscfree.sh`** Launches the RiscFree workspace for the provided HPS projects.
+* **`fpga_image.rbf`** FPGA bitstream used by the initialization scripts.
+* **`sw/*/Host/bwvfio.h` & `bwvfio.c`** Low-level VFIO header and implementation for PCIe BAR MMIO access and DMA memory allocation/mapping.
+* **`sw/*/Host/dma.lib.h`** Common DMA helper library for descriptor setup, queue initialization, doorbell, completion polling, and cleanup.
 
-CXL.mem validation. This test checks whether the host can read and write a portion of device memory through the DMA-based path.
+---
 
-#### `2_HostMem_sharing/`
+### 📂 1-1_CXL_io (CXL.io Validation)
+This test checks whether the host can access FPGA BAR space through PCIe/CXL.io and confirm read/write behavior.
 
-Host-memory sharing test. In this mode, the host starts first, initializes the shared memory region, and the device starts later to issue the request and participate in the synchronized increment test.
+* **`sw/1-1_CXL_io/src/cxl_io_test.c`** CXL.io test program. Verifies BAR/QCSR MMIO read/write from the host.
 
-#### `3_DeviceMem_sharing/`
+---
 
-Device-memory sharing test. In this mode, the device starts first, then the host starts later and participates in the synchronized increment test.
+### 📂 1-2_CXL_mem (CXL.mem Validation)
+This test checks whether the host can read and write a portion of device memory through the DMA-based path.
 
-#### `run_riscfree.sh`
+* **`sw/1-2_CXL_mem/src/cxl_mem_test.c`** CXL.mem test program. Verifies host read/write access to device memory through DMA.
 
-Launches the RiscFree workspace for the provided HPS projects.
+---
 
-#### `fpga_image.rbf`
+### 📂 2_HostMem_sharing (Host-Memory Sharing Test)
+In this mode, the **host starts first** and initializes the shared memory region. The device starts later to issue requests and participate in the synchronized increment test.
 
-FPGA bitstream used by the initialization scripts.
-
-## 2. Source Code list
-
-This document lists the main source files and their roles.
-
-### Common Host Library
-
-- `sw/*/Host/dma.lib.h`
-  Common DMA helper library for descriptor setup, queue initialization, doorbell, completion polling, and cleanup.
-
-- `sw/*/Host/bwvfio.h`
-  Low-level VFIO header for PCIe BAR MMIO access and DMA memory allocation/mapping.
-
-- `sw/*/Host/bwvfio.c`
-  Implementation of the VFIO wrapper in `bwvfio.h`.
-
-### CXL Basic Tests
-
-- `sw/1-1_CXL_io/src/cxl_io_test.c`
-  CXL.io test program. Verifies BAR/QCSR MMIO read/write from the host.
-
-- `sw/1-2_CXL_mem/src/cxl_mem_test.c`
-  CXL.mem test program. Verifies host read/write access to device memory through DMA.
-
-
-### Host Memory Sharing Test
-
-- `sw/2_HostMem_sharing/Host/main.c`
+* **Host Program:** `sw/2_HostMem_sharing/Host/main.c`
   Main host program for the host-memory-sharing test.
-
-- `riscfree/Riscfree_260306/HostMem_sharing/src/main.c`
+* **Device Program:** `riscfree/Riscfree_260306/HostMem_sharing/src/main.c`
   Main HPS bare-metal program for the host-memory-sharing test.
 
+---
 
-### Device Memory Sharing Test
+### 📂 3_DeviceMem_sharing (Device-Memory Sharing Test)
+In this mode, the **device starts first**. The host starts later and participates in the synchronized increment test.
 
-- `sw/3_DeviceMem_sharing/Host/main.c`
+* **Host Program:** `sw/3_DeviceMem_sharing/Host/main.c`
   Main host program for the device-memory-sharing test.
-
-- `riscfree/Riscfree_260306/DeviceMem_sharing/src/main.c`
+* **Device Program:** `riscfree/Riscfree_260306/DeviceMem_sharing/src/main.c`
   Main HPS bare-metal program for the device-memory-sharing test.
-
 
 ### 3. General Notes
 
