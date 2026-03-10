@@ -50,23 +50,49 @@ Launches the RiscFree workspace for the provided HPS projects.
 
 FPGA bitstream used by the initialization scripts.
 
-## 2. Prerequisites
+## 2. Source Code list
 
-Before running the tests, make sure the following environment is available:
+# Examiner Source Code Guide
 
-* Linux host system with access to the FPGA card
-* BittWare utilities installed:
+This document lists the main source files for inspection and their roles.
 
-  * `bw_bmc_configure`
-  * `bw_bmc_fpga_load`
-* PCIe utilities installed:
+## Common Host Library
 
-  * `lspci`
-* `sudo` permission
-* `gcc`
-* `libnuma`
-* RiscFree installed and callable as `RiscFree`
-* JTAG/debug connection for HPS bring-up through RiscFree
+- `sw/*/Host/dma.lib.h`
+  Common DMA helper library for descriptor setup, queue initialization, doorbell, completion polling, and cleanup.
+
+- `sw/*/Host/bwvfio.h`
+  Low-level VFIO header for PCIe BAR MMIO access and DMA memory allocation/mapping.
+
+- `sw/*/Host/bwvfio.c`
+  Implementation of the VFIO wrapper in `bwvfio.h`.
+
+## CXL Basic Tests
+
+- `sw/1-1_CXL_io/src/cxl_io_test.c`
+  CXL.io test program. Verifies BAR/QCSR MMIO read/write from the host.
+
+- `sw/1-2_CXL_mem/src/cxl_mem_test.c`
+  CXL.mem test program. Verifies host read/write access to device memory through DMA.
+
+
+## Host Memory Sharing Test
+
+- `sw/2_HostMem_sharing/Host/main.c`
+  Main host program for the host-memory-sharing test.
+
+- `riscfree/Riscfree_260306/HostMem_sharing/src/main.c`
+  Main HPS bare-metal program for the host-memory-sharing test.
+
+
+## Device Memory Sharing Test
+
+- `sw/3_DeviceMem_sharing/Host/main.c`
+  Main host program for the device-memory-sharing test.
+
+- `riscfree/Riscfree_260306/DeviceMem_sharing/src/main.c`
+  Main HPS bare-metal program for the device-memory-sharing test.
+
 
 ## 3. General Notes
 
