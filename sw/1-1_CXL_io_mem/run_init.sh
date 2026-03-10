@@ -2,7 +2,7 @@
 set -euo pipefail
 
 BDF="41:00.0"
-RBF="../DeviceMem_sharing/Host/fpga_image.rbf"
+RBF="../fpga_image.rbf"
 BMC_WAIT_SEC=2
 
 # 기대하는 lspci 한 줄(정확히 이 문자열이어야 PASS)
