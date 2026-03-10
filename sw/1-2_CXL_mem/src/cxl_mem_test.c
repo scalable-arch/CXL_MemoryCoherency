@@ -166,7 +166,6 @@ int main(void)
            TEST_COUNT);
 
     /*
-     * 디버깅과 확인을 위해 descriptor/TX/RX 버퍼의 IOVA를 출력한다.
      * DMA descriptor에는 이 IOVA들이 실제 DMA source/destination 주소로 사용된다.
      */
     printf("[INFO] IOVA(desc) = 0x%016" PRIx64 "\n", ctx.desc_iova);
@@ -176,7 +175,6 @@ int main(void)
     /*
      * orig_vals:
      *   각 테스트 주소의 원래 값을 저장해 두는 배열이다.
-     *   테스트 후 복구할 때 사용한다.
      *
      * restored_vals:
      *   복구 후 실제로 다시 읽은 값을 저장하는 배열이다.
@@ -188,9 +186,6 @@ int main(void)
     /*
      * 테스트 전에 대상 주소 범위의 원래 값을 모두 읽어 저장한다.
      * 주소는 0x0부터 시작해서 4바이트씩 증가하며 총 15개 위치를 검사한다.
-     *
-     * 예:
-     * 0x0, 0x4, 0x8, ..., 0x38
      */
     for (uint32_t i = 0; i < TEST_COUNT; ++i) {
         uint64_t dev_addr = DEV_MEM_BASE_ADDR + ((uint64_t)i * DEV_MEM_STRIDE_BYTES);
@@ -217,14 +212,6 @@ int main(void)
 
     /*
      * 각 주소에 대해 테스트 패턴을 생성해서 쓰고, 다시 읽어서 검증한다.
-     *
-     * write_val 생성 규칙:
-     *   0xA5A50000 | i
-     * 즉, 상위 비트는 고정 패턴(A5A5)으로 두고,
-     * 하위 일부 비트는 테스트 index를 반영해서 주소마다 다른 값을 쓰도록 한다.
-     *
-     * 이렇게 하면 각 주소가 구분 가능한 패턴을 가지게 되어,
-     * write/readback 결과를 눈으로 확인하기 쉽다.
      */
     for (uint32_t i = 0; i < TEST_COUNT; ++i) {
         uint64_t dev_addr = DEV_MEM_BASE_ADDR + ((uint64_t)i * DEV_MEM_STRIDE_BYTES);
@@ -251,7 +238,6 @@ int main(void)
 
         /*
          * write 값과 readback 값이 정확히 같으면 PASS로 집계한다.
-         * 값이 다르면 MMIO가 아니라 DMA data path 관점에서 mismatch가 발생한 것으로 보고 WARN/FAIL 처리한다.
          */
         if (rd_back == write_val) {
             printf("[PASS] addr 0x%08llx write 0x%08x -> read 0x%08x\n",
@@ -268,7 +254,6 @@ int main(void)
      * 테스트가 끝나면 처음 저장해 두었던 원래 값을 다시 써서
      * 디바이스 메모리 상태를 복구한다.
      *
-     * 이후 한 번 더 읽어서 restored_vals에 저장하고,
      * orig_vals와 비교하여 복구가 정확히 되었는지 확인한다.
      */
     for (uint32_t i = 0; i < TEST_COUNT; ++i) {
@@ -305,10 +290,6 @@ int main(void)
     /* DMA buffer 및 VFIO 디바이스 핸들 정리 */
     cleanup(&ctx);
 
-    /*
-     * fail이 하나도 없으면 성공 종료(0),
-     * 하나라도 있으면 비정상 종료 코드(6)를 반환한다.
-     */
     if (fail_cnt == 0u) {
         return 0;
     }
