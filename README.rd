@@ -1,21 +1,19 @@
-CXL Memory Coherency Validation Suite
+# CXL Memory Coherency Validation Suite
 
 This repository contains host-side and device-side test programs for validating basic CXL functionality on the FPGA platform, including:
 
-CXL.io MMIO access
-
-CXL.mem device-memory read/write
-
-Host-memory sharing between Host and Device
-
-Device-memory sharing between Host and Device
+* **CXL.io MMIO access**
+* **CXL.mem device-memory read/write**
+* **Host-memory sharing between Host and Device**
+* **Device-memory sharing between Host and Device**
 
 The software is organized to support both Linux host execution and bare-metal debugging on the HPS through RiscFree.
 
-1. Repository Overview
+## 1. Repository Overview
 
-The main software tree is located under sw/ and is organized as follows:
+The main software tree is located under `sw/` and is organized as follows:
 
+```text
 sw/
 ├── 1-1_CXL_io/
 ├── 1-2_CXL_mem/
@@ -24,394 +22,420 @@ sw/
 ├── 3_DeviceMem_sharing/
 ├── fpga_image.rbf
 └── run_riscfree.sh
-Directory Description
+```
 
-1-1_CXL_io/
+### Directory Description
+
+#### `1-1_CXL_io/`
+
 CXL.io validation. This test checks whether the host can access FPGA BAR space through PCIe/CXL.io and confirm read/write behavior.
 
-1-2_CXL_mem/
+#### `1-2_CXL_mem/`
+
 CXL.mem validation. This test checks whether the host can read and write a portion of device memory through the DMA-based path.
 
-2_HostMem_sharing/
+#### `2_HostMem_sharing/`
+
 Host-memory sharing test. In this mode, the host starts first, initializes the shared memory region, and the device starts later to issue the request and participate in the synchronized increment test.
 
-3_DeviceMem_sharing/
+#### `3_DeviceMem_sharing/`
+
 Device-memory sharing test. In this mode, the device starts first, then the host starts later and participates in the synchronized increment test.
 
-run_riscfree.sh
+#### `run_riscfree.sh`
+
 Launches the RiscFree workspace for the provided HPS projects.
 
-fpga_image.rbf
+#### `fpga_image.rbf`
+
 FPGA bitstream used by the initialization scripts.
 
-2. Prerequisites
+## 2. Prerequisites
 
 Before running the tests, make sure the following environment is available:
 
-Linux host system with access to the FPGA card
+* Linux host system with access to the FPGA card
+* BittWare utilities installed:
 
-BittWare utilities installed:
+  * `bw_bmc_configure`
+  * `bw_bmc_fpga_load`
+* PCIe utilities installed:
 
-bw_bmc_configure
+  * `lspci`
+* `sudo` permission
+* `gcc`
+* `libnuma`
+* RiscFree installed and callable as `RiscFree`
+* JTAG/debug connection for HPS bring-up through RiscFree
 
-bw_bmc_fpga_load
+## 3. General Notes
 
-PCIe utilities installed:
+### FPGA Initialization
 
-lspci
+Each test directory contains a `run_init.sh` script. This script:
 
-sudo permission
-
-gcc
-
-libnuma
-
-RiscFree installed and callable as RiscFree
-
-JTAG/debug connection for HPS bring-up through RiscFree
-
-3. General Notes
-FPGA Initialization
-
-Each test directory contains a run_init.sh script. This script:
-
-Reboots the BMC
-
-Loads the FPGA bitstream
-
-Rescans PCIe
-
-Checks the PCIe link and device enumeration
-
-Waits for HPS boot
-
-Prints Initiation Done! on success
+* Reboots the BMC
+* Loads the FPGA bitstream
+* Rescans PCIe
+* Checks the PCIe link and device enumeration
+* Waits for HPS boot
+* Prints `Initiation Done!` on success
 
 When prompted during BMC reboot, enter:
 
+```bash
 y
+```
 
-If OK does not appear, retry the initialization script.
+If `OK` does not appear, retry the initialization script.
 
-RiscFree
+### RiscFree
 
 Open RiscFree only when needed:
 
+```bash
 cd sw
 ./run_riscfree.sh
-Final Counter
+```
 
-For both memory-sharing tests, the final result is the Final counter value printed in the host terminal.
+### Final Counter
 
-4. CXL.io Test
+For both memory-sharing tests, the final result is the `Final counter` value printed in the host terminal.
+
+## 4. CXL.io Test
 
 This test verifies that the host can access the FPGA MMIO space through the BAR/QCSR path.
 
-Steps
+### Steps
+
+```bash
 cd sw
 ./run_riscfree.sh          # only when opening RiscFree is needed
 cd 1-1_CXL_io
 ./run_init.sh
+```
 
-Enter y once when asked.
+Enter `y` once when asked.
 
-After Initiation Done! appears, run:
+After `Initiation Done!` appears, run:
 
+```bash
 ./run_cxl_io_test.sh
-Expected Result
+```
+
+### Expected Result
 
 The program prints a sequence of MMIO read/write checks and reports whether the written value matches the readback value.
 
-5. CXL.mem Test
+## 5. CXL.mem Test
 
 This test verifies that the host can access a portion of device memory through the DMA path.
 
-Steps
+### Steps
+
+```bash
 cd sw
 ./run_riscfree.sh          # only when opening RiscFree is needed
 cd 1-2_CXL_mem
 ./run_init.sh
+```
 
-Enter y once when asked.
+Enter `y` once when asked.
 
-After Initiation Done! appears, run:
+After `Initiation Done!` appears, run:
 
+```bash
 ./run_cxl_mem_test.sh
-Expected Result
+```
+
+### Expected Result
 
 The program performs multiple device-memory write/readback checks and prints pass/fail messages for each address.
 
-6. Device Memory Sharing Test
+## 6. Device Memory Sharing Test
 
 In this flow, the device runs first, then the host runs second.
 
-Test Flow
+### Test Flow
 
-Device first
+* **Device first**
+* **Host second**
 
-Host second
+### Steps
 
-Steps
-0. Move to the software directory
+#### 0. Move to the software directory
+
+```bash
 cd sw
-1. Launch RiscFree
+```
+
+#### 1. Launch RiscFree
 
 Only needed when opening RiscFree:
 
+```bash
 ./run_riscfree.sh
-2. Initialize the FPGA and host environment
+```
+
+#### 2. Initialize the FPGA and host environment
+
+```bash
 cd 3_DeviceMem_sharing
 ./run_init.sh
+```
 
-Notes:
+**Notes:**
 
-Enter y once when prompted.
+* Enter `y` once when prompted.
+* If `OK` does not appear, retry.
+* Continue only after `Initiation Done!` is printed.
 
-If OK does not appear, retry.
-
-Continue only after Initiation Done! is printed.
-
-3. Build the device-side project in RiscFree
+#### 3. Build the device-side project in RiscFree
 
 In RiscFree:
 
-Right-click DeviceMem_sharing (or the relevant project folder)
-
-Select Clean Project
-
-Then select Build Project
+* Right-click **`DeviceMem_sharing`** (or the relevant project folder)
+* Select **Clean Project**
+* Then select **Build Project**
 
 This is mainly required:
 
-on the first run
+* on the first run
+* after recompilation
+* after source changes
 
-after recompilation
+If the project view is stale, use **Refresh** first.
 
-after source changes
-
-If the project view is stale, use Refresh first.
-
-4. Start device execution in RiscFree
+#### 4. Start device execution in RiscFree
 
 In RiscFree:
 
-Right-click 260306_test or the relevant project folder
+* Right-click **`260306_test`** or the relevant project folder
+* Select **Debug As**
+* Select **1 Ashling ...**
 
-Select Debug As
+If an `invalid target...` message appears, refer to your existing target/debug configuration note.
 
-Select 1 Ashling ...
+#### 5. Run to the synchronization end point
 
-If an invalid target... message appears, refer to your existing target/debug configuration note.
+In `main.c`, find:
 
-5. Run to the synchronization end point
-
-In main.c, find:
-
+```c
 end = 1;
+```
 
 Right-click that line and select:
 
-Run to Line
+* **Run to Line**
 
-6. Run the host-side program
+#### 6. Run the host-side program
+
+```bash
 ./run_host.sh
+```
 
 Optional increment count:
 
+```bash
 ./run_host.sh -n [increment_count]
+```
 
 Example:
 
+```bash
 ./run_host.sh -n 5000
-7. Check the final result
+```
 
-The final result is the Final counter value printed in the terminal.
+#### 7. Check the final result
 
-7. Host Memory Sharing Test
+The final result is the `Final counter` value printed in the terminal.
+
+## 7. Host Memory Sharing Test
 
 In this flow, the host runs first, then the device runs second.
 
-Test Flow
+### Test Flow
 
-Host first
+* **Host first**
+* **Device second**
 
-Device second
+### Steps
 
-Steps
-1. Move to the software directory
+#### 1. Move to the software directory
+
+```bash
 cd sw
-2. Launch RiscFree
+```
+
+#### 2. Launch RiscFree
 
 Only needed when opening RiscFree:
 
+```bash
 ./run_riscfree.sh
-3. Initialize the FPGA and host environment
+```
+
+#### 3. Initialize the FPGA and host environment
+
+```bash
 cd 2_HostMem_sharing
 ./run_init.sh
+```
 
-Notes:
+**Notes:**
 
-Enter y once when prompted.
+* Enter `y` once when prompted.
+* If `OK` does not appear, retry.
+* Continue only after `Initiation Done!` is printed.
 
-If OK does not appear, retry.
+#### 4. Run the host-side program first
 
-Continue only after Initiation Done! is printed.
-
-4. Run the host-side program first
+```bash
 ./run_host.sh
+```
 
 Optional increment count:
 
+```bash
 ./run_host.sh -n [increment_count]
+```
 
 Example:
 
+```bash
 ./run_host.sh -n 5000
-5. Build the device-side project in RiscFree
+```
+
+#### 5. Build the device-side project in RiscFree
 
 In RiscFree:
 
-Right-click HostMem_sharing (or the relevant project folder)
-
-Select Clean Project
-
-Then select Build Project
+* Right-click **`HostMem_sharing`** (or the relevant project folder)
+* Select **Clean Project**
+* Then select **Build Project**
 
 This is mainly required:
 
-on the first run
+* on the first run
+* after recompilation
+* after source changes
 
-after recompilation
+If needed, use **Refresh** first.
 
-after source changes
-
-If needed, use Refresh first.
-
-6. Start device execution in RiscFree
+#### 6. Start device execution in RiscFree
 
 In RiscFree:
 
-Right-click HostMem_sharing (or the relevant project folder)
+* Right-click **`HostMem_sharing`** (or the relevant project folder)
+* Select **Debug As**
+* Select **1 Ashling ...**
 
-Select Debug As
+#### 7. Run to the synchronization end point
 
-Select 1 Ashling ...
+In `main.c`, find:
 
-7. Run to the synchronization end point
-
-In main.c, find:
-
+```c
 end = 1;
+```
 
 Right-click that line and select:
 
-Run to Line
+* **Run to Line**
 
-8. Check the final result
+#### 8. Check the final result
 
-The final result is the Final counter value printed in the terminal.
+The final result is the `Final counter` value printed in the terminal.
 
-8. Notes on Increment Count
+## 8. Notes on Increment Count
 
 For the memory-sharing tests, the host script supports:
 
+```bash
 -n [increment_count]
+```
 
 This changes the number of host-side increment operations.
 
 Example:
 
+```bash
 ./run_host.sh -n 1000
+```
 
 To compare host and device contributions symmetrically, match the host increment count with the device-side increment constant in the device source.
 
-9. Expected Output Summary
-CXL.io
+## 9. Expected Output Summary
 
-BAR/QCSR read/write test messages
+### CXL.io
 
-PASS/WARN/FAIL readback logs
+* BAR/QCSR read/write test messages
+* PASS/WARN/FAIL readback logs
 
-CXL.mem
+### CXL.mem
 
-Device-memory DMA read/write test messages
+* Device-memory DMA read/write test messages
+* PASS/WARN/FAIL readback logs
 
-PASS/WARN/FAIL readback logs
+### Memory Sharing
 
-Memory Sharing
+* Handshake progress
+* Increment execution
+* Final output:
 
-Handshake progress
-
-Increment execution
-
-Final output:
-
+```text
 Final counter = ...
+```
 
-This printed Final counter is the main result to check.
+This printed `Final counter` is the main result to check.
 
-10. Troubleshooting
-OK does not appear in run_init.sh
+## 10. Troubleshooting
 
-Retry the initialization script
+### `OK` does not appear in `run_init.sh`
 
-Make sure the card is properly enumerated
+* Retry the initialization script
+* Make sure the card is properly enumerated
+* Check BMC reboot and FPGA load status
 
-Check BMC reboot and FPGA load status
+### `invalid target...` in RiscFree
 
-invalid target... in RiscFree
+* Use the existing working target/debug configuration
+* Recheck JTAG connection and target selection
 
-Use the existing working target/debug configuration
+### Build changes do not appear
 
-Recheck JTAG connection and target selection
+* Use **Refresh**
+* Then run **Clean Project**
+* Then run **Build Project**
 
-Build changes do not appear
+### Host script does not run
 
-Use Refresh
+* Check `sudo` permission
+* Verify `libnuma` is installed
+* Make sure the PCIe device is enumerated correctly in `lspci`
 
-Then run Clean Project
+## 11. Recommended Execution Order Summary
 
-Then run Build Project
+### Device Memory Sharing
 
-Host script does not run
+* Initialize FPGA
+* Build and start device in RiscFree
+* Run host program
+* Read `Final counter`
 
-Check sudo permission
+### Host Memory Sharing
 
-Verify libnuma is installed
+* Initialize FPGA
+* Run host program
+* Build and start device in RiscFree
+* Read `Final counter`
 
-Make sure the PCIe device is enumerated correctly in lspci
-
-11. Recommended Execution Order Summary
-Device Memory Sharing
-
-Initialize FPGA
-
-Build and start device in RiscFree
-
-Run host program
-
-Read Final counter
-
-Host Memory Sharing
-
-Initialize FPGA
-
-Run host program
-
-Build and start device in RiscFree
-
-Read Final counter
-
-12. Main Output to Record
+## 12. Main Output to Record
 
 For validation and reporting, record:
 
-CXL.io read/write result
-
-CXL.mem read/write result
-
-Final counter value for host-memory sharing
-
-Final counter value for device-memory sharing
+* CXL.io read/write result
+* CXL.mem read/write result
+* Final counter value for host-memory sharing
+* Final counter value for device-memory sharing
 
 These outputs are the primary evidence that the host-device communication and memory-sharing paths are functioning correctly.
