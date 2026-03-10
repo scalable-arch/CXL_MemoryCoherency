@@ -25,7 +25,7 @@ Explanation
 #define HS_XFER_BYTES          (32u)   // handshake 전송 블록 단위: 32B
 #define HS_DONE_WORD_IDX       (3u)
 
-#define DEFAULT_HOST_INC_COUNT (500000u) // Host가 수행할 increment 횟수
+#define DEFAULT_HOST_INC_COUNT (50000u) // Host가 수행할 increment 횟수
 #define COUNTER_XFER_BYTES     (32u) // counter 접근 블록 단위: 32B
 
  // Host DMA 기준 device memory map

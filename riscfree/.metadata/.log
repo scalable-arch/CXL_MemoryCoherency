@@ -4093,3 +4093,60 @@ java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.
 	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
 	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SESSION 2026-03-10 19:14:03.913 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/CXL/github_test_code(working)/riscfree
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:15:13.119
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:15:14.104
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:15:14.105
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:15:14.115
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 19:15:14.208
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 38099 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 19:15:15.975
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/HostMem_sharing/Debug/HostMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 19:15:16.559
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:16:32.413
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:16:32.426
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=USB-Blaster variant [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 19:16:32.492
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 42619 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 19:16:34.068
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 19:16:34.386
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:18:11.688
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 19:18:12.065
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=USB-Blaster variant [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 19:18:12.122
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 44867 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 19:18:13.764
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 19:18:14.145
+!MESSAGE -break-insert -p 1 -t main

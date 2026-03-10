@@ -15,9 +15,9 @@ Explanation
 #include <string.h>
 #include <inttypes.h>
 #include <stdatomic.h>
-#include <unistd.h>   
-#include <errno.h>    
-#include <stdlib.h>   
+#include <unistd.h>
+#include <errno.h>
+#include <stdlib.h>
 
 #include "dma.lib.h"
 
@@ -35,7 +35,7 @@ Explanation
 #define HS_REQ_OFF         (HS_BASE_OFF + 0x00u) // HPS -> Host 요청
 #define HS_ACK_OFF         (HS_BASE_OFF + 0x04u) // Host -> HPS 요청 확인
 #define HS_GO_OFF          (HS_BASE_OFF + 0x08u) // HPS -> Host 시작 허가
-#define HS_DONE_OFF        (HS_BASE_OFF + 0x0Cu) // HPS -> Host 작업 완료 알림 
+#define HS_DONE_OFF        (HS_BASE_OFF + 0x0Cu) // HPS -> Host 작업 완료 알림
 
 // Peterson lock vars
 #define LOCK_HOST_OFF      (HS_BASE_OFF + 0x20u) // Host 측 진입 의사 flag
@@ -46,7 +46,7 @@ Explanation
 #define TURN_DEV           (1u) // HPS 우선
 
 // Host가 수행할 기본 increment 횟수
-#define DEFAULT_HOST_INC_COUNT  (5000u)
+#define DEFAULT_HOST_INC_COUNT  (50000u)
 
 // shared buffer의 flag/counter를 host와 HPS가 함께 사용 중이므로, CPU/컴파일러의 메모리 재배치를 방지하여 접근 순서를 보장
 static inline void host_fence(void)
@@ -78,7 +78,7 @@ static int wait_u32_eq(volatile uint32_t *p,
     return -ETIMEDOUT;
 }
 
-// 플래그/변수 초기화 
+// 플래그/변수 초기화
 static void host_prepare_shared_state(uint8_t *shared_va)
 {
     *shm_u32_ptr(shared_va, COUNTER_OFF)   = 0u;
@@ -131,14 +131,14 @@ static inline void peterson_lock_host(uint8_t *shared_va)
     *turn = TURN_DEV; // Device로 TURN을 넘김 (Host/HPS 동시 진입 희망 시 HPS에게 우선권을 줌)
     host_fence();
 
-    while ((*flag_other != 0u) && (*turn == TURN_DEV)) { // HPS 진입 희망 + 우선권이 HPS에게 있으면 기다림 
+    while ((*flag_other != 0u) && (*turn == TURN_DEV)) { // HPS 진입 희망 + 우선권이 HPS에게 있으면 기다림
         // spin
     }
 
     host_fence();
 }
 
-// 해당 함수를 통해 상대방이 더 이상 Host가 section 진입을 희망하지 않는 것으로 판단 
+// 해당 함수를 통해 상대방이 더 이상 Host가 section 진입을 희망하지 않는 것으로 판단
 static inline void peterson_unlock_host(uint8_t *shared_va)
 {
     volatile uint32_t * const flag_self = shm_u32_ptr(shared_va, LOCK_HOST_OFF);
@@ -167,7 +167,7 @@ static int host_increment_n_times_shared_atomic(uint8_t *shared_va, uint32_t n)
     return 0;
 }
 
-// HPS의 완료 신호(DONE=token)를 기다렸다가 이를 확인하면 reset 동작 수행 
+// HPS의 완료 신호(DONE=token)를 기다렸다가 이를 확인하면 reset 동작 수행
 static int host_wait_done_and_clear(uint8_t *shared_va,
                                     uint32_t token,
                                     uint32_t poll_limit,
@@ -239,7 +239,7 @@ int main(int argc, char **argv)
         case 'b': // -b 옵션으로 대상 PCIe 디바이스 주소(=BDF)를 직접 지정한 경우
             bdf = optarg; // 문자열 저장 (dma.lib의 init_vifo 함수에서 해당 bdfㄹ PCIe 디바이스 접근)
             break;
-        case 'h': // 도움말 출력 옵션 
+        case 'h': // 도움말 출력 옵션
         default:
             print_usage(argv[0]);
             return 0;
@@ -267,7 +267,7 @@ int main(int argc, char **argv)
         cleanup_all(&ctx);
         return 1;
     }
-    
+
     // shared buffer 초기화 + 순서 보장(fence)
     memset(ctx.shared_va, 0, ctx.shared_bytes);
     host_fence();
@@ -287,7 +287,7 @@ int main(int argc, char **argv)
     printf("[HPS] TARGET_ADDR should be 0x%016" PRIx64 "\n", hps_target_addr);
     printf("[HPS] HS_BASE     should be 0x%016" PRIx64 "\n", hps_hs_base);
 
-    // Host와 Device/HPS가 공유할 handshake token을 정의 
+    // Host와 Device/HPS가 공유할 handshake token을 정의
     const uint32_t token = 0xA5A50001u;
 
     // Device/HPS가 REQ를 기록할 때까지 대기 + 안내 메시지 출력
