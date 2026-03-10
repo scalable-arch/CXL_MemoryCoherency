@@ -4,8 +4,8 @@ This repository contains host-side and device-side test programs for validating 
 
 * **CXL.io MMIO access**
 * **CXL.mem device-memory read/write**
-* **Host-memory sharing between Host and Device**
-* **Device-memory sharing between Host and Device**
+* **Host-memory sharing between Host and Device (CXL.cache support verified)**
+* **Device-memory sharing between Host and Device (CXL.cache support verified)**
 
 The software is organized to support both Linux host execution and bare-metal debugging on the HPS through RiscFree.
 
