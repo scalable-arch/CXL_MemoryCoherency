@@ -1,3 +1,14 @@
+/*
+Explanation
+이 코드는 호스트 프로그램이 VFIO 기반 DMA 공유 버퍼를 할당한 뒤,
+그 버퍼를 호스트 CPU와 디바이스/HPS 프로그램 사이의 공용 메모리 영역으로 사용하는 코드이다.
+공유 영역에는 카운터, 핸드셰이크 레지스터, 그리고 Peterson lock 변수가 포함된다.
+호스트는 먼저 공유 상태를 초기화한 뒤, 디바이스가 REQ 토큰을 보낼 때까지 대기하고,
+ACK를 반환한 뒤 GO 토큰을 기다린 후 임계 구역 작업을 시작한다.
+이후 호스트는 Peterson 알고리즘을 이용해 디바이스와 상호 배제를 맞추면서 공유 카운터를 지정한 횟수만큼 atomic 하게 증가시킨다.
+마지막으로 디바이스의 DONE 토큰을 기다리고 최종 카운터 값을 읽어 출력한 뒤, 다음 실행을 위해 공유 상태를 정리하고 VFIO 자원을 안전한 순서로 해제한다.
+*/
+
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdint.h>
@@ -15,11 +26,11 @@
 #define SHARED_BYTES       (2ull * 1024ull * 1024ull)
 
 // ---- For debug printing: HPS address = H2F_BASE + IOVA ----
-#define HPS_H2F_BASE       (0x80000100ull)
+#define HPS_H2F_BASE       (0x80000000ull)
 
 // ---- Offsets inside shared buffer ----
-#define COUNTER_OFF        (0x00000100u)
-#define HS_BASE_OFF        (0x00100100u)
+#define COUNTER_OFF        (0x00000000u)
+#define HS_BASE_OFF        (0x00100000u)
 
 #define HS_REQ_OFF         (HS_BASE_OFF + 0x00u)
 #define HS_ACK_OFF         (HS_BASE_OFF + 0x04u)
@@ -37,16 +48,28 @@
 // ---- Behavior params ----
 #define DEFAULT_HOST_INC_COUNT  (50000u)
 
+/*
+호스트 측 전역 메모리 순서 보장 fence.
+공유 메모리의 레지스터 및 카운터 접근이 호스트와 디바이스 사이에서 순서대로 관측되도록 한다.
+*/
 static inline void host_fence(void)
 {
     atomic_thread_fence(memory_order_seq_cst);
 }
 
+/*
+공유 버퍼 내 32비트 포인터 접근 헬퍼.
+바이트 단위 베이스 주소와 오프셋을 받아 공유 영역 내부의 volatile uint32_t 포인터로 변환한다.
+*/
 static inline volatile uint32_t *shm_u32_ptr(uint8_t *base, uint32_t off)
 {
     return (volatile uint32_t *)(void *)(base + off);
 }
 
+/*
+공유 32비트 값이 기대값이 될 때까지 polling 하는 함수.
+대상 위치를 반복적으로 읽으면서 값이 맞는지 확인하고, 필요하면 각 poll 사이에 sleep 하며, 실패 시 timeout을 반환한다.
+*/
 static int wait_u32_eq(volatile uint32_t *p,
                        uint32_t expected,
                        uint32_t poll_limit,
@@ -62,6 +85,10 @@ static int wait_u32_eq(volatile uint32_t *p,
     return -ETIMEDOUT;
 }
 
+/*
+공유 상태 초기화 함수.
+공유 카운터, 핸드셰이크 레지스터, Peterson lock 변수를 모두 0 또는 초기값으로 설정해 호스트와 디바이스가 동일한 시작 상태를 갖도록 만든다.
+*/
 static void host_prepare_shared_state(uint8_t *shared_va)
 {
     *shm_u32_ptr(shared_va, COUNTER_OFF)   = 0u;
@@ -78,7 +105,10 @@ static void host_prepare_shared_state(uint8_t *shared_va)
     host_fence();
 }
 
-// Host waits for device/HPS REQ, then ACKs, then waits for GO.
+/*
+호스트 측 핸드셰이크 수신 단계.
+디바이스가 REQ 토큰을 쓸 때까지 대기한 뒤 ACK 토큰을 기록하고, 이후 디바이스가 GO 토큰을 보낼 때까지 다시 대기한다.
+*/
 static int host_wait_req_ack_wait_go(uint8_t *shared_va,
                                      uint32_t token,
                                      uint32_t poll_limit,
@@ -100,7 +130,10 @@ static int host_wait_req_ack_wait_go(uint8_t *shared_va,
     return 0;
 }
 
-// Peterson mutex: host side
+/*
+호스트 측 Peterson lock 획득 함수.
+호스트 진입 플래그를 세우고 turn을 디바이스 쪽으로 넘긴 뒤, 디바이스가 사용 중이면 spin 하면서 임계 구역 진입을 기다린다.
+*/
 static inline void peterson_lock_host(uint8_t *shared_va)
 {
     volatile uint32_t * const flag_self  = shm_u32_ptr(shared_va, LOCK_HOST_OFF);
@@ -120,6 +153,10 @@ static inline void peterson_lock_host(uint8_t *shared_va)
     host_fence();
 }
 
+/*
+호스트 측 Peterson lock 해제 함수.
+임계 구역 작업이 끝난 뒤 호스트 플래그를 내림으로써 디바이스가 다음에 진입할 수 있도록 한다.
+*/
 static inline void peterson_unlock_host(uint8_t *shared_va)
 {
     volatile uint32_t * const flag_self = shm_u32_ptr(shared_va, LOCK_HOST_OFF);
@@ -128,6 +165,10 @@ static inline void peterson_unlock_host(uint8_t *shared_va)
     host_fence();
 }
 
+/*
+호스트 측 공유 카운터 증가 루프.
+지정한 횟수만큼 카운터를 증가시키며, 각 read-modify-write 구간은 Peterson lock으로 보호한다.
+*/
 static int host_increment_n_times_shared_atomic(uint8_t *shared_va, uint32_t n)
 {
     volatile uint32_t * const counter = shm_u32_ptr(shared_va, COUNTER_OFF);
@@ -146,6 +187,10 @@ static int host_increment_n_times_shared_atomic(uint8_t *shared_va, uint32_t n)
     return 0;
 }
 
+/*
+디바이스 완료 신호 대기 및 clear 함수.
+디바이스가 DONE 토큰을 기록할 때까지 기다린 뒤, 해당 값을 0으로 지워 다음 실행에서도 같은 핸드셰이크 영역을 재사용할 수 있게 한다.
+*/
 static int host_wait_done_and_clear(uint8_t *shared_va,
                                     uint32_t token,
                                     uint32_t poll_limit,
@@ -161,7 +206,10 @@ static int host_wait_done_and_clear(uint8_t *shared_va,
     return 0;
 }
 
-// IMPORTANT: free mem first, close dev later
+/*
+자원 정리 전용 함수.
+VFIO로 할당한 메모리 객체들을 안전한 순서로 먼저 해제하고, 마지막에 디바이스 핸들을 닫는다.
+*/
 static void cleanup_all(dma_ctx_t *ctx)
 {
     if (!ctx) return;
@@ -186,6 +234,10 @@ static void cleanup_all(dma_ctx_t *ctx)
     bwvfio_close_dev(&ctx->dev);
 }
 
+/*
+사용법 출력 함수.
+호스트 증가 횟수와 PCIe BDF 선택을 위한 실행 옵션 형식을 사용자에게 보여준다.
+*/
 static void print_usage(const char *prog)
 {
     printf("Usage: %s [-n inc_count] [-b BDF]\n", prog);
@@ -193,6 +245,11 @@ static void print_usage(const char *prog)
     printf("  -b BDF         PCI BDF (default: 0000:41:00.0)\n");
 }
 
+/*
+메인 함수.
+명령행 인자를 파싱하고, VFIO와 공유 DMA 버퍼를 초기화한 뒤, 호스트-디바이스 핸드셰이크, 카운터 증가 작업, 완료 대기, 결과 출력, 
+그리고 마지막 자원 해제까지 전체 흐름을 수행한다.
+*/
 int main(int argc, char **argv)
 {
     const char *bdf = "0000:41:00.0";
@@ -294,7 +351,7 @@ int main(int argc, char **argv)
     uint32_t final = *counter;
     host_fence();
 
-    printf("DONE seen+cleared. FINAL counter = 0x%08x (%u)\n", final, final);
+    printf("DONE seen+cleared. FINAL counter = 0x%08x (result : %u)\n", final, final);
 
     // next-run cleanup
     *shm_u32_ptr(ctx.shared_va, HS_REQ_OFF)    = 0u;
