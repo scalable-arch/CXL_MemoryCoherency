@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;HostMem_sharing_CXLCACHE&apos;" deleteContents="false" description="Delete resource &apos;HostMem_sharing_CXLCACHE&apos;" element1="/HostMem_sharing_CXLCACHE" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1773118963447"/>
+</session>
