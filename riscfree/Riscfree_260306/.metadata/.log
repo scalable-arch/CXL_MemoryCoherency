@@ -3580,3 +3580,258 @@ java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.
 	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
 	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SESSION 2026-03-10 15:15:40.757 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:16:12.102
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:16:13.083
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:16:13.084
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:16:13.104
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 15:16:13.192
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 35057 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 15:16:15.045
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306/HostMem_sharing/Debug/HostMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 15:16:15.561
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY org.eclipse.cdt.core 4 0 2026-03-10 15:16:32.550
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.cdt.core.CCorePlugin.stop() of bundle org.eclipse.cdt.core.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:923)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	... 13 more
+Root exception:
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-03-10 15:16:33.367
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+!SESSION 2026-03-10 15:16:39.002 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:17:04.862
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:17:04.980
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 15:17:05.063
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 37109 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 15:17:06.748
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 15:17:07.294
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:18:32.065
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:18:32.428
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 15:18:32.484
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 34381 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 15:18:34.128
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 15:18:34.516
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:19:42.062
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:19:42.077
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 15:19:42.131
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 43003 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 15:19:43.826
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 15:19:44.087
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY org.eclipse.cdt.core 4 0 2026-03-10 15:20:13.694
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.cdt.core.CCorePlugin.stop() of bundle org.eclipse.cdt.core.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:923)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	... 13 more
+Root exception:
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-03-10 15:20:14.013
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+!SESSION 2026-03-10 15:20:16.415 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:21:13.970
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 15:21:14.434
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=USB-Blaster variant [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 15:21:14.524
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 46115 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 15:21:16.219
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/99june18/new/CXL_MemoryCoherency/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 15:21:16.862
+!MESSAGE -break-insert -p 1 -t main
+
+!ENTRY org.eclipse.cdt.core 4 0 2026-03-10 15:21:45.146
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Exception in org.eclipse.cdt.core.CCorePlugin.stop() of bundle org.eclipse.cdt.core.
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:923)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	... 13 more
+Root exception:
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.runtime.content.IContentTypeManager.removeContentTypeChangeListener(org.eclipse.core.runtime.content.IContentTypeManager$IContentTypeChangeListener)" because the return value of "org.eclipse.core.runtime.Platform.getContentTypeManager()" is null
+	at org.eclipse.cdt.internal.core.model.CModelManager.shutdown(CModelManager.java:1378)
+	at org.eclipse.cdt.core.model.CoreModel.shutdown(CoreModel.java:1156)
+	at org.eclipse.cdt.core.CCorePlugin.stop(CCorePlugin.java:375)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:903)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:895)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1071)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:392)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:2116)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1986)
+	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:281)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:222)
+	at org.eclipse.osgi.container.Module.doStop(Module.java:695)
+	at org.eclipse.osgi.container.Module.stop(Module.java:554)
+	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:212)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:240)
+	at java.base/java.lang.Thread.run(Thread.java:1583)

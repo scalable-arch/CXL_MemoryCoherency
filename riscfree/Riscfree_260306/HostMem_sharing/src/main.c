@@ -18,7 +18,7 @@
 #define TURN_HOST        (0u)
 #define TURN_DEV         (1u)
 
-#define LIMIT            (5000u)
+#define LIMIT            (50000u)
 
 static inline void io_fence(void)
 {

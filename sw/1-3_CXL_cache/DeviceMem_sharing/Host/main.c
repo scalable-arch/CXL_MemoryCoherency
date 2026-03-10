@@ -27,9 +27,8 @@
  *   lock_dev      : 0x00100040
  *   turn          : 0x00100060
  */
-#define DEV_COUNTER_ADDR       (0x00000100ull)
-#define DEV_HS_BASE            (0x00100100ull)
-
+#define DEV_COUNTER_ADDR       (0x00000000ull)
+#define DEV_HS_BASE            (0x00100000ull)
 #define DEV_LOCK_HOST_ADDR     (DEV_HS_BASE + 0x20ull)
 #define DEV_LOCK_DEV_ADDR      (DEV_HS_BASE + 0x40ull)
 #define DEV_TURN_ADDR          (DEV_HS_BASE + 0x60ull)
