@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # 기본 프로젝트(워크스페이스) 경로
-DEFAULT_WS="../riscfree/Riscfree_260306"
+DEFAULT_WS="riscfree/Riscfree_260306"
 
 # 첫 번째 인자로 경로를 주면 그걸 사용, 아니면 기본값 사용
 WS_DIR="${1:-$DEFAULT_WS}"
