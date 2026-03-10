@@ -1,4 +1,4 @@
-20:26:49 **** Build of configuration Debug for project DeviceMem_sharing ****
+10:05:43 **** Incremental Build of configuration Debug for project DeviceMem_sharing ****
 make all 
 Building file: ../src/init.S
 Invoking: GNU Arm Cross Assembler
@@ -26,5 +26,5 @@ aarch64-none-elf-size --format=berkeley "DeviceMem_sharing.elf"
 Finished building: DeviceMem_sharing.siz
  
 
-20:26:49 Build Finished. 0 errors, 0 warnings. (took 228ms)
+10:05:43 Build Finished. 0 errors, 0 warnings. (took 214ms)
 

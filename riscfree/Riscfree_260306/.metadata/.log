@@ -3325,3 +3325,30 @@ org.eclipse.core.runtime.AssertionFailedException: assertion failed: The applica
 
 !ENTRY org.eclipse.core.jobs 2 2 2026-03-10 00:04:14.962
 !MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob
+!SESSION 2026-03-10 10:04:56.975 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 10:07:40.211
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 10:07:41.195
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 10:07:41.196
+!MESSAGE Scanning debug probes
+
+!ENTRY com.ashling.riscfree.debug.utils 1 0 2026-03-10 10:07:41.213
+!MESSAGE DebugProbe [deviceName=USB-Blaster-2, serialNumber=1, displayName=IA-860m USB Blaster 3 [3-1.4], probeType=null]
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 1 0 2026-03-10 10:07:41.318
+!MESSAGE GDB SERVER COMMAND :/tools/intel/riscfree/debugger/gdbserver-arm/ash-arm-gdb-server --probe-type usb-blaster-2 --transport-type jtag --device 0x6BA00477 --auto-detect true --gdb-port 42745 --jtag-frequency 16000KHz --instance 1 --tap-number 1 --core-number 0 --target-reset 0
+
+!ENTRY org.eclipse.embedcdt.debug.gdbjtag.core 4 1 2026-03-10 10:07:43.090
+!MESSAGE /tools/intel/riscfree/RiscFree//../toolchain/Arm/aarch64-none-elf/bin/aarch64-none-elf-gdb --interpreter=mi2 --nx /home/wjdtjarla4/CXL/github_test_code(working)/riscfree/Riscfree_260306/DeviceMem_sharing/Debug/DeviceMem_sharing.elf
+
+!ENTRY com.ashling.riscfree.debug.opxd.core 4 150 2026-03-10 10:07:43.659
+!MESSAGE -break-insert -p 1 -t main
