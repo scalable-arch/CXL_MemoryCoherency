@@ -39,11 +39,14 @@ Files used across multiple tests for setup, configuration, and fundamental opera
 ### 1.2 Validation Directories
 * **`1-1_CXL_io/`** : CXL.io validation. Checks whether the host can access FPGA BAR space through PCIe/CXL.io and confirm read/write behavior.
   * *Source:* `sw/1-1_CXL_io/src/cxl_io_test.c`
+
 * **`1-2_CXL_mem/`** : CXL.mem validation. Checks whether the host can read and write a portion of device memory through the DMA-based path.
   * *Source:* `sw/1-2_CXL_mem/src/cxl_mem_test.c`
+
 * **`2_HostMem_sharing/`** : Host-memory sharing test. The host starts first and initializes the shared memory region. The device starts later to issue requests.
   * *Host Source:* `sw/2_HostMem_sharing/Host/main.c`
   * *Device Source:* `riscfree/Riscfree_260306/HostMem_sharing/src/main.c`
+
 * **`3_DeviceMem_sharing/`** : Device-memory sharing test. The device starts first. The host starts later and participates in the synchronized increment test.
   * *Host Source:* `sw/3_DeviceMem_sharing/Host/main.c`
   * *Device Source:* `riscfree/Riscfree_260306/DeviceMem_sharing/src/main.c`
