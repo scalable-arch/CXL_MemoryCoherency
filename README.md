@@ -52,11 +52,9 @@ FPGA bitstream used by the initialization scripts.
 
 ## 2. Source Code list
 
-# Examiner Source Code Guide
+This document lists the main source files and their roles.
 
-This document lists the main source files for inspection and their roles.
-
-## Common Host Library
+### Common Host Library
 
 - `sw/*/Host/dma.lib.h`
   Common DMA helper library for descriptor setup, queue initialization, doorbell, completion polling, and cleanup.
@@ -67,7 +65,7 @@ This document lists the main source files for inspection and their roles.
 - `sw/*/Host/bwvfio.c`
   Implementation of the VFIO wrapper in `bwvfio.h`.
 
-## CXL Basic Tests
+### CXL Basic Tests
 
 - `sw/1-1_CXL_io/src/cxl_io_test.c`
   CXL.io test program. Verifies BAR/QCSR MMIO read/write from the host.
@@ -76,7 +74,7 @@ This document lists the main source files for inspection and their roles.
   CXL.mem test program. Verifies host read/write access to device memory through DMA.
 
 
-## Host Memory Sharing Test
+### Host Memory Sharing Test
 
 - `sw/2_HostMem_sharing/Host/main.c`
   Main host program for the host-memory-sharing test.
@@ -85,7 +83,7 @@ This document lists the main source files for inspection and their roles.
   Main HPS bare-metal program for the host-memory-sharing test.
 
 
-## Device Memory Sharing Test
+### Device Memory Sharing Test
 
 - `sw/3_DeviceMem_sharing/Host/main.c`
   Main host program for the device-memory-sharing test.
@@ -94,7 +92,7 @@ This document lists the main source files for inspection and their roles.
   Main HPS bare-metal program for the device-memory-sharing test.
 
 
-## 3. General Notes
+### 3. General Notes
 
 ### FPGA Initialization
 
