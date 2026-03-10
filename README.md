@@ -53,32 +53,7 @@ Files used across multiple tests for setup, configuration, and fundamental opera
 
 ---
 
-## 2. General Notes
-
-### 2.1 FPGA Initialization
-Each test directory contains a `run_init.sh` script. This script performs the following:
-1. Reboots the BMC
-2. Loads the FPGA bitstream
-3. Rescans PCIe
-4. Checks the PCIe link and device enumeration
-5. Waits for HPS boot
-6. Prints `Initiation Done!` on success
-
-> **Note:** When prompted during BMC reboot, enter `y`. If `OK` does not appear, retry the initialization script.
-
-### 2.2 RiscFree
-Open RiscFree only when needed by running:
-```bash
-cd sw
-./run_riscfree.sh
-```
-
-### 2.3 Final Counter
-For both memory-sharing tests, the final result is the `Final counter` value printed in the host terminal.
-
----
-
-## 3. CXL.io Test
+## 2. CXL.io Test
 
 This test verifies that the host can access the FPGA MMIO space through the BAR/QCSR path.
 
@@ -99,7 +74,7 @@ This test verifies that the host can access the FPGA MMIO space through the BAR/
 
 ---
 
-## 4. CXL.mem Test
+## 3. CXL.mem Test
 
 This test verifies that the host can access a portion of device memory through the DMA path.
 
@@ -120,7 +95,7 @@ This test verifies that the host can access a portion of device memory through t
 
 ---
 
-## 5. CXL.cache Validation
+## 4. CXL.cache Validation
 
 Although `sw/1-3_CXL_cache/` contains source files, the code is identical to the memory coherency tests. Therefore, there is no separate script for it.
 
@@ -128,7 +103,7 @@ Completing the subsequent **Host memory sharing** and **Device memory sharing** 
 
 ---
 
-## 6. Device Memory Sharing Test
+## 5. Device Memory Sharing Test
 
 **Test Flow:** `Device first` -> `Host second`
 
@@ -159,7 +134,7 @@ Completing the subsequent **Host memory sharing** and **Device memory sharing** 
 
 ---
 
-## 7. Host Memory Sharing Test
+## 6. Host Memory Sharing Test
 
 **Test Flow:** `Host first` -> `Device second`
 
@@ -190,7 +165,7 @@ Completing the subsequent **Host memory sharing** and **Device memory sharing** 
 
 ---
 
-## 8. Notes on Increment Count
+## 7. Notes on Increment Count
 
 For the memory-sharing tests, the host script supports modifying the number of host-side increment operations using the `-n` flag:
 
@@ -205,7 +180,7 @@ For the memory-sharing tests, the host script supports modifying the number of h
 
 ---
 
-## 9. Expected Output Summary
+## 8. Expected Output Summary
 
 ### CXL.io
 * BAR/QCSR read/write test messages
