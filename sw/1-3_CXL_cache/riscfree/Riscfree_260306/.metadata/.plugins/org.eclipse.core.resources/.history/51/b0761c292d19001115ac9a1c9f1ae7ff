@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+#define TARGET_ADDR ((uintptr_t)0x90000000u)
+#define LIMIT       (10000000u)
+
+uint32_t inc_to_10000(void)
+{
+    volatile uint32_t * const p = (volatile uint32_t *)TARGET_ADDR;
+
+    *p = 0;  // 시작값
+    for (uint32_t i = 0; i < LIMIT; ++i) {
+        (*p)++;  // volatile 메모리 값을 1씩 증가
+    }
+
+    return *p;   // 최종적으로 10000
+}
+
+int main(void)
+{
+
+    int result = (int)inc_to_10000();
+
+    int a = 0;
+
+    a++;
+
+    return a;
+
+}

@@ -1,0 +1,30 @@
+16:21:52 **** Build of configuration Debug for project 260306_test ****
+make all 
+Building file: ../src/init.S
+Invoking: GNU Arm Cross Assembler
+aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -x assembler-with-cpp -MMD -MP -MF"src/init.d" -MT"src/init.o" -c -o "src/init.o" "../src/init.S"
+Finished building: ../src/init.S
+ 
+Building file: ../src/main.c
+Invoking: GNU Arm Cross C Compiler
+aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -std=gnu11 -MMD -MP -MF"src/main.d" -MT"src/main.o" -c -o "src/main.o" "../src/main.c"
+Finished building: ../src/main.c
+ 
+Building target: 260306_test.elf
+Invoking: GNU Arm Cross C Linker
+aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -T "/home/wjdtjarla4/CXL/github_test_code/riscfree/Riscfree_260306/260306_test/src/link.ld" -nostartfiles -Xlinker --gc-sections -Xlinker --no-warn-rwx-segments -Wl,-Map,"260306_test.map" --specs=nosys.specs -o "260306_test.elf" ./src/init.o ./src/main.o   
+Finished building target: 260306_test.elf
+ 
+Invoking: GNU Arm Cross Create Flash Image
+aarch64-none-elf-objcopy -O ihex "260306_test.elf"  "260306_test.hex"
+Finished building: 260306_test.hex
+ 
+Invoking: GNU Arm Cross Print Size
+aarch64-none-elf-size --format=berkeley "260306_test.elf"
+   text	   data	    bss	    dec	    hex	filename
+    704	      0	   4096	   4800	   12c0	260306_test.elf
+Finished building: 260306_test.siz
+ 
+
+16:21:52 Build Finished. 0 errors, 0 warnings. (took 268ms)
+
