@@ -1,3 +1,14 @@
+/*
+Explanation
+이 코드는 호스트 측에서 DMA를 사용해 device memory 기반 atomic increment 동작을 수행하는 코드이다.
+호스트와 HPS는 DEV_COUNTER_ADDR의 counter를 함께 사용하며, DEV_HS_BASE 아래의 핸드셰이크 영역과 lock 변수를 통해 실행 순서와 상호 배제를 맞춘다.
+프로그램은 먼저 VFIO를 통해 FPGA 디바이스를 열고, descriptor ring과 TX/RX buffer를 포함한 DMA용 Host buffer를 할당한다.
+이후 device memory의 counter와 lock 상태를 초기화하고, REQ/ACK/GO 기반 barrier handshake를 통해 HPS와 시작 시점을 맞춘다.
+그 다음 호스트는 Dekker mutex를 사용해 HPS와 상호 배제를 보장하면서 device memory counter를 host_inc_count 횟수만큼 증가시킨다.
+증가 작업이 끝나면 HPS가 DONE 토큰을 기록할 때까지 기다린 뒤 최종 counter 값을 다시 읽어 결과를 확인한다.
+마지막으로 DONE 값을 clear하고 DMA/VFIO 자원을 정리한 뒤 종료한다.
+*/
+
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdint.h>
@@ -36,7 +47,7 @@ static int h2d_write_buf(dma_ctx_t *ctx, uint64_t dst_dev_addr, const void *src,
 
     if (!ctx || !src) return -1;
     if (len == 0 || len > DMA_LEN_MAX_BYTES) return -1;
-    
+
     // H2D queue 초기화
     st = qcsr_init_queue(ctx, QCSR_DIR_H2D, QUEUE_ID, ctx->desc_iova, RING_ORDER_LOG2);
     if (st) return st;
