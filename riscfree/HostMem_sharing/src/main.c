@@ -1,3 +1,14 @@
+/*
+Explanation
+이 코드는 디바이스/HPS 측에서 공유 메모리를 사용해 호스트와 동기화한 뒤,
+공유 counter에 대해 atomic increment를 수행하는 코드이다.
+프로그램은 먼저 handshake 영역의 REQ/ACK/GO/DONE 레지스터를 이용해
+호스트와 실행 시작 시점을 맞추고, 시작 직전에 counter를 0으로 초기화한다.
+그 다음 Peterson lock을 사용해 호스트와 상호 배제를 보장하면서
+TARGET_ADDR의 counter를 LIMIT 횟수만큼 증가시킨다.
+증가 작업이 끝나면 최종 값을 읽고 DONE 토큰을 기록해
+디바이스 측 작업 완료를 호스트에 알린 뒤 프로그램을 종료한다.
+*/
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -20,6 +31,10 @@
 
 #define LIMIT            (50000u)
 
+/*
+I/O 메모리 접근 순서를 보장하는 fence 함수.
+아키텍처별 적절한 배리어 명령을 사용해 공유 메모리와 핸드셰이크 레지스터 접근 순서를 맞춘다.
+*/
 static inline void io_fence(void)
 {
 #if defined(__riscv)
@@ -31,7 +46,10 @@ static inline void io_fence(void)
 #endif
 }
 
-// Device initiates: REQ -> wait ACK -> reset counter -> GO
+/*
+디바이스가 먼저 시작하는 핸드셰이크 함수.
+REQ를 보내고 호스트의 ACK를 기다린 뒤, counter를 0으로 맞추고 GO를 보내 실행 시작을 알린다.
+*/
 static bool device_handshake_initiate(uint32_t token, uint32_t spin_limit)
 {
     volatile uint32_t * const req      = (volatile uint32_t *)HS_REQ_ADDR;
@@ -74,7 +92,10 @@ static bool device_handshake_initiate(uint32_t token, uint32_t spin_limit)
     return true;
 }
 
-// Peterson mutex: device side
+/*
+디바이스 측 Peterson lock 획득 함수.
+자신의 진입 의사를 표시하고 turn을 호스트 쪽으로 넘긴 뒤, 호스트가 사용 중이면 spin 하면서 임계 구역 진입을 기다린다.
+*/
 static inline void peterson_lock_device(void)
 {
     volatile uint32_t * const flag_self  = (volatile uint32_t *)LOCK_DEV_ADDR;
@@ -94,6 +115,10 @@ static inline void peterson_lock_device(void)
     io_fence();
 }
 
+/*
+디바이스 측 Peterson lock 해제 함수.
+자신의 flag를 내려 임계 구역 사용 종료를 알리고, 다음에는 호스트가 진입할 수 있도록 한다.
+*/
 static inline void peterson_unlock_device(void)
 {
     volatile uint32_t * const flag_self = (volatile uint32_t *)LOCK_DEV_ADDR;
@@ -102,6 +127,10 @@ static inline void peterson_unlock_device(void)
     io_fence();
 }
 
+/*
+디바이스 측 atomic increment 본체 함수.
+Peterson lock으로 read-modify-write 구간을 보호하면서 shared counter를 LIMIT 횟수만큼 증가시키고 마지막 값을 반환한다.
+*/
 static uint32_t do_increment_atomic(void)
 {
     volatile uint32_t * const p = (volatile uint32_t *)TARGET_ADDR;
@@ -120,6 +149,10 @@ static uint32_t do_increment_atomic(void)
     return *p;
 }
 
+/*
+메인 함수.
+초기 핸드셰이크를 수행해 호스트와 시작 시점을 맞춘 뒤, atomic increment를 실행하고 완료 후 DONE 토큰을 기록한다.
+*/
 int main(void)
 {
     const uint32_t token = 0xA5A50001u;
