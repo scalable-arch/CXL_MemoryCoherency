@@ -10,12 +10,14 @@
 
 #include "dma.lib.h"
 
-#define HS_XFER_WORDS          (8u)
-#define HS_XFER_BYTES          (32u)   // one DMA block
-#define HS_DONE_WORD_IDX       (3u)    // HS_BASE + 0xC
+#define HS_XFER_WORDS              (8u)
+#define HS_XFER_BYTES              (32u)   // one DMA block
+#define HS_DONE_WORD_IDX           (3u)    // HS_BASE + 0xC
+#define HS_REFRESH_REQ_WORD_IDX    (4u)    // HS_BASE + 0x10
+#define HS_REFRESH_ACK_WORD_IDX    (5u)    // HS_BASE + 0x14
 
-#define DEFAULT_HOST_INC_COUNT (500000u)
-#define COUNTER_XFER_BYTES     (32u)
+#define DEFAULT_HOST_INC_COUNT     (50000u)
+#define COUNTER_XFER_BYTES         (32u)
 
 /*
  * Device memory map from host DMA point of view:
@@ -165,11 +167,13 @@ static int host_barrier_handshake_dma(dma_ctx_t *ctx,
                                    dev_turn_addr);
     if (st) return st;
 
-    // REQ=token, ACK/GO/DONE=0
+    // REQ=token, ACK/GO/DONE/REFRESH_REQ/REFRESH_ACK=0
     wr[0] = token;  // REQ
     wr[1] = 0u;     // ACK
     wr[2] = 0u;     // GO
     wr[3] = 0u;     // DONE
+    wr[4] = 0u;     // REFRESH_REQ
+    wr[5] = 0u;     // REFRESH_ACK
     st = h2d_write_buf(ctx, dev_hs_base, wr, HS_XFER_BYTES);
     if (st) return st;
 
@@ -188,6 +192,8 @@ static int host_barrier_handshake_dma(dma_ctx_t *ctx,
     wr[1] = token;
     wr[2] = token;
     wr[3] = 0u;
+    wr[4] = 0u;
+    wr[5] = 0u;
     st = h2d_write_buf(ctx, dev_hs_base, wr, HS_XFER_BYTES);
     if (st) return st;
 
@@ -310,6 +316,48 @@ static int host_wait_hps_done(dma_ctx_t *ctx,
     return -ETIMEDOUT;
 }
 
+static int host_request_hps_result_refresh(dma_ctx_t *ctx,
+                                           uint64_t dev_hs_base,
+                                           uint32_t token)
+{
+    int st = 0;
+    uint32_t rd[HS_XFER_WORDS] = {0};
+
+    st = d2h_read_buf(ctx, rd, dev_hs_base, HS_XFER_BYTES);
+    if (st) return st;
+
+    rd[HS_REFRESH_REQ_WORD_IDX] = token;
+    rd[HS_REFRESH_ACK_WORD_IDX] = 0u;
+
+    st = h2d_write_buf(ctx, dev_hs_base, rd, HS_XFER_BYTES);
+    if (st) return st;
+
+    return 0;
+}
+
+static int host_wait_hps_refresh_ack(dma_ctx_t *ctx,
+                                     uint64_t dev_hs_base,
+                                     uint32_t token,
+                                     uint32_t poll_limit,
+                                     uint32_t poll_sleep_us)
+{
+    int st = 0;
+    uint32_t rd[HS_XFER_WORDS] = {0};
+
+    for (uint32_t i = 0; i < poll_limit; ++i) {
+        st = d2h_read_buf(ctx, rd, dev_hs_base, HS_XFER_BYTES);
+        if (st) return st;
+
+        if (rd[HS_REFRESH_ACK_WORD_IDX] == token) {
+            return 0;
+        }
+
+        if (poll_sleep_us) usleep(poll_sleep_us);
+    }
+
+    return -ETIMEDOUT;
+}
+
 static int host_clear_hps_done(dma_ctx_t *ctx, uint64_t dev_hs_base)
 {
     int st = 0;
@@ -318,7 +366,9 @@ static int host_clear_hps_done(dma_ctx_t *ctx, uint64_t dev_hs_base)
     st = d2h_read_buf(ctx, rd, dev_hs_base, HS_XFER_BYTES);
     if (st) return st;
 
-    rd[HS_DONE_WORD_IDX] = 0u;
+    rd[HS_DONE_WORD_IDX]        = 0u;
+    rd[HS_REFRESH_REQ_WORD_IDX] = 0u;
+    rd[HS_REFRESH_ACK_WORD_IDX] = 0u;
 
     st = h2d_write_buf(ctx, dev_hs_base, rd, HS_XFER_BYTES);
     if (st) return st;
@@ -388,7 +438,7 @@ int main(int argc, char **argv)
     const uint32_t token = 0xA5A50001u;
 
     printf("Handshake start: hs_base=0x%016" PRIx64 ", token=0x%08x\n",
-           DEV_HS_BASE, token);
+           (uint64_t)DEV_HS_BASE, token);
 
     st = host_barrier_handshake_dma(&ctx,
                                     DEV_COUNTER_ADDR,
@@ -431,22 +481,40 @@ int main(int argc, char **argv)
     }
     printf("HPS done detected.\n");
 
+    st = host_request_hps_result_refresh(&ctx, DEV_HS_BASE, token);
+    if (st) {
+        printf("request HPS result refresh failed: %d\n", st);
+        cleanup(&ctx);
+        return 5;
+    }
+    printf("HPS result refresh request sent.\n");
+
+    st = host_wait_hps_refresh_ack(&ctx, DEV_HS_BASE, token,
+                                   /*poll_limit=*/5000u,
+                                   /*poll_sleep_us=*/1000u);
+    if (st) {
+        printf("wait HPS refresh ack failed: %d\n", st);
+        cleanup(&ctx);
+        return 6;
+    }
+    printf("HPS result refresh ACK detected.\n");
+
     uint32_t final = 0u;
     st = read_u32_block(&ctx, DEV_COUNTER_ADDR, &final);
     if (st) {
         printf("final counter read failed: %d\n", st);
         cleanup(&ctx);
-        return 5;
+        return 7;
     }
-    printf("FINAL counter = 0x%08x (%u)\n", final, final);
+    printf("FINAL counter = 0x%08x (result : %u)\n", final, final);
 
     st = host_clear_hps_done(&ctx, DEV_HS_BASE);
     if (st) {
-        printf("clear HPS done failed: %d\n", st);
+        printf("clear HPS done/refresh flags failed: %d\n", st);
         cleanup(&ctx);
-        return 6;
+        return 8;
     }
-    printf("HPS done cleared.\n");
+    printf("HPS done/refresh flags cleared.\n");
 
     cleanup(&ctx);
     return 0;

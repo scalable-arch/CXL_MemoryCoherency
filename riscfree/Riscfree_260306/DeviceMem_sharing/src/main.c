@@ -1,27 +1,29 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define TARGET_ADDR      ((uintptr_t)0x90000000u)
-#define HS_BASE          ((uintptr_t)0x90100000u)
+#define TARGET_ADDR          ((uintptr_t)0x90000000u)
+#define HS_BASE              ((uintptr_t)0x90100000u)
 
-#define HS_REQ_ADDR      (HS_BASE + 0x0u)
-#define HS_ACK_ADDR      (HS_BASE + 0x4u)
-#define HS_GO_ADDR       (HS_BASE + 0x8u)
-#define HS_DONE_ADDR     (HS_BASE + 0xCu)
+#define HS_REQ_ADDR          (HS_BASE + 0x0u)
+#define HS_ACK_ADDR          (HS_BASE + 0x4u)
+#define HS_GO_ADDR           (HS_BASE + 0x8u)
+#define HS_DONE_ADDR         (HS_BASE + 0xCu)
+#define HS_REFRESH_REQ_ADDR  (HS_BASE + 0x10u)
+#define HS_REFRESH_ACK_ADDR  (HS_BASE + 0x14u)
 
 /*
  * IMPORTANT:
  * Host side updates memory in 32B DMA blocks.
  * So each shared sync variable gets its OWN 32B block.
  */
-#define LOCK_HOST_ADDR   (HS_BASE + 0x20u)   // host flag block
-#define LOCK_DEV_ADDR    (HS_BASE + 0x40u)   // device flag block
-#define TURN_ADDR        (HS_BASE + 0x60u)   // turn block
+#define LOCK_HOST_ADDR       (HS_BASE + 0x20u)   // host flag block
+#define LOCK_DEV_ADDR        (HS_BASE + 0x40u)   // device flag block
+#define TURN_ADDR            (HS_BASE + 0x60u)   // turn block
 
-#define TURN_HOST        (0u)
-#define TURN_DEV         (1u)
+#define TURN_HOST            (0u)
+#define TURN_DEV             (1u)
 
-#define LIMIT            (500000u)
+#define LIMIT                (50000u)
 
 static inline void io_fence(void)
 {
@@ -36,15 +38,19 @@ static inline void io_fence(void)
 
 static bool barrier_handshake(uint32_t token, uint32_t spin_limit)
 {
-    volatile uint32_t * const req   = (volatile uint32_t *)HS_REQ_ADDR;
-    volatile uint32_t * const ack   = (volatile uint32_t *)HS_ACK_ADDR;
-    volatile uint32_t * const go    = (volatile uint32_t *)HS_GO_ADDR;
-    volatile uint32_t * const done  = (volatile uint32_t *)HS_DONE_ADDR;
-    volatile uint32_t * const myflag = (volatile uint32_t *)LOCK_DEV_ADDR;
+    volatile uint32_t * const req         = (volatile uint32_t *)HS_REQ_ADDR;
+    volatile uint32_t * const ack         = (volatile uint32_t *)HS_ACK_ADDR;
+    volatile uint32_t * const go          = (volatile uint32_t *)HS_GO_ADDR;
+    volatile uint32_t * const done        = (volatile uint32_t *)HS_DONE_ADDR;
+    volatile uint32_t * const refresh_req = (volatile uint32_t *)HS_REFRESH_REQ_ADDR;
+    volatile uint32_t * const refresh_ack = (volatile uint32_t *)HS_REFRESH_ACK_ADDR;
+    volatile uint32_t * const myflag      = (volatile uint32_t *)LOCK_DEV_ADDR;
 
     // 이번 실행용 초기화
-    *done   = 0u;
-    *myflag = 0u;
+    *done        = 0u;
+    *refresh_req = 0u;
+    *refresh_ack = 0u;
+    *myflag      = 0u;
     io_fence();
 
     bool req_seen = false;
@@ -116,6 +122,18 @@ static void dekker_unlock_device(void)
     io_fence();
 }
 
+static uint32_t read_counter_once(void)
+{
+    volatile uint32_t * const p = (volatile uint32_t *)TARGET_ADDR;
+    uint32_t v = 0u;
+
+    io_fence();
+    v = *p;
+    io_fence();
+
+    return v;
+}
+
 static uint32_t do_increment_atomic(void)
 {
     volatile uint32_t * const p = (volatile uint32_t *)TARGET_ADDR;
@@ -131,26 +149,53 @@ static uint32_t do_increment_atomic(void)
         dekker_unlock_device();
     }
 
-    return *p;
+    return read_counter_once();
+}
+
+static void wait_host_refresh_request(uint32_t token)
+{
+    volatile uint32_t * const refresh_req = (volatile uint32_t *)HS_REFRESH_REQ_ADDR;
+
+    while (*refresh_req != token) {
+        // host cpu가 끝났다는 신호를 기다림
+    }
+
+    io_fence();
+}
+
+static void send_refresh_ack(uint32_t token)
+{
+    volatile uint32_t * const refresh_ack = (volatile uint32_t *)HS_REFRESH_ACK_ADDR;
+
+    io_fence();
+    *refresh_ack = token;
+    io_fence();
 }
 
 int main(void)
 {
     const uint32_t token = 0xA5A50001u;
-    int end = 0;
+    volatile int end = 0;
+    volatile uint32_t result = 0u;
+    volatile uint32_t * const done = (volatile uint32_t *)HS_DONE_ADDR;
 
     if (!barrier_handshake(token, 200000000u)) {
         return -1;
     }
 
-    uint32_t result = do_increment_atomic();
-    (void)result;
+    result = do_increment_atomic();
 
-    volatile uint32_t * const done = (volatile uint32_t *)HS_DONE_ADDR;
     io_fence();
     *done = token;
     io_fence();
 
+    // host cpu가 다 끝난 뒤 다시 한번 counter를 읽어서 result를 최신화
+    wait_host_refresh_request(token);
+    result = read_counter_once();
+    send_refresh_ack(token);
+
     end = 1;
+    (void)result;
+    (void)end;
     return 0;
 }

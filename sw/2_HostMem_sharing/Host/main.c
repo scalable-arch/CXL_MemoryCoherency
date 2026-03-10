@@ -35,7 +35,7 @@
 #define TURN_DEV           (1u)
 
 // ---- Behavior params ----
-#define DEFAULT_HOST_INC_COUNT  (5000u)
+#define DEFAULT_HOST_INC_COUNT  (50000u)
 
 static inline void host_fence(void)
 {
@@ -294,7 +294,7 @@ int main(int argc, char **argv)
     uint32_t final = *counter;
     host_fence();
 
-    printf("DONE seen+cleared. FINAL counter = 0x%08x (%u)\n", final, final);
+    printf("DONE seen+cleared. FINAL counter = 0x%08x (result : %u)\n", final, final);
 
     // next-run cleanup
     *shm_u32_ptr(ctx.shared_va, HS_REQ_OFF)    = 0u;
