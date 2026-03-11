@@ -61,12 +61,11 @@ static inline volatile uint32_t *shm_u32_ptr(uint8_t *base, uint32_t off)
     return (volatile uint32_t *)(void *)(base + off);
 }
 
-
+// shared buffer 내 shared flag의 값이 expected가 될 때까지 polling (HPS의 writing을 기다림)
 static int wait_u32_eq(volatile uint32_t *p,
                        uint32_t expected,
                        uint32_t poll_limit,
                        uint32_t poll_sleep_us)
-// shared buffer 내 shared flag의 값이 expected가 될 때까지 polling (HPS의 writing을 기다림)
 {
     for (uint32_t i = 0; (poll_limit == 0u) || (i < poll_limit); ++i) { // poll_limit이 0이면 무한 대기
         if (*p == expected) {
