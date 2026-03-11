@@ -1,9 +1,9 @@
 /*
 Explanation
 이 코드는 디바이스/HPS 측에서 공유 메모리를 사용해 호스트와 동기화한 뒤, 공유 counter에 대해 atomic increment를 수행하는 코드이다.
-프로그램은 먼저 handshake 영역의 REQ/ACK/GO/DONE 레지스터를 이용해 호스트와 실행 시작 시점을 맞추고, 시작 직전에 counter를 0으로 초기화한다.
+프로그램은 먼저 handshake 영역의 REQ/ACK/GO 레지스터를 이용해 호스트와 실행 시작 시점을 맞추고, Host의 ACK를 확인한 뒤 시작 직전에 counter를 0으로 초기화한 후 GO 토큰을 기록한다.
 그 다음 Peterson lock을 사용해 호스트와 상호 배제를 보장하면서 TARGET_ADDR의 counter를 LIMIT 횟수만큼 증가시킨다.
-증가 작업이 끝나면 최종 값을 읽고 DONE 토큰을 기록해 디바이스 측 작업 완료를 호스트에 알린 뒤 프로그램을 종료한다.
+증가 작업이 끝나면 counter를 한 번 읽은 뒤 DONE 토큰을 기록해 디바이스 측 작업 완료를 호스트에 알리고 프로그램을 종료한다.
 */
 
 #include <stdint.h>
