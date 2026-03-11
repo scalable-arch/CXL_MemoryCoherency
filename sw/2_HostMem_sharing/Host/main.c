@@ -114,7 +114,6 @@ static void host_prepare_shared_state(uint8_t *shared_va)
 호스트 측 핸드셰이크 수신 단계.
 디바이스가 REQ 토큰을 쓸 때까지 대기한 뒤 ACK 토큰을 기록하고,
 이후 디바이스가 GO 토큰을 보낼 때까지 다시 대기한다.
-호스트는 device/HPS의 REQ를 기다린 뒤 ACK를 쓰고, 이후 GO를 기다린다.
 */
 static int host_wait_req_ack_wait_go(uint8_t *shared_va,
                                      uint32_t token,
