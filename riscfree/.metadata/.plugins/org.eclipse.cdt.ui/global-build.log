@@ -1,4 +1,4 @@
-15:30:10 **** Build of configuration Debug for project HostMem_sharing ****
+16:27:34 **** Build of configuration Debug for project HostMem_sharing ****
 make all 
 Building file: ../src/init.S
 Invoking: GNU Arm Cross Assembler

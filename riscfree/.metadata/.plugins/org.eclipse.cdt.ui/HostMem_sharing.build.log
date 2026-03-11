@@ -1,4 +1,4 @@
-15:30:10 **** Build of configuration Debug for project HostMem_sharing ****
+16:27:34 **** Build of configuration Debug for project HostMem_sharing ****
 make all 
 Building file: ../src/init.S
 Invoking: GNU Arm Cross Assembler
@@ -26,5 +26,5 @@ aarch64-none-elf-size --format=berkeley "HostMem_sharing.elf"
 Finished building: HostMem_sharing.siz
  
 
-15:30:10 Build Finished. 0 errors, 0 warnings. (took 116ms)
+16:27:34 Build Finished. 0 errors, 0 warnings. (took 167ms)
 
