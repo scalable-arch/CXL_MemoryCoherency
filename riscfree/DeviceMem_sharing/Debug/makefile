@@ -58,7 +58,7 @@ main-build: DeviceMem_sharing.elf secondary-outputs
 DeviceMem_sharing.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU Arm Cross C Linker'
-	aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -T "/home/wjdtjarla4/CXL/github_test_code(working)/riscfree/DeviceMem_sharing/src/link.ld" -nostartfiles -Xlinker --gc-sections -Xlinker --no-warn-rwx-segments -Wl,-Map,"DeviceMem_sharing.map" --specs=nosys.specs -o "DeviceMem_sharing.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	aarch64-none-elf-gcc -mcpu=generic+simd -mcmodel=small -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -g3 -T "/home/99june18/CXL_MemoryCoherency/riscfree/DeviceMem_sharing/src/link.ld" -nostartfiles -Xlinker --gc-sections -Xlinker --no-warn-rwx-segments -Wl,-Map,"DeviceMem_sharing.map" --specs=nosys.specs -o "DeviceMem_sharing.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
