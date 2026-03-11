@@ -1,12 +1,12 @@
 /*
 Explanation
-이 코드는 호스트 측에서 shared buffer 기반 atomic increment 동작을 수행하는 코드이다.
-호스트와 디바이스/HPS는 같은 shared buffer를 함께 사용하며, COUNTER_OFF의 counter와 HS_BASE_OFF 아래의 handshake/lock 변수를 공유한다.
-프로그램은 먼저 VFIO를 통해 FPGA 디바이스를 열고, Host와 HPS가 함께 접근할 shared buffer를 할당한 뒤 초기 상태를 설정한다.
-이후 REQ/ACK/GO 기반 handshake를 통해 HPS와 실행 순서를 맞추고 실제 작업을 시작한다.
-그 다음 호스트는 Peterson lock을 사용해 HPS와 상호 배제를 보장하면서 shared counter를 host_inc_count 횟수만큼 증가시킨다.
-증가 작업이 끝나면 HPS가 DONE 토큰을 기록할 때까지 기다렸다가 이를 확인하고 DONE 값을 clear한다.
-마지막으로 최종 counter 값을 읽어 결과를 출력하고, 다음 실행을 위해 shared state를 정리한 뒤 종료한다.
+이 코드는 호스트 프로그램이 VFIO 기반 DMA 공유 버퍼를 할당한 뒤,
+그 버퍼를 호스트 CPU와 디바이스/HPS 프로그램 사이의 공용 메모리 영역으로 사용하는 코드이다.
+공유 영역에는 카운터, 핸드셰이크 레지스터, 그리고 Peterson lock 변수가 포함된다.
+호스트는 먼저 공유 상태를 초기화한 뒤, 디바이스가 REQ 토큰을 보낼 때까지 대기하고,
+ACK를 반환한 뒤 GO 토큰을 기다린 후 임계 구역 작업을 시작한다.
+이후 호스트는 Peterson 알고리즘을 이용해 디바이스와 상호 배제를 맞추면서 공유 카운터를 지정한 횟수만큼 atomic 하게 증가시킨다.
+마지막으로 디바이스의 DONE 토큰을 기다리고 최종 카운터 값을 읽어 출력한 뒤, 다음 실행을 위해 공유 상태를 정리하고 VFIO 자원을 안전한 순서로 해제한다.
 */
 
 #define _GNU_SOURCE
