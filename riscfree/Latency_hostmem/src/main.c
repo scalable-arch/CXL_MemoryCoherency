@@ -1,19 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/*
- * Host-side shared memory must already be created and mapped so that
- * the HPS can access it at 0x81000000.
- *
- * This version is intentionally minimized to produce the lowest possible
- * measured value from software:
- * - no fence around the measured load
- * - same address is measured repeatedly
- * - warm-up reads are performed before measurement
- *
- * Therefore, this measures a best-case visible latency for one 32-bit load,
- * not necessarily a full uncached end-to-end host-memory round-trip latency.
- */
 
 #define TARGET_ADDR         ((uintptr_t)0x80000000u)
 #define READ_COUNT          (100u)
@@ -86,6 +73,7 @@ static inline uint64_t read_counter_freq(void)
 #endif
 }
 
+/* 카운터를 연속으로 읽는 자체 오버헤드를 여러 번 측정해 최소값을 구한다. */
 static uint64_t measure_overhead(void)
 {
     uint64_t min_delta = ~0ull;
@@ -103,6 +91,7 @@ static uint64_t measure_overhead(void)
     return min_delta;
 }
 
+/* 실제 측정 전에 동일 주소를 여러 번 읽어 경로를 워밍업한다. */
 static void warmup_reads(uintptr_t addr)
 {
     volatile const uint32_t * const p = (volatile const uint32_t *)addr;
@@ -115,6 +104,7 @@ static void warmup_reads(uintptr_t addr)
     g_sink += sum;
 }
 
+/* 지정한 주소를 1회 읽고, 읽기 전후 카운터 차이(raw cycle)를 반환한다. */
 static uint64_t measure_read_once_cycles(uintptr_t addr, uint32_t *value_out)
 {
     volatile const uint32_t * const p = (volatile const uint32_t *)addr;
@@ -131,6 +121,13 @@ static uint64_t measure_read_once_cycles(uintptr_t addr, uint32_t *value_out)
     return (t1 - t0);
 }
 
+
+/* 전체 측정 흐름:
+ * 1) 카운터 주파수/오버헤드 측정
+ * 2) 워밍업 수행
+ * 3) READ_COUNT번 읽기 지연 측정
+ * 4) min/max/avg 결과 계산
+ */
 int main(void)
 {
     int end = 0;
